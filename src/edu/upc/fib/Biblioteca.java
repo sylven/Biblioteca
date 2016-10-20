@@ -2,23 +2,34 @@ package edu.upc.fib;
 import java.util.Map;
 
 public class Biblioteca {
-    private Documento[] LlistaDocuments;
-    private Map<Frase,Documento[]> IndexAutor;
-    private Map<Frase,Documento[]> IndexTitol;
-    private Map<Pair<Integer,Palabra>,Documento[]> Diccionario;
+    private Documento[] llistaDocuments;
 
-    public Documento[] LlistaAutor(Frase Autor){
+    //private Map<Frase,Documento[]> IndexAutor;
+    //private Map<Frase,Documento[]> IndexTitol;
+    //private Map<Pair<Integer,Palabra>,Documento[]> Diccionario;
+
+    public Biblioteca() {
+
+    }
+
+    /*public Documento[] LlistaAutor(Frase Autor){
         return IndexAutor.get(Autor);
-    }
+    }*/
 
-    public Documento[] LlistaTitol(Frase Titol){
+    /*public Documento[] LlistaTitol(Frase Titol){
         return IndexAutor.get(Titol);
-    }
+    }*/
 
-    public void AfegirDocument(Documento D){
+    public void afegirDocument() {
+
+        // Pedir autor
+
+        // Pedir título
+        // Pedir documento
+        // Indexar palabras
 
         //Afegeix a LListaDocuments
-        Integer i=LlistaDocuments.length;
+        /*Integer i=LlistaDocuments.length;
         LlistaDocuments[++i]=D;
 
         //Afegeix a IndexAutor
@@ -51,7 +62,7 @@ public class Biblioteca {
             IndexTitol.put(Autor,Docs);
         }
 
-        //Falta Afegir a Diccionario
+        //Falta Afegir a Diccionario*/
 
     }
 

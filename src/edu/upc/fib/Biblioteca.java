@@ -21,7 +21,6 @@ public class Biblioteca {
     }*/
 
     public void afegirDocument() {
-
         // Pedir autor
 
         // Pedir título

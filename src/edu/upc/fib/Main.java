@@ -6,35 +6,33 @@ import java.util.TreeSet;
 
 public class Main {
 
-    public static void main(String[] args) {
+     public static void main(String[] args) {
         Biblioteca biblioteca = new Biblioteca();
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Biblioteca");
-        System.out.println("1- Gestió documents");
+        int choice = 0;
+        while (choice != -1) {
+            System.out.println("[Menú]");
+            System.out.println("1- Gestió de documents");
+            System.out.println("0- Sortir del programa");
+            System.out.print("Tria una opció: ");
+            choice = scanner.nextInt();
 
-        System.out.println("Tria una opció:");
-        int choice = scanner.nextInt();
-
-        switch (choice) {
-            case 1:
-                System.out.println("Biblioteca - Gestió de documents");
-                System.out.println("1- Afegir document");
-                break;
-            default:
-        }
-
-        System.out.println("Tria una opció:");
-        choice = scanner.nextInt();
-
-        switch (choice) {
-            case 1:
-                System.out.println("Biblioteca - Añadir documento");
-                biblioteca.afegirDocument();
-                break;
-            default:
-                // The user input an unexpected choice.
+            if (choice == 0) choice = -1;
+            else if (choice == 1) {
+                while (choice != 0) {
+                    System.out.println("[Menú] Gestió de documents");
+                    System.out.println("1- Afegir document");
+                    System.out.println("0- Enrere");
+                    System.out.print("Tria una opció: ");
+                    choice = scanner.nextInt();
+                    if (choice == 1) {
+                        System.out.println("· Gestió de documents > Afegir document");
+                        biblioteca.afegirDocument();
+                    }
+                }
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        // Cosole navigation
+        // Console navigation
         int choice = 0;
         while (choice != -1) {
             System.out.println("[Menú]");

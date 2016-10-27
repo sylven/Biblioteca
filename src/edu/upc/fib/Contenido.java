@@ -1,18 +1,29 @@
 package edu.upc.fib;
 
+import java.util.HashMap;
+
 public class Contenido {
-    private Frase[] Contenido;
+    //private Frase[] Contenido;
     //private SparseVector Palabras; Pot fer productes vectorials que es el que necessitem per fer les comparacions de documents
 
-    public Boolean ExisteixParaula(Palabra P){
+    public Contenido(String content) {
+
+    }
+
+    // Retorna el HashMap poblat amb la freqüència de les paraules
+    public HashMap<Palabra, Integer> calculateWordFrequency() {
+
+    }
+
+    /*public Boolean ExisteixParaula(Palabra P){
         return true;
-    }
+    }*/
 
-    public Frase[] getContenido() {
+    /*public Frase[] getContenido() {
         return Contenido;
-    }
+    }*/
 
-    public void setContenido(Frase[] contenido) {
+    /*public void setContenido(Frase[] contenido) {
         Contenido = contenido;
-    }
+    }*/
 }

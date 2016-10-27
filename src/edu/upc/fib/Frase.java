@@ -13,14 +13,14 @@ public class Frase {
         }
     }
 
-    public void print() {
+    /*public void print() {
         for (Palabra w : sentence) {
             w.print();
         }
         System.out.println();
-    }
+    }*/
 
-    public void addParaula(String word) {
+    public void addParaula(String word)  {
         sentence.addElement(new Palabra(word));
     }
 

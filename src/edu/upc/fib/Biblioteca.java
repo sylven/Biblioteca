@@ -1,25 +1,31 @@
 package edu.upc.fib;
 
-import sun.reflect.generics.tree.Tree;
-
 import java.util.*;
 
 public class Biblioteca {
     //> TreeMap de títulos (donde cada título tiene asociado el contenido del documento)
         // v2: TreeMap de documentos donde los titulos son la clave y el valor es una lista decumentos con el mismo titulo
-    TreeMap<Frase, List<Documento>> documentos;
-
-    //> TreeMap de autores (donde cada autor tendrá un vector con los punteros o ids de los documentos de los que es autor)
-        // Separar en una clase aparte?
-        // Crear una clase que implementa TreeMap y hacernos una versión con funcionalidades que necesitemos?
-    TreeMap<Frase, List<Documento>> autoresDocumentos;
+    TreeMap<Frase, Vector<Documento>> documents;
 
     //> Vector de palabras con su frecuecia global
-    HashMap<Palabra, Integer> frecuenciaPalabras;
+    HashMap<Palabra, Integer> wordFrequency;
 
+    public Biblioteca() {
+        documents = new TreeMap<>();
+        wordFrequency = new HashMap<>();
+    }
 
-
-
+    public void addDocument(String author, String title, String content) {
+        Frase newTitle = new Frase(title);
+        Documento newDocument = new Documento(author, title, content);
+        // Comprueba si existe el indice title, si ya existe añade el documento al vector, si no, añade un vector de una
+        // posicion con ese documento
+        if (documents.containsKey(newTitle)) {
+            documents.get(newTitle).add(newDocument);
+        } else {
+            documents.put(newTitle, new Vector().add(newDocument);
+        }
+    }
 
 
 
@@ -29,10 +35,6 @@ public class Biblioteca {
     //private Map<Frase,Documento[]> IndexAutor;
     //private Map<Frase,Documento[]> IndexTitol;
     //private Map<Pair<Integer,Palabra>,Documento[]> Diccionario;
-
-    public Biblioteca() {
-        autores = new Hashtable<Frase, String[]>();
-    }
 
     public void printAutors() {
         Enumeration listaAutores = autores.keys();
@@ -58,7 +60,7 @@ public class Biblioteca {
         return IndexAutor.get(Titol);
     }*/
 
-    public void afegirDocument() {
+    //public void afegirDocument() {
         // Seleccionar autor
 
         // Pedir título
@@ -101,7 +103,7 @@ public class Biblioteca {
 
         //Falta Afegir a Diccionario*/
 
-    }
+    //}
 
 	/*public Boolean ExisteixParaula(Integer index, Palabra P){
 		return Biblioteca[index].ExisteixParaula(P);

@@ -1,12 +1,29 @@
 package edu.upc.fib;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.Scanner;
+
+import sun.reflect.generics.tree.Tree;
+
+import java.util.*;
 
 public class Biblioteca {
-    private Hashtable<Frase, String[]> autores;
-    //private Documento[] llistaDocuments;
+    //> TreeMap de títulos (donde cada título tiene asociado el contenido del documento)
+        // v2: TreeMap de documentos donde los titulos son la clave y el valor es una lista decumentos con el mismo titulo
+    TreeMap<Frase, List<Documento>> documentos;
+
+    //> TreeMap de autores (donde cada autor tendrá un vector con los punteros o ids de los documentos de los que es autor)
+        // Separar en una clase aparte?
+        // Crear una clase que implementa TreeMap y hacernos una versión con funcionalidades que necesitemos?
+    TreeMap<Frase, List<Documento>> autoresDocumentos;
+
+    //> Vector de palabras con su frecuecia global
+    HashMap<Palabra, Integer> frecuenciaPalabras;
+
+
+
+
+
+
+
+   //private Documento[] llistaDocuments;
 
 
     //private Map<Frase,Documento[]> IndexAutor;
@@ -27,7 +44,7 @@ public class Biblioteca {
 
     public void afegirAutor() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Introdueix el nom de l'autor: ");
+        System.out.print("Introdueix el nom de l'autor: ");
         String autor = scanner.nextLine();
         String emptyArray[] = new String[0];
         autores.put(new Frase(autor), emptyArray);

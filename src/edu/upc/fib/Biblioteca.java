@@ -3,12 +3,16 @@ package edu.upc.fib;
 import java.util.*;
 
 public class Biblioteca {
+    //> Pensar en hacer una nueva clase Conjunto_Documentos
+
     //> TreeMap de títulos (donde cada título tiene asociado el contenido del documento)
         // v2: TreeMap de documentos donde los titulos son la clave y el valor es una lista decumentos con el mismo titulo
     TreeMap<Frase, Vector<Documento>> documents;
 
     //> Vector de palabras con su frecuecia global
     HashMap<Palabra, Integer> wordFrequency;
+
+    Autores autores = new Autores();
 
     public Biblioteca() {
         documents = new TreeMap<>();
@@ -23,8 +27,15 @@ public class Biblioteca {
         if (documents.containsKey(newTitle)) {
             documents.get(newTitle).add(newDocument);
         } else {
-            documents.put(newTitle, new Vector().add(newDocument);
+            Vector<Documento> newVector = new Vector();
+            newVector.add(newDocument);
+            documents.put(newTitle, newVector);
         }
+        //
+    }
+
+    public void addAuthor(String author) {
+        autores.addAuthor(author);
     }
 
 

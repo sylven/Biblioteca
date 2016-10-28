@@ -34,7 +34,9 @@ public class Main {
                         biblioteca.printAutors();
                     } else if (choice == 2) {
                         System.out.println("· Gestió de autors > Afegir autor");
-                        biblioteca.afegirAutor();
+                        System.out.print("Introdueix el nom de l'autor: ");
+                        String author = scanner.nextLine();
+                        biblioteca.addAuthor(author);
                     }
                 }
             }  else if (choice == 2) {
@@ -46,7 +48,7 @@ public class Main {
                     choice = scanner.nextInt();
                     if (choice == 1) {
                         System.out.println("· Gestió de documents > Afegir document");
-                        biblioteca.afegirDocument();
+                        biblioteca.addDocument();
                     }
                 }
             }

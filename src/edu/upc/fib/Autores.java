@@ -26,6 +26,14 @@ public class Autores {
         return false;
     }
 
+    public Boolean containsAuthor(Frase author) {
+        return documentAuthors.containsKey(author);
+    }
+
+    public void deleteAuthor(Frase author) {
+        documentAuthors.remove(author);
+    }
+
     // Hay que actualizarlo cuando se añada un nuevo documento a la biblioteca
     public void addDocumentToAuthor() {
 

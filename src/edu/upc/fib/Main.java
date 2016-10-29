@@ -58,11 +58,20 @@ public class Main {
                         if (biblioteca.addAuthor(author)) System.out.println("Autor "+author+" afegit satisfactoriament.");
                         else System.out.println("L'autor "+author+" ja existeix.");
                     } else if (choice == 3) {
-                        System.out.println("[Biblioteca > Gestió d'autors > Modificar autor]");
-                        System.out.println("To Be Implemented");
+//                        System.out.println("[Biblioteca > Gestió d'autors > Modificar autor]");
+//                        System.out.print("Introdueix el nom de l'autor: ");
+//                        String author = scanner.nextLine();
+//                        if () {
+//                            System.out.println("Autor trobat, introdueix el nou nom: ");
+//                            String newAutor = scanner.nextLine();
+//                            biblioteca.modifyAuthor(author, newAuthor);
+//                        }
                     } else if (choice == 4) {
                         System.out.println("[Biblioteca > Gestió d'autors > Eliminar autor]");
-                        System.out.println("To Be Implemented");
+                        System.out.print("Introdueix el nom de l'autor: ");
+                        String author = scanner.nextLine();
+                        if (biblioteca.deleteAuthor(author)) System.out.println("Autor "+author+" eliminat satisfactoriament");
+                        else System.out.println("No s'ha trobat l'autor "+author);
                     }
                 }
             }  else if (choice == 3) {

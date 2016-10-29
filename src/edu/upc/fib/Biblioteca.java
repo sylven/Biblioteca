@@ -38,8 +38,16 @@ public class Biblioteca {
         return autores.addAuthor(author);
     }
 
-    public void deleteAuthor(String author) {
+    public Boolean deleteAuthor(String authorName) {
+        Frase author = stringToFrase(authorName);
+        if (autores.containsAuthor(author)) {
+            autores.deleteAuthor(author);
+        }
+        return false;
+    }
 
+    public Frase stringToFrase(String string) {
+        return new Frase(string);
     }
 
 

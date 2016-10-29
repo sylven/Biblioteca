@@ -19,36 +19,44 @@ public class Biblioteca {
         wordFrequency = new HashMap<>();
     }
 
-    public void addDocument(String author, String title, String content) {
-        Frase newTitle = new Frase(title);
-        Documento newDocument = new Documento(author, title, content);
-        // Comprueba si existe el indice title, si ya existe añade el documento al vector, si no, añade un vector de una
-        // posicion con ese documento
-        if (documents.containsKey(newTitle)) {
-            documents.get(newTitle).add(newDocument);
-        } else {
-            Vector<Documento> newVector = new Vector();
-            newVector.add(newDocument);
-            documents.put(newTitle, newVector);
-        }
-        //
-    }
-
-    public Boolean addAuthor(String author) {
-        return autores.addAuthor(author);
-    }
-
-    public Boolean deleteAuthor(String authorName) {
-        Frase author = stringToFrase(authorName);
-        if (autores.containsAuthor(author)) {
-            autores.deleteAuthor(author);
-        }
-        return false;
-    }
-
+    // Converts a String to an Frase class
     public Frase stringToFrase(String string) {
         return new Frase(string);
     }
+
+    // Asks Autores class to add an Author
+    public Boolean addAuthor(String authorName) {
+        Frase author = stringToFrase(authorName);
+        return autores.addAuthor(author);
+    }
+
+    // Asks Autores class to delete an Author
+    public Boolean deleteAuthor(String authorName) {
+        Frase author = stringToFrase(authorName);
+        return autores.deleteAuthor(author);
+    }
+
+    // Asks Autores class to replace authorName with newAuthorName
+    public Boolean modifyAuthor(String authorName, String newAuthorName) {
+        Frase author = stringToFrase(authorName);
+        Frase newAuthor = stringToFrase(newAuthorName);
+        return autores.modifyAuthor(author, newAuthor);
+    }
+
+    public void addDocument(String author, String title, String content) {
+//        Frase newTitle = new Frase(title);
+//        Documento newDocument = new Documento(author, title, content);
+//        // Comprueba si existe el indice title, si ya existe añade el documento al vector, si no, añade un vector de una
+//        // posicion con ese documento
+//        if (documents.containsKey(newTitle)) {
+//            documents.get(newTitle).add(newDocument);
+//        } else {
+//            Vector<Documento> newVector = new Vector();
+//            newVector.add(newDocument);
+//            documents.put(newTitle, newVector);
+//        }
+    }
+
 
 
 

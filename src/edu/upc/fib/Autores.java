@@ -17,24 +17,41 @@ public class Autores {
         return documentAuthors.containsKey(author);
     }
 
-    public Boolean addAuthor(String author) {
-        Frase newAuthor = new Frase(author);
-        if (!existsAuthor(newAuthor)) {
-            documentAuthors.put(newAuthor, new Vector());
+    // Returns if "documentAuthors" contains "author"
+    public Boolean containsAuthor(Frase author) {
+        return documentAuthors.containsKey(author);
+    }
+
+    // Adds "author" to "documentAuthors" if it doesn't exist
+    public Boolean addAuthor(Frase author) {
+        if (!containsAuthor(author)) {
+            documentAuthors.put(author, new Vector<Documento>());
             return true;
         }
         return false;
     }
 
-    public Boolean containsAuthor(Frase author) {
-        return documentAuthors.containsKey(author);
+    // Changes the "author" name for "newAuthor"
+    public Boolean modifyAuthor(Frase author, Frase newAuthor) {
+        if (containsAuthor(author)) {
+            Vector<Documento> documents = documentAuthors.get(author);
+            documentAuthors.remove((author));
+            documentAuthors.put(newAuthor, documents);
+            return true;
+        }
+        return false;
     }
 
-    public void deleteAuthor(Frase author) {
-        documentAuthors.remove(author);
+    // Deletes "author" from "documentAuthors"
+    public Boolean deleteAuthor(Frase author) {
+        if (containsAuthor(author)) {
+            documentAuthors.remove(author);
+            return true;
+        }
+        return false;
     }
 
-    // Hay que actualizarlo cuando se añada un nuevo documento a la biblioteca
+    // Adds a document to the author
     public void addDocumentToAuthor() {
 
     }

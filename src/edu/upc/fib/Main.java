@@ -51,7 +51,9 @@ public class Main {
                     if (choice == 1) {
                         // Print list of authors
                         System.out.println("\n[Biblioteca > Gestión de autores > Ver lista de autores]");
-                        System.out.println("To Be Implemented");
+                        for (String s : biblioteca.getAutores()) {
+                            System.out.println(s);
+                        }
                     } else if (choice == 2) {
                         System.out.println("\n[Biblioteca > Gestión de autores > Añadir autor]");
                         System.out.print("  >> Introduce el nombre del autor: ");

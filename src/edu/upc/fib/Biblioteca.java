@@ -43,6 +43,18 @@ public class Biblioteca {
         return autores.modifyAuthor(autor, nuevoAutor);
     }
 
+    public Vector<String> getAutores() {
+        Vector<String> nombresAutores = new Vector<String>();
+        for (Frase f : autores.getAutores()) {
+            String s = f.getPalabra(0).getString();
+            for (int i = 1; i < f.getSize(); i++) {
+                s += f.getPalabra(i).getString();
+            }
+            nombresAutores.add(s);
+        }
+        return nombresAutores;
+    }
+
     public void addDocument(String author, String title, String content) {
 //        Frase newTitle = new Frase(title);
 //        Documento newDocument = new Documento(author, title, content);

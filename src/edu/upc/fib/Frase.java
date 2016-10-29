@@ -51,7 +51,7 @@ public class Frase implements Comparable<Frase> {
     public int compareTo(Frase o) {
         for (int i = 0; i < Math.min(getSize(), o.getSize()); i++) {
             if (!mFrase.get(i).getString().equals(o.getPalabra(i).getString())) {
-                return mFrase.get(i).getString().compareTo(o.getPalabra(i).getString());
+                return mFrase.get(i).getString().toLowerCase().compareTo(o.getPalabra(i).getString().toLowerCase());
             }
         }
         if (getSize() < o.getSize()) return -1;

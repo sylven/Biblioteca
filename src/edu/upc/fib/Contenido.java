@@ -4,14 +4,14 @@ import java.util.HashMap;
 
 public class Contenido {
     //private Frase[] Contenido;
-    //private SparseVector Palabras; Pot fer productes vectorials que es el que necessitem per fer les comparacions de documents
+    //private SparseVector Palabras; Pot fer productes vectorials que es el que necessitem per fer les comparacions de mDocumentos
 
     public Contenido(String content) {
 
     }
 
     // Retorna el HashMap poblat amb la freqüència de les paraules
-    public HashMap<Palabra, Integer> calculateWordFrequency() {
+    public HashMap<Palabra, Integer> calcularFrecuenciaPalabras() {
         return new HashMap<>();
     }
 

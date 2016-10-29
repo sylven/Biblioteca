@@ -1,18 +1,18 @@
 package edu.upc.fib;
 
 public class Palabra {
-    private String mWord;
+    private String mPalabra;
 
     public Palabra(String word) {
-        mWord = word;
+        mPalabra = word;
     }
 
     public String getString() {
-        return mWord;
+        return mPalabra;
     }
 
     public void setPalabra(String word) {
-        mWord = word;
+        mPalabra = word;
     }
 
 //    @Override

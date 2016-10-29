@@ -14,41 +14,78 @@ public class Main {
         // Console navigation
         int choice = 0;
         while (choice != -1) {
-            System.out.println("[Menú]");
-            System.out.println("1- Gestió de autors");
-            System.out.println("2- Gestió de documents");
-            System.out.println("0- Sortir del programa");
+            System.out.println("[Biblioteca]");
+            System.out.println(" 1- Consultes");
+            System.out.println(" 2- Gestió d'autors");
+            System.out.println(" 3- Gestió de documents");
+            System.out.println(" 0- Sortir del programa");
             System.out.print("Tria una opció: ");
             choice = scanner.nextInt();
 
             if (choice == 0) choice = -1;
             else if (choice == 1) {
                 while (choice != 0) {
-                    System.out.println("[Menú] Gestió de autors");
-                    System.out.println("1- Veure llista d'autors");
-                    System.out.println("2- Afegir autor");
-                    System.out.println("0- Enrere");
+                    //System.out.println("[Menú]");
+                    System.out.println("[Biblioteca > Consultes]");
+                    System.out.println(" 0- Enrere");
+                    System.out.print("Tria una opció: ");
+                    choice = scanner.nextInt();
+                }
+            } else if (choice == 2) {
+                while (choice != 0) {
+                     System.out.println("[Biblioteca > Gestió d'autors]");
+                    System.out.println(" 1- Veure llista d'autors");
+                    System.out.println(" 2- Afegir autor");
+                    System.out.println(" 3- Modificar autor");
+                    System.out.println(" 4- Eliminar autor");
+                    System.out.println(" 0- Enrere");
                     System.out.print("Tria una opció: ");
                     choice = scanner.nextInt();
                     if (choice == 1) {
-                        biblioteca.printAutors();
+                        // Print list of authors
+                        System.out.println("[Biblioteca > Gestió d'autors > Veure llista d'autors]");
+                        System.out.println("To Be Implemented");
                     } else if (choice == 2) {
-                        System.out.println("· Gestió de autors > Afegir autor");
+                        System.out.println("[Biblioteca > Gestió d'autors > Afegir autor]");
                         System.out.print("Introdueix el nom de l'autor: ");
                         String author = scanner.nextLine();
                         biblioteca.addAuthor(author);
+                    } else if (choice == 3) {
+                        System.out.println("[Biblioteca > Gestió d'autors > Modificar autor]");
+                        System.out.println("To Be Implemented");
+                    } else if (choice == 4) {
+                        System.out.println("[Biblioteca > Gestió d'autors > Eliminar autor]");
+                        System.out.println("To Be Implemented");
                     }
                 }
-            }  else if (choice == 2) {
+            }  else if (choice == 3) {
                 while (choice != 0) {
-                    System.out.println("[Menú] Gestió de documents");
-                    System.out.println("1- Afegir document");
-                    System.out.println("0- Enrere");
+                    System.out.println("[Biblioteca > Gestió de documents]");
+                    System.out.println(" 1- Veure llista de documents");
+                    System.out.println(" 2- Afegir document");
+                    System.out.println(" 3- Modificar document");
+                    System.out.println(" 4- Eliminar document");
+                    System.out.println(" 0- Enrere");
                     System.out.print("Tria una opció: ");
                     choice = scanner.nextInt();
                     if (choice == 1) {
-                        System.out.println("· Gestió de documents > Afegir document");
-                        biblioteca.addDocument();
+                        System.out.println("[Biblioteca > Gestió de documents > Veure llista de documents]");
+                        System.out.println("To Be Implemented");
+                    } else if (choice == 2) {
+                        System.out.println("[Biblioteca > Gestió de documents > Afegir document]");
+                        System.out.print("Introdueix el nom de l'autor: ");
+                        String author = scanner.nextLine();
+                        System.out.print("Introdueix el títol: ");
+                        String title = scanner.nextLine();
+                        System.out.print("Introdueix el contingut: ");
+                        String content = scanner.nextLine();
+                        biblioteca.addDocument(author, title, content);
+                    } else if (choice == 3) {
+                        System.out.println("[Biblioteca > Gestió de documents > Modificar document]");
+                        System.out.println("To Be Implemented");
+                    } else if (choice == 4) {
+                        System.out.println("[Biblioteca > Gestió de documents > Eliminar document]");
+                        System.out.println("To Be Implemented");
                     }
                 }
             }

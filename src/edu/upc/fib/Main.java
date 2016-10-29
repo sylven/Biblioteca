@@ -11,6 +11,9 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
+        // BUG: scanner skipping input after nextInt(), 2 workarounds (consider using 2nd one)
+        // http://stackoverflow.com/questions/13102045/scanner-is-skipping-nextline-after-using-next-nextint-or-other-nextfoo
+
         // Console navigation
         int choice = 0;
         while (choice != -1) {
@@ -21,6 +24,7 @@ public class Main {
             System.out.println(" 0- Sortir del programa");
             System.out.print("Tria una opció: ");
             choice = scanner.nextInt();
+            scanner.nextLine();
 
             if (choice == 0) choice = -1;
             else if (choice == 1) {
@@ -30,10 +34,11 @@ public class Main {
                     System.out.println(" 0- Enrere");
                     System.out.print("Tria una opció: ");
                     choice = scanner.nextInt();
+                    scanner.nextLine();
                 }
             } else if (choice == 2) {
                 while (choice != 0) {
-                     System.out.println("[Biblioteca > Gestió d'autors]");
+                    System.out.println("[Biblioteca > Gestió d'autors]");
                     System.out.println(" 1- Veure llista d'autors");
                     System.out.println(" 2- Afegir autor");
                     System.out.println(" 3- Modificar autor");
@@ -41,6 +46,7 @@ public class Main {
                     System.out.println(" 0- Enrere");
                     System.out.print("Tria una opció: ");
                     choice = scanner.nextInt();
+                    scanner.nextLine();
                     if (choice == 1) {
                         // Print list of authors
                         System.out.println("[Biblioteca > Gestió d'autors > Veure llista d'autors]");
@@ -49,7 +55,8 @@ public class Main {
                         System.out.println("[Biblioteca > Gestió d'autors > Afegir autor]");
                         System.out.print("Introdueix el nom de l'autor: ");
                         String author = scanner.nextLine();
-                        biblioteca.addAuthor(author);
+                        if (biblioteca.addAuthor(author)) System.out.println("Autor "+author+" afegit satisfactoriament.");
+                        else System.out.println("L'autor "+author+" ja existeix.");
                     } else if (choice == 3) {
                         System.out.println("[Biblioteca > Gestió d'autors > Modificar autor]");
                         System.out.println("To Be Implemented");
@@ -68,6 +75,7 @@ public class Main {
                     System.out.println(" 0- Enrere");
                     System.out.print("Tria una opció: ");
                     choice = scanner.nextInt();
+                    scanner.nextLine();
                     if (choice == 1) {
                         System.out.println("[Biblioteca > Gestió de documents > Veure llista de documents]");
                         System.out.println("To Be Implemented");

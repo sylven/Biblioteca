@@ -12,7 +12,7 @@ public class Contenido {
 
     // Retorna el HashMap poblat amb la freqüència de les paraules
     public HashMap<Palabra, Integer> calculateWordFrequency() {
-
+        return new HashMap<>();
     }
 
     /*public Boolean ExisteixParaula(Palabra P){

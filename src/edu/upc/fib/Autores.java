@@ -17,18 +17,17 @@ public class Autores {
         return documentAuthors.containsKey(author);
     }
 
-    public void addAuthor(String author) {
+    public Boolean addAuthor(String author) {
         Frase newAuthor = new Frase(author);
         if (!existsAuthor(newAuthor)) {
             documentAuthors.put(newAuthor, new Vector());
+            return true;
         }
-        // Decidir que hacer si ya existe
+        return false;
     }
 
     // Hay que actualizarlo cuando se añada un nuevo documento a la biblioteca
     public void addDocumentToAuthor() {
 
     }
-
-
 }

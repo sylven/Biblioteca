@@ -34,8 +34,12 @@ public class Biblioteca {
         //
     }
 
-    public void addAuthor(String author) {
-        autores.addAuthor(author);
+    public Boolean addAuthor(String author) {
+        return autores.addAuthor(author);
+    }
+
+    public void deleteAuthor(String author) {
+
     }
 
 
@@ -47,21 +51,21 @@ public class Biblioteca {
     //private Map<Frase,Documento[]> IndexTitol;
     //private Map<Pair<Integer,Palabra>,Documento[]> Diccionario;
 
-    public void printAutors() {
-        Enumeration listaAutores = autores.keys();
-        while (listaAutores.hasMoreElements()) {
-            Frase f = (Frase) listaAutores.nextElement();
-            f.print();
-        }
-    }
+//    public void printAutors() {
+//        Enumeration listaAutores = autores.keys();
+//        while (listaAutores.hasMoreElements()) {
+//            Frase f = (Frase) listaAutores.nextElement();
+//            f.print();
+//        }
+//    }
 
-    public void afegirAutor() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Introdueix el nom de l'autor: ");
-        String autor = scanner.nextLine();
-        String emptyArray[] = new String[0];
-        autores.put(new Frase(autor), emptyArray);
-    }
+//    public void afegirAutor() {
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.print("Introdueix el nom de l'autor: ");
+//        String autor = scanner.nextLine();
+//        String emptyArray[] = new String[0];
+//        autores.put(new Frase(autor), emptyArray);
+//    }
 
     /*public Documento[] LlistaAutor(Frase Autor){
         return IndexAutor.get(Autor);

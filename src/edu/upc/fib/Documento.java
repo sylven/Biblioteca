@@ -29,12 +29,7 @@ public class Documento {
         frequencyPalabras = mContent.calculateWordFrequency();
     }
 
-
-
-
-
     //private static Biblioteca Biblioteca;
-
 
     /*public Boolean ExisteixParaula(Palabra P){
         return Contenido.ExisteixParaula(P);

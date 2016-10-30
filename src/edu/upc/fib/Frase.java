@@ -58,4 +58,6 @@ public class Frase implements Comparable<Frase> {
         else if (getSize() > o.getSize()) return 1;
         return 0;
     }
+
+
 }

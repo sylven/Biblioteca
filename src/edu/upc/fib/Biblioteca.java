@@ -3,46 +3,34 @@ package edu.upc.fib;
 import java.util.*;
 
 public class Biblioteca {
-    //> Pensar en hacer una nueva clase Conjunto_Documentos
-
-    //> TreeMap de títulos (donde cada título tiene asociado el contenido del documento)
-        // v2: TreeMap de mDocumentos donde los titulos son la clave y el valor es una lista decumentos con el mismo titulo
-    TreeMap<Frase, Vector<Documento>> mDocumentos;
-
-    //> Vector de palabras con su frecuecia global
-    HashMap<Palabra, Integer> mFrecuenciaPalabras;
-
-    Autores autores = new Autores();
+    Documentos documentos;
+    Autores autores;
 
     public Biblioteca() {
-        mDocumentos = new TreeMap<>();
-        mFrecuenciaPalabras = new HashMap<>();
-    }
-
-    // Converts a "string" to an "Frase" object
-    public Frase stringAFrase(String string) {
-        return new Frase(string);
+        documentos = new Documentos();
+        autores = new Autores();
     }
 
     // Asks Autores class to add an Author
-    public Boolean anadirAuthor(String authorName) {
-        Frase autor = stringAFrase(authorName);
+    public Boolean addAutor(String authorName) {
+        Frase autor = new Frase(authorName);
         return autores.addAuthor(autor);
     }
 
     // Asks Autores class to delete an Author
-    public Boolean eliminarAuthor(String nombreAutor) {
-        Frase autor = stringAFrase(nombreAutor);
+    public Boolean eliminarAutor(String nombreAutor) {
+        Frase autor = new Frase(nombreAutor);
         return autores.deleteAuthor(autor);
     }
 
     // Asks Autores class to replace authorName with newAuthorName
-    public Boolean modifyAuthor(String nombreAutor, String nuevoNombreAutor) {
-        Frase autor = stringAFrase(nombreAutor);
-        Frase nuevoAutor = stringAFrase(nuevoNombreAutor);
+    public Boolean modifyAutor(String nombreAutor, String nuevoNombreAutor) {
+        Frase autor = new Frase(nombreAutor);
+        Frase nuevoAutor = new Frase(nuevoNombreAutor);
         return autores.modifyAuthor(autor, nuevoAutor);
     }
 
+    // Devuelve una vector de strings con todos los autores
     public Vector<String> getAutores() {
         Vector<String> nombresAutores = new Vector<String>();
         for (Frase f : autores.getAutores()) {
@@ -55,18 +43,13 @@ public class Biblioteca {
         return nombresAutores;
     }
 
-    public void addDocument(String author, String title, String content) {
-//        Frase newTitle = new Frase(title);
-//        Documento newDocument = new Documento(author, title, content);
-//        // Comprueba si existe el indice title, si ya existe añade el documento al vector, si no, añade un vector de una
-//        // posicion con ese documento
-//        if (mDocumentos.containsKey(newTitle)) {
-//            mDocumentos.get(newTitle).add(newDocument);
-//        } else {
-//            Vector<Documento> newVector = new Vector();
-//            newVector.add(newDocument);
-//            mDocumentos.put(newTitle, newVector);
-//        }
+    // Añade un documento
+    public Boolean addDocumento(String autor, String titulo, Vector<String> contenido) {
+        Frase fAutor = new Frase(autor);
+        autores.addAuthor(fAutor);
+        Frase fTitulo = new Frase(titulo);
+        Contenido fContenido = new Contenido(contenido);
+        return documentos.addDocumento(fAutor, fTitulo, fContenido);
     }
 
 

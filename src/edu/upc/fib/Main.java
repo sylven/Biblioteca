@@ -1,6 +1,7 @@
 package edu.upc.fib;
 
 import java.util.Scanner;
+import java.util.Vector;
 
 public class Main {
 
@@ -49,7 +50,6 @@ public class Main {
                     choice = scanner.nextInt();
                     scanner.nextLine();
                     if (choice == 1) {
-                        // Print list of authors
                         System.out.println("\n[Biblioteca > Gestión de autores > Ver lista de autores]");
                         for (String s : biblioteca.getAutores()) {
                             System.out.println(s);
@@ -58,7 +58,7 @@ public class Main {
                         System.out.println("\n[Biblioteca > Gestión de autores > Añadir autor]");
                         System.out.print("  >> Introduce el nombre del autor: ");
                         String author = scanner.nextLine();
-                        if (biblioteca.anadirAuthor(author)) System.out.println("(i) Autor \""+author+"\" añadido satisfractoriamente.");
+                        if (biblioteca.addAutor(author)) System.out.println("(i) Autor \""+author+"\" añadido satisfractoriamente.");
                         else System.out.println("(i) El autor \""+author+"\" ya existe.");
                     } else if (choice == 3) {
                         System.out.println("\n[Biblioteca > Gestión de autores > Modificar autor]");
@@ -66,20 +66,20 @@ public class Main {
                         String authorName = scanner.nextLine();
                         System.out.print("  >> Introduce el nuevo nombre del autor: ");
                         String newAuthorName = scanner.nextLine();
-                        if (biblioteca.modifyAuthor(authorName, newAuthorName)) System.out.println("(i) Autor \""+authorName+"\" modificado a \""+newAuthorName+"\" satisfactoriamente.");
+                        if (biblioteca.modifyAutor(authorName, newAuthorName)) System.out.println("(i) Autor \""+authorName+"\" modificado a \""+newAuthorName+"\" satisfactoriamente.");
                         else System.out.println("(i) No se ha encontrado el autor \""+authorName+"\"");
                     } else if (choice == 4) {
                         System.out.println("\n[Biblioteca > Gestión de autores > Eliminar autor]");
                         System.out.print("  >> Introduce el nombre del autor: ");
                         String author = scanner.nextLine();
-                        if (biblioteca.eliminarAuthor(author)) System.out.println("(i) Autor \""+author+"\" eliminado satisfactoriamente");
+                        if (biblioteca.eliminarAutor(author)) System.out.println("(i) Autor \""+author+"\" eliminado satisfactoriamente");
                         else System.out.println("(i) No se ha encontrado el autor \""+author+"\"");
                     }
                 }
             }  else if (choice == 3) {
                 while (choice != 0) {
                     System.out.println("\n[ Biblioteca > Gestión de documentos ]------|");
-                    System.out.println("| 1- Ver lista de documentos               |");
+                    System.out.println("| 1- Ver lista de documentos                |");
                     System.out.println("| 2- Añadir documento                       |");
                     System.out.println("| 3- Modificar documento                    |");
                     System.out.println("| 4- Eliminar documento                     |");
@@ -94,12 +94,18 @@ public class Main {
                     } else if (choice == 2) {
                         System.out.println("\n[Biblioteca > Gestión de documentos > Añadir documento]");
                         System.out.print("  >> Introduce el nombre del autor: ");
-                        String author = scanner.nextLine();
-                        System.out.print("  >> Introdueix el títol: ");
-                        String title = scanner.nextLine();
-                        System.out.print("  >> Introduce el contenido: ");
-                        String content = scanner.nextLine();
-                        biblioteca.addDocument(author, title, content);
+                        String autor = scanner.nextLine();
+                        System.out.print("  >> Introduce el título: ");
+                        String titulo = scanner.nextLine();
+                        System.out.println("  >> Introduce el contenido (finalizar con una línea con un 0): ");
+                        String contenido = scanner.nextLine();
+                        Vector<String> vContenido = new Vector<>();
+                        while (!contenido.equals("0")) {
+                            vContenido.add(contenido);
+                            contenido = scanner.nextLine();
+                        }
+                        if (biblioteca.addDocumento(autor, titulo, vContenido)) System.out.println("Documento añadido satisfactoriamente.");
+                        else System.out.println("El documento no se ha añadido porque ya existe.");
                     } else if (choice == 3) {
                         System.out.println("\n[Biblioteca > Gestión de documentos > Modificar documento]");
                         System.out.println("To Be Implemented");

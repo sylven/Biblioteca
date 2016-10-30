@@ -20,14 +20,20 @@ public class Documento {
         // MOVER dentro de documento?
     HashMap<Documento, Integer> similarDocuments;
 
-    public Documento(String autor, String titulo, String contenido) {
-        // Si no existe el autor se crea
-        // Si existe, se añade la información
-
-        mTitulo = new Frase(titulo);
-        mContenido = new Contenido(contenido);
-        mFrecuenciaPalabras = mContenido.calcularFrecuenciaPalabras();
+    public Documento(Frase autor, Frase titulo, Contenido contenido) {
+        mAutor = autor;
+        mTitulo = titulo;
+        mContenido = contenido;
+        //mFrecuenciaPalabras = mContenido.calcularFrecuenciaPalabras();
     }
+
+    public Frase getAutor() {
+        return mAutor;
+    }
+
+//    public Frase getTitulo() {
+//        return mTitulo;
+//    }
 
     //private static Biblioteca Biblioteca;
 
@@ -35,13 +41,13 @@ public class Documento {
         return Contenido.ExisteixParaula(P);
     }*/
 
-    public Documento(Frase A, Frase T, Contenido C){
-        /*setAutor(A);
-        setTitulo(T);
-        Contenido = C;
-
-        Biblioteca.AfegirDocument(this);*/
-    }
+//    public Documento(Frase A, Frase T, Contenido C){
+//        /*setAutor(A);
+//        setTitulo(T);
+//        Contenido = C;
+//
+//        Biblioteca.AfegirDocument(this);*/
+//    }
 
     /*public Frase getAutor() {
         return Autor;
@@ -49,10 +55,6 @@ public class Documento {
 
     /*public void setAutor(Frase autor) {
         Autor = autor;
-    }*/
-
-    /*public Frase getTitulo() {
-        return Titulo;
     }*/
 
     /*public void setTitulo(Frase titulo) {

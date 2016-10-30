@@ -14,10 +14,6 @@ public class Autores {
         mAutoresDocumentos = new TreeMap<>();
     }
 
-    public Boolean existsAuthor(Frase author) {
-        return mAutoresDocumentos.containsKey(author);
-    }
-
     // Returns if "mAutoresDocumentos" contains "author"
     public Boolean containsAuthor(Frase author) {
         return mAutoresDocumentos.containsKey(author);

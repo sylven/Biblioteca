@@ -13,9 +13,9 @@ public class Contenido {
         }
     }
 
-    public HashMap<Palabra, Integer> calcularFrecuenciaPalabras() {
-        return new HashMap<>();
-    }
+//    public HashMap<Palabra, Integer> calcularFrecuenciaPalabras() {
+//        return new HashMap<>();
+//    }
 
     //private Frase[] Contenido;
 

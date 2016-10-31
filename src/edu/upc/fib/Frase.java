@@ -15,7 +15,6 @@ public class Frase implements Comparable<Frase> {
             mFrase.add(new Palabra(matcher.group()));
         }
 
-        System.out.println(matcher.groupCount());
 //        if (matcher.find()) {
 //            mFrase = new Vector<>();
 //            for (int i = 0; i < matcher.groupCount(); i++) {

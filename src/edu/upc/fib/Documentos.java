@@ -1,5 +1,10 @@
 package edu.upc.fib;
 
+import sun.swing.StringUIClientPropertyKey;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -12,9 +17,24 @@ public class Documentos {
     //> Vector de palabras con su frecuecia global
     HashMap<Palabra, Integer> mFrecuenciaPalabras;
 
+    Vector<Palabra> palabrasFuncionales;
+
     public Documentos() {
         mDocumentos = new TreeMap<>();
         mFrecuenciaPalabras = new HashMap<>();
+
+        // Cargar palabras funcioanales
+        palabrasFuncionales = new Vector<>();
+        try (BufferedReader br = new BufferedReader(new FileReader("empty.sp"))) {
+            String line = br.readLine();
+
+            while (line != null) {
+                palabrasFuncionales.add(new Palabra(line));
+                line = br.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Añade el documento y crea el autor si no existe

@@ -8,7 +8,7 @@ public class Documento {
     private Contenido mContenido;
 
     //> Vector de palabras y su frecuencia dentro de este documento
-    HashMap<Palabra, Integer> mFrecuenciaPalabras;
+    HashMap<String, Integer> mFrecuenciaPalabras;
 
     //> Estructura de datos que calcule el peso de cada palabra dentro de un documento (que se actualiza despues de
         // cada modificacion o alta
@@ -24,7 +24,7 @@ public class Documento {
         mAutor = autor;
         mTitulo = titulo;
         mContenido = contenido;
-        //mFrecuenciaPalabras = mContenido.calcularFrecuenciaPalabras();
+        mFrecuenciaPalabras = mContenido.calcularFrecuenciaPalabras();
     }
 
     public Frase getAutor() {

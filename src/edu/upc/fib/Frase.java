@@ -61,10 +61,6 @@ public class Frase implements Comparable<Frase> {
         //frase.addElement(new Palabra(word));
     }
 
-    public String getParaula(int position) {
-        return mFrase.get(position).getString();
-    }
-
     @Override
     public int compareTo(Frase o) {
         for (int i = 0; i < Math.min(getSize(), o.getSize()); i++) {

@@ -1,6 +1,7 @@
 package edu.upc.fib;
 
 import java.util.HashMap;
+import java.util.Set;
 import java.util.Vector;
 
 public class Contenido {
@@ -25,6 +26,10 @@ public class Contenido {
                 }
             }
         }
+        /*Set<Palabra> Prova=freqPalabras.keySet();
+               for (Palabra St: Prova) {
+                   System.out.println("\n" + St.getString() + " " + freqPalabras.get(St));
+               }*/
         return freqPalabras;
     }
 //    public  HashMap<String, Integer> calcularFrecuenciaPalabras(){

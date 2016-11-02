@@ -1,6 +1,7 @@
 package edu.upc.fib;
 
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Vector;
 
@@ -26,6 +27,17 @@ public class Autores {
             return true;
         }
         return false;
+    }
+
+    public void addDocumento(Documento doc, Frase fAutor){
+        Vector<Documento> docs;
+        if (mAutoresDocumentos.containsKey(fAutor)) {
+            docs=mAutoresDocumentos.get(fAutor);
+        } else{
+            docs=new Vector<>();
+        }
+        docs.add(doc);
+        mAutoresDocumentos.put(fAutor,docs);
     }
 
     // Changes the "author" name for "newAuthor"
@@ -56,4 +68,32 @@ public class Autores {
     public void addDocumentToAuthor() {
 
     }
+
+   /* public Vector<Documento> consultarDocumentos(String AuthorName){
+        Frase F=new Frase(AuthorName);
+        if(mAutoresDocumentos.containsKey(F)) System.out.println("4");
+        Vector<Documento> ret =mAutoresDocumentos.get(F);
+        System.out.println(ret.size());
+        return ret;
+    }*/
+
+     public Set<Frase> prefixeAutor(String prefixe){
+         Frase pre= new Frase(prefixe);
+         String prefixefinal=prefixe.concat("z");
+         Frase pref= new Frase(prefixefinal);
+         Boolean i=false;
+         Boolean f=false;
+         Frase inici=mAutoresDocumentos.lowerKey(pre);
+         if (inici==null) {
+             inici = mAutoresDocumentos.firstKey();
+             i=true;
+         }
+         Frase fin=mAutoresDocumentos.higherKey(pref);
+         if (fin==null) {
+             fin = mAutoresDocumentos.lastKey();
+             f=true;
+         }
+         SortedMap<Frase,Vector<Documento>> ret= mAutoresDocumentos.subMap(inici,i,fin,f);
+         return ret.keySet();
+     }
 }

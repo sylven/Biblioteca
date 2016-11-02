@@ -32,6 +32,7 @@ public class Frase implements Comparable<Frase> {
 //        }
     }
 
+
     /*public void print() {
         for (Palabra w : frase) {
             w.print();
@@ -56,6 +57,14 @@ public class Frase implements Comparable<Frase> {
     public int getSize() {
         return mFrase.size();
     }
+
+   /* public String toString(Frase F){
+        String s = F.getPalabra(0).getString();
+        for (int i = 1; i < F.getSize(); i++) {
+            s += F.getPalabra(i).getString();
+        }
+        return s;
+    }*/
 
     public void addParaula(String word)  {
         //frase.addElement(new Palabra(word));

@@ -1,6 +1,7 @@
 package edu.upc.fib;
 
 import java.util.Scanner;
+import java.util.Set;
 import java.util.Vector;
 
 public class Main {
@@ -31,11 +32,39 @@ public class Main {
                 while (choice != 0) {
                     //System.out.println("[Menú]");
                     System.out.println("\n[ Biblioteca > Consultas ]------------------|");
+                    System.out.println("| 1- Consulta por autor                     |");
+                    System.out.println("| 2- Consulta d'autor per prefixe           |");
                     System.out.println("| 0- Volver atrás                           |");
                     System.out.println("|-------------------------------------------|");
                     System.out.print("  >> Escoge una opción: ");
                     choice = scanner.nextInt();
                     scanner.nextLine();
+                    if (choice == 1) {
+                       /* System.out.println("\n[Biblioteca > Consultas > Consulta por autor]");
+                        System.out.println("\nElija un autor");
+                        for (String s : biblioteca.getAutores()) {
+                            System.out.println(s);
+                        }
+                        String AuthorName = scanner.nextLine();
+                        System.out.println("1");
+                        Vector<String> TitulosAutor = biblioteca.consultarTituloAutor(AuthorName);
+                        System.out.println("2");
+                        for (String titulo : TitulosAutor) {
+                            System.out.println("3");
+                            System.out.print("\nAutor:");
+                            ;
+                            System.out.print(titulo);
+                            System.out.println("8");
+                        }*/
+                    } else if (choice == 2) {
+                        System.out.println("\n[Biblioteca > Consulta > Consulta d'autor per prefixe ]");
+                        System.out.print("  >> Introduce el prefixe: ");
+                        String author = scanner.nextLine();
+                        Vector<String> prefixes=biblioteca.prefixeAutor(author);
+                        for (String s: prefixes){
+                            System.out.print("\n" + s);
+                        }
+                    }
                 }
             } else if (choice == 2) {
                 while (choice != 0) {

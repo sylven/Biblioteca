@@ -49,10 +49,41 @@ public class Biblioteca {
         autores.addAuthor(fAutor);
         Frase fTitulo = new Frase(titulo);
         Contenido fContenido = new Contenido(contenido);
-        return documentos.addDocumento(fAutor, fTitulo, fContenido);
+        Documento doc = null;
+        if( documentos.addDocumento(fAutor, fTitulo, fContenido, doc)){
+            autores.addDocumento(doc,fAutor);
+            return true;
+        }
+        return false;
+
     }
 
+   /* public Vector<String> consultarTituloAutor(String AuthorName){
+        Vector<Documento> docs=autores.consultarDocumentos(AuthorName);
+        Vector<String> autors=new Vector<>();
+        System.out.println("9");
+        for (Documento doc: docs){
+            System.out.println("10");
+            String s=documentos.getTituloAutor(doc);
+            System.out.println(s);
+            System.out.println("11");
+            autors.add(s);
+        }
+        return autors;
+    }*/
 
+    public Vector<String> prefixeAutor(String prefixe){
+        Set<Frase> prefixeFrase=autores.prefixeAutor(prefixe);
+       Vector<String> prefixeString=new Vector<>();
+        for(Frase f: prefixeFrase){
+            String s = f.getPalabra(0).getString();
+            for (int i = 1; i < f.getSize(); i++) {
+                s += f.getPalabra(i).getString();
+            }
+            prefixeString.add(s);
+        }
+        return prefixeString;
+    }
 
 
    //private Documento[] llistaDocuments;

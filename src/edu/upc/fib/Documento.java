@@ -31,6 +31,21 @@ public class Documento {
         return mAutor;
     }
 
+   /* public String getTituloS(){
+        System.out.println("6");
+        String s = mTitulo.getPalabra(0).getString();
+        for (int i = 1; i < mTitulo.getSize(); i++) {
+            s += mTitulo.getPalabra(i).getString();
+        }
+        System.out.println("7");
+        return s;
+    }
+
+
+    public Frase getTitulo() {
+        return mTitulo;
+    }*/
+
 //    public Frase getTitulo() {
 //        return mTitulo;
 //    }

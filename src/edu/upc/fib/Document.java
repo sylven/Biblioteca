@@ -1,0 +1,79 @@
+package edu.upc.fib;
+
+import java.util.HashMap;
+import java.util.Vector;
+
+public class Document {
+    private Sentence mAuthor;
+    private Sentence mTitle;
+    private Content mContent;
+
+    //> Vector de palabras y su frecuencia dentro de este documento
+    private HashMap<String, Integer> mWordFrequency;
+
+    //> Estructura de datos que calcule el peso de cada palabra dentro de un documento (que se actualiza despues de
+        // cada modificacion o alta
+        // MOVER dentro de documento?
+    private HashMap<String, Integer> mWordsWeight;
+
+    //> Estructura que contenga parecidos entre mDocuments
+        // Probablemente igual que la de los pesos de las palabras
+        // MOVER dentro de documento?
+    private HashMap<Document, Integer> mSimilarDocuments;
+
+    public Document(String author, String title, Vector<String> content) {
+        mAuthor = new Sentence(author);
+        mTitle = new Sentence(title);
+        mContent = new Content(content);
+        mWordFrequency = mContent.getWordFrecuency();
+    }
+
+    public Sentence getAuthor() {
+        return mAuthor;
+    }
+
+   /* public String getTituloS(){
+        System.out.println("6");
+        String s = mTitle.getPalabra(0).getString();
+        for (int i = 1; i < mTitle.getSize(); i++) {
+            s += mTitle.getPalabra(i).getString();
+        }
+        System.out.println("7");
+        return s;
+    }
+
+
+    public Sentence getTitulo() {
+        return mTitle;
+    }*/
+
+//    public Sentence getTitulo() {
+//        return mTitle;
+//    }
+
+    //private static Library Library;
+
+    /*public Boolean ExisteixParaula(String P){
+        return Content.ExisteixParaula(P);
+    }*/
+
+//    public Document(Sentence A, Sentence T, Content C){
+//        /*setAutor(A);
+//        setTitulo(T);
+//        Content = C;
+//
+//        Library.AfegirDocument(this);*/
+//    }
+
+    /*public Sentence getAutor() {
+        return Author;
+    }*/
+
+    /*public void setAutor(Sentence autor) {
+        Author = autor;
+    }*/
+
+    /*public void setTitulo(Sentence titulo) {
+        Titulo = titulo;
+    }*/
+}

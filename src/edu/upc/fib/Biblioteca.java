@@ -1,39 +1,40 @@
 package edu.upc.fib;
 
+import javax.print.Doc;
 import java.util.*;
 
 public class Biblioteca {
-    Documentos documentos;
-    Autores autores;
+    Documentos mDocumentos;
+    Autores mAutores;
 
     public Biblioteca() {
-        documentos = new Documentos();
-        autores = new Autores();
+        mDocumentos = new Documentos();
+        mAutores = new Autores();
     }
 
     // Asks Autores class to add an Author
     public Boolean addAutor(String authorName) {
         Frase autor = new Frase(authorName);
-        return autores.addAuthor(autor);
+        return mAutores.addAuthor(autor);
     }
 
     // Asks Autores class to delete an Author
     public Boolean eliminarAutor(String nombreAutor) {
         Frase autor = new Frase(nombreAutor);
-        return autores.deleteAuthor(autor);
+        return mAutores.deleteAuthor(autor);
     }
 
     // Asks Autores class to replace authorName with newAuthorName
     public Boolean modifyAutor(String nombreAutor, String nuevoNombreAutor) {
         Frase autor = new Frase(nombreAutor);
         Frase nuevoAutor = new Frase(nuevoNombreAutor);
-        return autores.modifyAuthor(autor, nuevoAutor);
+        return mAutores.modifyAuthor(autor, nuevoAutor);
     }
 
     // Devuelve una vector de strings con todos los autores
     public Vector<String> getAutores() {
-        Vector<String> nombresAutores = new Vector<String>();
-        for (Frase f : autores.getAutores()) {
+        Vector<String> nombresAutores = new Vector<>();
+        for (Frase f : mAutores.getAutores()) {
             String s = f.getPalabra(0).getString();
             for (int i = 1; i < f.getSize(); i++) {
                 s += f.getPalabra(i).getString();
@@ -46,12 +47,12 @@ public class Biblioteca {
     // Añade un documento
     public Boolean addDocumento(String autor, String titulo, Vector<String> contenido) {
         Frase fAutor = new Frase(autor);
-        autores.addAuthor(fAutor);
+        mAutores.addAuthor(fAutor);
         Frase fTitulo = new Frase(titulo);
         Contenido fContenido = new Contenido(contenido);
         Documento doc = null;
-        if( documentos.addDocumento(fAutor, fTitulo, fContenido, doc)){
-            autores.addDocumento(doc,fAutor);
+        if( mDocumentos.addDocumento(fAutor, fTitulo, fContenido, doc)){
+            mAutores.addDocumento(doc,fAutor);
             return true;
         }
         return false;
@@ -72,17 +73,17 @@ public class Biblioteca {
         return autors;
     }*/
 
-    public Vector<String> prefixeAutor(String prefixe){
-        Set<Frase> prefixeFrase=autores.prefixeAutor(prefixe);
-       Vector<String> prefixeString=new Vector<>();
-        for(Frase f: prefixeFrase){
+    public Vector<String> getAutoresPrefijo(String prefijo){
+        SortedMap<Frase, Vector<Documento>> autores = mAutores.prefixeAutor(prefijo);
+        Vector<String> autoresString = new Vector<>();
+        Set<Frase> keysAutores = autores.keySet();
+        for(Frase f: keysAutores){
             String s = f.getPalabra(0).getString();
-            for (int i = 1; i < f.getSize(); i++) {
-                s += f.getPalabra(i).getString();
-            }
-            prefixeString.add(s);
+            for (int i = 1; i < f.getSize(); i++)
+                s += " "+f.getPalabra(i).getString();
+            autoresString.add(s);
         }
-        return prefixeString;
+        return autoresString;
     }
 
 

@@ -1,9 +1,6 @@
 package edu.upc.fib;
 
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.util.Vector;
+import java.util.*;
 
 public class Autores {
     //> TreeMap de autores (donde cada autor tendrá un vector con los punteros o ids de los mDocumentos de los que es autor)
@@ -77,23 +74,7 @@ public class Autores {
         return ret;
     }*/
 
-     public Set<Frase> prefixeAutor(String prefixe){
-         Frase pre= new Frase(prefixe);
-         String prefixefinal=prefixe.concat("z");
-         Frase pref= new Frase(prefixefinal);
-         Boolean i=false;
-         Boolean f=false;
-         Frase inici=mAutoresDocumentos.lowerKey(pre);
-         if (inici==null) {
-             inici = mAutoresDocumentos.firstKey();
-             i=true;
-         }
-         Frase fin=mAutoresDocumentos.higherKey(pref);
-         if (fin==null) {
-             fin = mAutoresDocumentos.lastKey();
-             f=true;
-         }
-         SortedMap<Frase,Vector<Documento>> ret= mAutoresDocumentos.subMap(inici,i,fin,f);
-         return ret.keySet();
+     public SortedMap<Frase, Vector<Documento>> prefixeAutor(String prefijo){
+         return (NavigableMap) mAutoresDocumentos.subMap(new Frase(prefijo), true, new Frase(prefijo + Character.MAX_VALUE), true);
      }
 }

@@ -21,14 +21,14 @@ public class Palabra {
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
+        //if (getClass() != obj.getClass()) return false;
         final Palabra other = (Palabra) obj;
-        if (mPalabra != other.mPalabra) return false;
+        if (!mPalabra.equals(other.getString())) return false;
         return true;
     }
 
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         Palabra P1= new Palabra("Juan");
         Palabra P2= new Palabra("Pepe");
         Palabra P3= new Palabra("Juan");
@@ -39,5 +39,5 @@ public class Palabra {
         if(a.containsKey(P1)) System.out.println("Good3");
         if(a.containsKey(P3)) System.out.println("Good4");
         if(a.containsKey("Juan")) System.out.println("Good5");
-    }*/
+    }
 }

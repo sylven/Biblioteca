@@ -33,7 +33,7 @@ public class Main {
                     //System.out.println("[Menú]");
                     System.out.println("\n[ Biblioteca > Consultas ]------------------|");
                     System.out.println("| 1- Consulta por autor                     |");
-                    System.out.println("| 2- Consulta d'autor per prefixe           |");
+                    System.out.println("| 2- Consulta de autor por prefijo          |");
                     System.out.println("| 0- Volver atrás                           |");
                     System.out.println("|-------------------------------------------|");
                     System.out.print("  >> Escoge una opción: ");
@@ -57,12 +57,12 @@ public class Main {
                             System.out.println("8");
                         }*/
                     } else if (choice == 2) {
-                        System.out.println("\n[Biblioteca > Consulta > Consulta d'autor per prefixe ]");
-                        System.out.print("  >> Introduce el prefixe: ");
+                        System.out.println("\n[Biblioteca > Consulta > Consulta de autor por prefijo ]");
+                        System.out.print("  >> Introduce el prefijo: ");
                         String author = scanner.nextLine();
-                        Vector<String> prefixes=biblioteca.prefixeAutor(author);
-                        for (String s: prefixes){
-                            System.out.print("\n" + s);
+                        Vector<String> autores = biblioteca.getAutoresPrefijo(author);
+                        for (String s: autores){
+                            System.out.println(s);
                         }
                     }
                 }

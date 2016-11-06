@@ -51,6 +51,10 @@ public class Authors {
         return mAuthors.keySet();
     }
 
+    public Vector<String> getAuthorDocumentTitles(String authorName) {
+        return mAuthors.get(authorName).getDocumentTitles();
+    }
+
 //    public void addDocument(String author, Document document){
 //        mAuthors.get(author).addDocument(document);
 //    }

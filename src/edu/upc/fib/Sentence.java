@@ -24,6 +24,14 @@ public class Sentence implements Comparable<Sentence> {
         return mWords.size();
     }
 
+    public String toString() {
+        String ret = "";
+        for (String word : mWords) {
+            ret += word;
+        }
+        return ret;
+    }
+
 
 
 

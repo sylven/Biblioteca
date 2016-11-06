@@ -32,6 +32,10 @@ public class Document {
         return mAuthor;
     }
 
+    public Sentence getTitle() {
+        return mTitle;
+    }
+
    /* public String getTituloS(){
         System.out.println("6");
         String s = mTitle.getPalabra(0).getString();

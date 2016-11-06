@@ -36,6 +36,10 @@ public class Library {
         return mDocuments.getDocumentTitles();
     }
 
+    public Vector<String> getAuthorDocumentTitles(String authorName) {
+        return mAuthors.getAuthorDocumentTitles(authorName);
+    }
+
     public Boolean addDocument(String authorName, String title, Vector<String> content) {
         mAuthors.addAuthor(authorName);
         return mDocuments.addDocument(authorName, title, content, mAuthors.getAuthor(authorName));

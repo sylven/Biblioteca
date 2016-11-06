@@ -42,22 +42,14 @@ public class Main {
                     choice = scanner.nextInt();
                     scanner.nextLine();
                     if (choice == 1) {
-                       /* System.out.println("\n[Library > Consultas > Consulta por autor]");
-                        System.out.println("\nElija un autor");
-                        for (String s : biblioteca.getAuthors()) {
+                        System.out.println("\n[Library > Consultas > Consulta por autor]");
+                        System.out.print("  >> Introduce el nombre del autor: ");
+                        String authorName = scanner.nextLine();
+                        Vector<String> authorDocumentTitles = library.getAuthorDocumentTitles(authorName);
+                        if (authorDocumentTitles.size() == 0) System.out.println("(i) No hay autores.");
+                        for (String s : authorDocumentTitles) {
                             System.out.println(s);
                         }
-                        String AuthorName = scanner.nextLine();
-                        System.out.println("1");
-                        Vector<String> TitulosAutor = biblioteca.consultarTituloAutor(AuthorName);
-                        System.out.println("2");
-                        for (String titulo : TitulosAutor) {
-                            System.out.println("3");
-                            System.out.print("\nAutor:");
-                            ;
-                            System.out.print(titulo);
-                            System.out.println("8");
-                        }*/
                     } else if (choice == 2) {
                         System.out.println("\n[Library > Consulta > Consulta de autor por prefijo ]");
                         System.out.print("  >> Introduce el prefijo: ");

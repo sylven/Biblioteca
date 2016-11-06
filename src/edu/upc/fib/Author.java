@@ -1,5 +1,6 @@
 package edu.upc.fib;
 
+import java.util.Set;
 import java.util.Vector;
 
 public class Author {
@@ -18,5 +19,13 @@ public class Author {
 
     public void modifyName(String newName) {
         mName = new Sentence(newName);
+    }
+
+    public Vector<String> getDocumentTitles() {
+        Vector<String> documentTitles = new Vector<>();
+        for (Document document : mDocuments) {
+            documentTitles.add(document.getTitle().toString());
+        }
+        return documentTitles;
     }
 }

@@ -19,12 +19,12 @@ public class Main {
         // Navegación en consola
         int choice = 0;
         while (choice != -1) {
-            System.out.println("[ Library ]---------------------------------|");
-            System.out.println("| 1- Consultas                              |");
-            System.out.println("| 2- Gestión de autores                     |");
-            System.out.println("| 3- Gestión de documentos                  |");
-            System.out.println("| 0- Salir del programa                     |");
-            System.out.println("|-------------------------------------------|");
+            System.out.println("[ Library ]----------------------------------------|");
+            System.out.println("| 1- Consultas                                     |");
+            System.out.println("| 2- Gestión de autores                            |");
+            System.out.println("| 3- Gestión de documentos                         |");
+            System.out.println("| 0- Salir del programa                            |");
+            System.out.println("|--------------------------------------------------|");
             System.out.print("  >> Escoge una opción: ");
             choice = scanner.nextInt();
             scanner.nextLine();
@@ -33,11 +33,11 @@ public class Main {
             else if (choice == 1) {
                 while (choice != 0) {
                     //System.out.println("[Menú]");
-                    System.out.println("\n[ Library > Consultas ]---------------------|");
-                    System.out.println("| 1- Consulta por autor                     |");
-                    System.out.println("| 2- Consulta de autor por prefijo          |");
-                    System.out.println("| 0- Volver atrás                           |");
-                    System.out.println("|-------------------------------------------|");
+                    System.out.println("\n[ Library > Consultas ]----------------------------|");
+                    System.out.println("| 1- Lista de títulos de un autor                  |");
+                    System.out.println("| 2- Lista de autores que empiecen con un prefijo  |");
+                    System.out.println("| 0- Volver atrás                                  |");
+                    System.out.println("|--------------------------------------------------|");
                     System.out.print("  >> Escoge una opción: ");
                     choice = scanner.nextInt();
                     scanner.nextLine();
@@ -73,22 +73,22 @@ public class Main {
                 }
             } else if (choice == 2) {
                 while (choice != 0) {
-                    System.out.println("\n[ Library > Gestión de autores ]------------|");
-                    System.out.println("| 1- Ver lista de autores                   |");
-                    System.out.println("| 2- Añadir autor                           |");
-                    System.out.println("| 3- Modificar autor                        |");
-                    System.out.println("| 4- Eliminar autor                         |");
-                    System.out.println("| 0- Volver atrás                           |");
-                    System.out.println("|-------------------------------------------|");
+                    System.out.println("\n[ Library > Gestión de autores ]-------------------|");
+                    System.out.println("| 1- Ver lista de autores                          |");
+                    System.out.println("| 2- Añadir autor                                  |");
+                    System.out.println("| 3- Modificar autor                               |");
+                    System.out.println("| 4- Eliminar autor                                |");
+                    System.out.println("| 0- Volver atrás                                  |");
+                    System.out.println("|--------------------------------------------------|");
                     System.out.print("  >> Escoge una opción: ");
                     choice = scanner.nextInt();
                     scanner.nextLine();
                     if (choice == 1) {
                         System.out.println("\n[Library > Gestión de autores > Ver lista de autores]");
-                        Set<String> authors = library.getAuthors();
-                        if (authors.size() == 0) System.out.println("(i) No hay autores.");
+                        Set<String> authorNames = library.getAuthorNames();
+                        if (authorNames.size() == 0) System.out.println("(i) No hay autores.");
                         else {
-                            for (String s : library.getAuthors()) {
+                            for (String s : authorNames) {
                                 System.out.println(s);
                             }
                         }
@@ -116,19 +116,25 @@ public class Main {
                 }
             }  else if (choice == 3) {
                 while (choice != 0) {
-                    System.out.println("\n[ Library > Gestión de documentos ]---------|");
-                    System.out.println("| 1- Ver lista de documentos                |");
-                    System.out.println("| 2- Añadir documento                       |");
-                    System.out.println("| 3- Modificar documento                    |");
-                    System.out.println("| 4- Eliminar documento                     |");
-                    System.out.println("| 0- Volver atrás                           |");
-                    System.out.println("|-------------------------------------------|");
+                    System.out.println("\n[ Library > Gestión de documentos ]----------------|");
+                    System.out.println("| 1- Ver lista de documentos                       |");
+                    System.out.println("| 2- Añadir documento                              |");
+                    System.out.println("| 3- Modificar documento                           |");
+                    System.out.println("| 4- Eliminar documento                            |");
+                    System.out.println("| 0- Volver atrás                                  |");
+                    System.out.println("|--------------------------------------------------|");
                     System.out.print("  >> Escoge una opción: ");
                     choice = scanner.nextInt();
                     scanner.nextLine();
                     if (choice == 1) {
                         System.out.println("\n[Library > Gestión de documentos > Ver lista de documentos]");
-                        System.out.println("To Be Implemented");
+                        Set<String> documentTitles = library.getDocumentTitles();
+                        if (documentTitles.size() == 0) System.out.println("(i) No hay documentos.");
+                        else {
+                            for (String s : documentTitles) {
+                                System.out.println(s);
+                            }
+                        }
                     } else if (choice == 2) {
                         System.out.println("\n[Library > Gestión de documentos > Añadir documento]");
                         System.out.print("  >> Introduce el nombre del autor: ");

@@ -43,7 +43,11 @@ public class Authors {
         return false;
     }
 
-    public Set<String> getAuthors() {
+    public Author getAuthor(String authorName) {
+        return mAuthors.get(authorName);
+    }
+
+    public Set<String> getAuthorNames() {
         return mAuthors.keySet();
     }
 

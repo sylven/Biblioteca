@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
@@ -35,8 +36,9 @@ public class Documents {
         }
     }
 
-    public Boolean addDocument(String author, String title, Vector<String> content) {
-        Document newDocument = new Document(author, title, content);
+    public Boolean addDocument(String authorName, String title, Vector<String> content, Author author) {
+        Document newDocument = new Document(authorName, title, content);
+        author.addDocument(newDocument);
         Vector<Document> vDocuments;
         if (mDocuments.containsKey(title)) {
             //> ¿Comprobar si el documento ya existe mirando los autores de todos los documentos con el mismo titulo?
@@ -56,6 +58,10 @@ public class Documents {
             mDocuments.put(title, vDocuments);
         }
         return true;
+    }
+
+    public Set<String> getDocumentTitles() {
+        return mDocuments.keySet();
     }
 
    /* public String getTituloAutor(Document doc) {

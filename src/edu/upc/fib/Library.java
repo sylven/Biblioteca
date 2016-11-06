@@ -11,8 +11,8 @@ public class Library {
         mAuthors = new Authors();
     }
 
-    public Set<String> getAuthors() {
-        return mAuthors.getAuthors();
+    public Set<String> getAuthorNames() {
+        return mAuthors.getAuthorNames();
     }
 
     public Boolean addAutor(String authorName) {
@@ -31,9 +31,14 @@ public class Library {
 //        return
 //    }
 
+    // Mejorar para incluir a los autores?
+    public Set<String> getDocumentTitles() {
+        return mDocuments.getDocumentTitles();
+    }
+
     public Boolean addDocument(String authorName, String title, Vector<String> content) {
         mAuthors.addAuthor(authorName);
-        return mDocuments.addDocument(authorName, title, content);
+        return mDocuments.addDocument(authorName, title, content, mAuthors.getAuthor(authorName));
     }
 
    /* public Vector<String> consultarTituloAutor(String AuthorName){

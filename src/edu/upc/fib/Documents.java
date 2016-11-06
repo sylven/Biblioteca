@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Documents {
     //> TreeMap de títulos (donde cada título tiene asociado el contenido del documento)
@@ -56,6 +58,31 @@ public class Documents {
             vDocuments = new Vector<>();
             vDocuments.add(newDocument);
             mDocuments.put(title, vDocuments);
+        }
+        this.updatemWordFrecuency(content);
+        return true;
+    }
+
+    public Boolean updatemWordFrecuency(Vector<String> content){
+        Vector<String> words = new Vector<>();
+        for (String s:content) {
+            words = new Vector<>();
+            Pattern pattern = Pattern.compile("([A-Za-z'ÁáÄäÀàÉéËëÈèÍíÏïÌìÓóÖöÒòÚúÜüÙùÑñÇçÑñ-])+|.");
+            Matcher matcher = pattern.matcher(s);
+            while (matcher.find()) words.add(matcher.group());
+            for (String st : words) {
+                if(!connectorWords.contains(st) && !st.equals(" ")) {
+                    if (mWordFrecuency.containsKey(st)) {
+                        Integer i = mWordFrecuency.get(st);
+                        ++i;
+                        mWordFrecuency.remove(st);
+                        mWordFrecuency.put(st, i);
+                    } else {
+                        Integer i = 1;
+                        mWordFrecuency.put(st, i);
+                    }
+                }
+            }
         }
         return true;
     }

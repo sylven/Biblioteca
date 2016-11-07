@@ -126,6 +126,19 @@ public class Documents {
         return true;
     }
 
+    public Boolean modifyDocumentAuthor(String authorName, String title, String newAuthorName){
+        Vector<Document> docs=mDocuments.get(title);
+        for (Document doc:docs){
+            Sentence sentenceAuthor=doc.getAuthor();
+            String stringAuthor=sentenceAuthor.toString();
+            if(stringAuthor.equals(authorName)){
+                Sentence sAuthor= new Sentence(newAuthorName);
+                doc.setAuthor(sAuthor);
+            }
+        }
+        return true;
+    }
+
    /* public String getTituloAutor(Document doc) {
         Set<Sentence> Titulos= mDocuments.keySet();
         String ret=new String();

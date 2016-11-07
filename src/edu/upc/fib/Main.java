@@ -144,7 +144,24 @@ public class Main {
                         else System.out.println("El documento no se ha añadido porque ya existe.");
                     } else if (choice == 3) {
                         System.out.println("\n[Library > Gestión de documentos > Modificar documento]");
-                        System.out.println("To Be Implemented");
+                        System.out.print("  >> Introduce el nombre del autor: ");
+                        String authorName = scanner.nextLine();
+                        System.out.print("  >> Introduce el título del documento: ");
+                        String title = scanner.nextLine();
+                        System.out.println("| 1- Modificar Autor                               |");
+                        System.out.println("| 2- Modificar Titulo                              |");
+                        System.out.println("| 3- Modificar contenido                           |");
+                        choice = scanner.nextInt();
+                        scanner.nextLine();
+                        if(choice==1){
+                            System.out.print("  >> Introduce el nuevo autor del documento: ");
+                            String newAuthorName = scanner.nextLine();
+                            if(library.modifyDocumentAuthor(authorName,title, newAuthorName)) System.out.print("(i) Document modificado satisfactoriamente.");
+                        }else if(choice==2){
+
+                        }else if (choice==3){
+
+                        }
                     } else if (choice == 4) {
                         System.out.println("\n[Library > Gestión de documentos > Eliminar documento]");
                         System.out.print("  >> Introduce el nombre del autor: ");

@@ -49,6 +49,18 @@ public class Authors {
         return true;
     }
 
+    public Boolean modifyDocumentAuthor(String authorName, String title, String newAuthorName){
+        Author author=mAuthors.get(authorName);
+        Document doc=author.getDocument(title);
+        if(author.deleteDocument(title)) mAuthors.remove(authorName);
+        if (!containsAuthor(newAuthorName)) {
+            mAuthors.put(newAuthorName, new Author(newAuthorName));
+        }
+        Author newAuthor=mAuthors.get(newAuthorName);
+        newAuthor.addDocument(doc);
+        return true;
+    }
+
     public Author getAuthor(String authorName) {
         return mAuthors.get(authorName);
     }

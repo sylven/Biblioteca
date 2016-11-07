@@ -42,4 +42,15 @@ public class Author {
         if(mDocuments.isEmpty())return true;
         return false;
     }
+
+    public Document getDocument(String title){
+        for (Document doc:mDocuments){
+            Sentence fTitle=doc.getTitle();
+            String sTitle=fTitle.toString();
+            if(sTitle.equals(title)){
+                return doc;
+            }
+        }
+        return null;
+    }
 }

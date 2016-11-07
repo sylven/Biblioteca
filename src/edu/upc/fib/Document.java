@@ -32,6 +32,10 @@ public class Document {
         return mAuthor;
     }
 
+    public void setAuthor(Sentence author) {
+        mAuthor=author;
+    }
+
     public Sentence getTitle() {
         return mTitle;
     }

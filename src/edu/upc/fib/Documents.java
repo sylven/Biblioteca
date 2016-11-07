@@ -139,6 +139,34 @@ public class Documents {
         return true;
     }
 
+    public Boolean modifyDocumentTitle(String authorName, String title, String newTitle){
+        Vector<Document> docs=mDocuments.get(title);
+        Document oldDoc=null;
+        for(Document doc:docs){
+            Sentence sentenceAuthor=doc.getAuthor();
+            String stringAuthor=sentenceAuthor.toString();
+            if(stringAuthor.equals(authorName)){
+                oldDoc=doc;
+            }
+        }
+        docs.remove(oldDoc);
+        mDocuments.remove(title);
+        if(!docs.isEmpty())mDocuments.put(title,docs);
+        oldDoc.setTitle(new Sentence(newTitle));
+        if(mDocuments.containsKey(newTitle)){
+            Vector<Document> documents=mDocuments.get(newTitle);
+            documents.add(oldDoc);
+            mDocuments.put(newTitle,documents);
+        }
+        else{
+            Vector<Document> documents =new Vector<>();
+            documents.add(oldDoc);
+            mDocuments.put(newTitle,documents);
+        }
+        return true;
+    }
+
+
    /* public String getTituloAutor(Document doc) {
         Set<Sentence> Titulos= mDocuments.keySet();
         String ret=new String();

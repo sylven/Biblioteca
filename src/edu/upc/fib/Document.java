@@ -40,6 +40,10 @@ public class Document {
         return mTitle;
     }
 
+    public void setTitle(Sentence title) {
+        mTitle=title;
+    }
+
     public Content getContent() {
         return mContent;
     }

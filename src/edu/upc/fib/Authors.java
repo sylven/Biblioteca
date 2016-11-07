@@ -61,6 +61,12 @@ public class Authors {
         return true;
     }
 
+    public Boolean modifyDocumentTitle(String authorName, String title, String newTitle){
+        Author author=mAuthors.get(authorName);
+        author.modifyDocumentTitle(title, newTitle);
+        return true;
+    }
+
     public Author getAuthor(String authorName) {
         return mAuthors.get(authorName);
     }

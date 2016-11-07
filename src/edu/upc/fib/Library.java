@@ -57,6 +57,12 @@ public class Library {
         return true;
     }
 
+    public Boolean modifyDocumentTitle(String authorName, String title, String newTitle){
+        mDocuments.modifyDocumentTitle(authorName,title,newTitle);
+        mAuthors.modifyDocumentTitle(authorName,title,newTitle);
+        return true;
+    }
+
    /* public Vector<String> consultarTituloAutor(String AuthorName){
         Vector<Document> docs=autores.consultarDocumentos(AuthorName);
         Vector<String> autors=new Vector<>();

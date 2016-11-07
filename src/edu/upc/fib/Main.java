@@ -158,7 +158,9 @@ public class Main {
                             String newAuthorName = scanner.nextLine();
                             if(library.modifyDocumentAuthor(authorName,title, newAuthorName)) System.out.print("(i) Document modificado satisfactoriamente.");
                         }else if(choice==2){
-
+                            System.out.print("  >> Introduce el nuevo titulo del documento: ");
+                            String newTitle = scanner.nextLine();
+                            if(library.modifyDocumentTitle(authorName,title, newTitle)) System.out.print("(i) Document modificado satisfactoriamente.");
                         }else if (choice==3){
 
                         }

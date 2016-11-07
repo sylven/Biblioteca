@@ -48,6 +48,14 @@ public class Document {
         return mContent;
     }
 
+    public void setContent(Content content) {
+        mContent=content;
+    }
+
+    public void updateWordFrecuency(){
+        mWordFrequency=mContent.getWordFrecuency();
+    }
+
    /* public String getTituloS(){
         System.out.println("6");
         String s = mTitle.getPalabra(0).getString();

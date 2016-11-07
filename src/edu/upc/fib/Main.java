@@ -150,7 +150,7 @@ public class Main {
                         String title = scanner.nextLine();
                         System.out.println("| 1- Modificar Autor                               |");
                         System.out.println("| 2- Modificar Titulo                              |");
-                        System.out.println("| 3- Modificar contenido                           |");
+                        System.out.println("| 3- Modificar Contenido                           |");
                         choice = scanner.nextInt();
                         scanner.nextLine();
                         if(choice==1){
@@ -162,7 +162,14 @@ public class Main {
                             String newTitle = scanner.nextLine();
                             if(library.modifyDocumentTitle(authorName,title, newTitle)) System.out.print("(i) Document modificado satisfactoriamente.");
                         }else if (choice==3){
-
+                            System.out.print("  >> Introduce el nuevo contenido del documento(finalizar con una línea con un 0): ");
+                            String content = scanner.nextLine();
+                            Vector<String> newContent = new Vector<>();
+                            while (!content.equals("0")) {
+                                newContent.add(content);
+                                content = scanner.nextLine();
+                            }
+                            if(library.modifyDocumentContent(authorName,title, newContent)) System.out.print("(i) Document modificado satisfactoriamente.");
                         }
                     } else if (choice == 4) {
                         System.out.println("\n[Library > Gestión de documentos > Eliminar documento]");

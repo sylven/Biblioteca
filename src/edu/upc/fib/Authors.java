@@ -67,6 +67,12 @@ public class Authors {
         return true;
     }
 
+    public Boolean modifyDocumentContent(String authorName, String title, Vector<String> newContent){
+        Author author=mAuthors.get(authorName);
+        author.modifyDocumentContent(title, newContent);
+        return true;
+    }
+
     public Author getAuthor(String authorName) {
         return mAuthors.get(authorName);
     }

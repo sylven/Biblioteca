@@ -166,6 +166,26 @@ public class Documents {
         return true;
     }
 
+    public Boolean modifyDocumentContent(String authorName, String title, Vector<String> newContent){
+        Vector<Document> docs=mDocuments.get(title);
+        Content content= new Content(newContent);
+        Content oldContent= null;
+        Document d=null;
+        for (Document doc:docs){
+        Sentence sentenceAuthor=doc.getAuthor();
+        String stringAuthor=sentenceAuthor.toString();
+        if(stringAuthor.equals(authorName)){
+            d=doc;
+            oldContent=doc.getContent();
+            doc.setContent(content);
+        }
+    }
+        d.updateWordFrecuency();
+        this.deleteWordFrecuency(oldContent);
+        this.updatemWordFrecuency(newContent);
+        return true;
+}
+
 
    /* public String getTituloAutor(Document doc) {
         Set<Sentence> Titulos= mDocuments.keySet();

@@ -64,4 +64,16 @@ public class Author {
         }
         return true;
     }
+
+    public Boolean modifyDocumentContent(String title, Vector<String> newContent){
+        Content content= new Content(newContent);
+        for (Document doc:mDocuments){
+            Sentence fTitle=doc.getTitle();
+            String sTitle=fTitle.toString();
+            if(sTitle.equals(title)){
+                doc.setContent(content);
+            }
+        }
+        return true;
+    }
 }

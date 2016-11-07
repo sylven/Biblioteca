@@ -28,4 +28,18 @@ public class Author {
         }
         return documentTitles;
     }
+
+    public Boolean deleteDocument(String title){
+        Document d=null;
+        for (Document doc: mDocuments){
+            Sentence fTitle=doc.getTitle();
+            String sTitle=fTitle.toString();
+            if(sTitle.equals(title)){
+                d=doc;
+            }
+        }
+        mDocuments.remove(d);
+        if(mDocuments.isEmpty())return true;
+        return false;
+    }
 }

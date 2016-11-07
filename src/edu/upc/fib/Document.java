@@ -36,6 +36,10 @@ public class Document {
         return mTitle;
     }
 
+    public Content getContent() {
+        return mContent;
+    }
+
    /* public String getTituloS(){
         System.out.println("6");
         String s = mTitle.getPalabra(0).getString();

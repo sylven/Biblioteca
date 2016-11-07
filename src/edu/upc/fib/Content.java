@@ -2,7 +2,6 @@ package edu.upc.fib;
 
 import java.util.HashMap;
 import java.util.InputMismatchException;
-import java.util.IntSummaryStatistics;
 import java.util.Vector;
 
 public class Content {
@@ -32,6 +31,10 @@ public class Content {
             }
         }
         return wordFrequency;
+    }
+
+    public Vector<Sentence> getContent() {
+        return mContent;
     }
 //    public  HashMap<String, Integer> calcularFrecuenciaPalabras(){
 //        HashMap<String, Integer> ret=new HashMap<String ,Integer>();

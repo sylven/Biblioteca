@@ -147,7 +147,11 @@ public class Main {
                         System.out.println("To Be Implemented");
                     } else if (choice == 4) {
                         System.out.println("\n[Library > Gestión de documentos > Eliminar documento]");
-                        System.out.println("To Be Implemented");
+                        System.out.print("  >> Introduce el nombre del autor: ");
+                        String authorName = scanner.nextLine();
+                        System.out.print("  >> Introduce el título del documento: ");
+                        String title = scanner.nextLine();
+                        if(library.deleteDocument(authorName,title)) System.out.print("(i) Document eliminado satisfactoriamente.");;
                     }
                 }
             }

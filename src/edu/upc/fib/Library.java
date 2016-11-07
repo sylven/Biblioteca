@@ -45,6 +45,12 @@ public class Library {
         return mDocuments.addDocument(authorName, title, content, mAuthors.getAuthor(authorName));
     }
 
+    public Boolean deleteDocument(String authorName, String title){
+        mAuthors.deleteDocument(authorName, title);
+        mDocuments.deleteDocument(authorName,title);
+        return true;
+    }
+
    /* public Vector<String> consultarTituloAutor(String AuthorName){
         Vector<Document> docs=autores.consultarDocumentos(AuthorName);
         Vector<String> autors=new Vector<>();

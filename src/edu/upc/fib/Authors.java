@@ -43,6 +43,12 @@ public class Authors {
         return false;
     }
 
+    public Boolean deleteDocument(String authorName, String title){
+        Author author = mAuthors.get(authorName);
+        if(author.deleteDocument(title)) mAuthors.remove(authorName);
+        return true;
+    }
+
     public Author getAuthor(String authorName) {
         return mAuthors.get(authorName);
     }

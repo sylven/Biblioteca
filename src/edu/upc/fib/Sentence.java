@@ -32,7 +32,9 @@ public class Sentence implements Comparable<Sentence> {
         return ret;
     }
 
-
+    public Vector<String> getWords() {
+        return mWords;
+    }
 
 
     //    @Override

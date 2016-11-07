@@ -87,8 +87,43 @@ public class Documents {
         return true;
     }
 
+    public Boolean deleteWordFrecuency(Content content){
+        Vector<Sentence> sentences=content.getContent();
+        for (Sentence sentence:sentences) {
+            Vector<String> words = sentence.getWords();
+            for (String s:words) {
+                if(!connectorWords.contains(s) && !s.equals(" ")) {
+                    Integer i = mWordFrecuency.get(s);
+                    --i;
+                    mWordFrecuency.remove(s);
+                    if (i > 0) mWordFrecuency.put(s, i);
+                }
+            }
+        }
+        return true;
+    }
+
     public Set<String> getDocumentTitles() {
         return mDocuments.keySet();
+    }
+
+    public Boolean deleteDocument(String authorName, String title){
+        Vector<Document> docs=mDocuments.get(title);
+        Content content = null;
+        Document d=null;
+        for (Document doc: docs){
+            Sentence fAuthor=doc.getAuthor();
+            String sAuthor=fAuthor.toString();
+            if(sAuthor.equals(authorName)){
+                d=doc;
+                content=doc.getContent();
+            }
+        }
+        docs.remove(d);
+        mDocuments.remove(title);
+        if (!docs.isEmpty())mDocuments.put(title,docs);
+        this.deleteWordFrecuency(content);
+        return true;
     }
 
    /* public String getTituloAutor(Document doc) {

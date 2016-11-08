@@ -14,19 +14,21 @@ public class Content {
         }
     }
 
-    public HashMap<String, Integer> getWordFrecuency(){
+    public HashMap<String, Integer> getWordFrecuency(Vector<String> connectorWords){
         //> Decidir si guardar los espacios
         HashMap<String, Integer> wordFrequency = new HashMap<>();
         for (Sentence sentence : mContent) {
             for (int i = 0; i < sentence.getSize(); i++) {
                 String word = sentence.getWord(i);
-                //> Ignorar palabras funcionales y signos de puntuación
-                //> Pensar si separar esta operación del constructor de documento y llamarla desde Documentos
-                //> Pensar como pasarle la lista de palabras funcionales a esta clase
-                if (wordFrequency.containsKey(word)) {
-                    wordFrequency.put(word, wordFrequency.get(word)+1);
-                } else {
-                    wordFrequency.put(word, 1);
+                if(!connectorWords.contains(word) && !word.equals(" ")) {
+                    //> Ignorar palabras funcionales y signos de puntuación
+                    //> Pensar si separar esta operación del constructor de documento y llamarla desde Documentos
+                    //> Pensar como pasarle la lista de palabras funcionales a esta clase
+                    if (wordFrequency.containsKey(word)) {
+                        wordFrequency.put(word, wordFrequency.get(word) + 1);
+                    } else {
+                        wordFrequency.put(word, 1);
+                    }
                 }
             }
         }

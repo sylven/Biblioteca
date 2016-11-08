@@ -177,7 +177,7 @@ public class Main {
                         String authorName = scanner.nextLine();
                         System.out.print("  >> Introduce el título del documento: ");
                         String title = scanner.nextLine();
-                        if(library.deleteDocument(authorName,title)) System.out.print("(i) Document eliminado satisfactoriamente.");;
+                        if(library.deleteDocument(authorName,title)) System.out.print("(i) Document eliminado satisfactoriamente.");
                     }
                 }
             }

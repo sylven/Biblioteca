@@ -21,11 +21,11 @@ public class Document {
         // MOVER dentro de documento?
     private HashMap<Document, Integer> mSimilarDocuments;
 
-    public Document(String author, String title, Vector<String> content) {
+    public Document(String author, String title, Vector<String> content, Vector<String> connectorWords) {
         mAuthor = new Sentence(author);
         mTitle = new Sentence(title);
         mContent = new Content(content);
-        mWordFrequency = mContent.getWordFrecuency();
+        mWordFrequency = mContent.getWordFrecuency(connectorWords);
     }
 
     public Sentence getAuthor() {
@@ -52,8 +52,8 @@ public class Document {
         mContent=content;
     }
 
-    public void updateWordFrecuency(){
-        mWordFrequency=mContent.getWordFrecuency();
+    public void updateWordFrecuency(Vector<String> connectorWords){
+        mWordFrequency=mContent.getWordFrecuency(connectorWords);
     }
 
    /* public String getTituloS(){

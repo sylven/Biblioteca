@@ -39,7 +39,7 @@ public class Documents {
     }
 
     public Boolean addDocument(String authorName, String title, Vector<String> content, Author author) {
-        Document newDocument = new Document(authorName, title, content);
+        Document newDocument = new Document(authorName, title, content,connectorWords);
         author.addDocument(newDocument);
         Vector<Document> vDocuments;
         if (mDocuments.containsKey(title)) {
@@ -180,7 +180,7 @@ public class Documents {
             doc.setContent(content);
         }
     }
-        d.updateWordFrecuency();
+        d.updateWordFrecuency(connectorWords);
         this.deleteWordFrecuency(oldContent);
         this.updatemWordFrecuency(newContent);
         return true;

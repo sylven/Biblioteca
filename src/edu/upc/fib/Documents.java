@@ -17,7 +17,7 @@ public class Documents {
     private TreeMap<String, Vector<Document>> mDocuments;
 
     //> Vector de palabras con su frecuecia global
-    private HashMap<String, Vector<Document>> mWordFrecuency;
+    private HashMap<String, Integer> mWordFrecuency;
 
     private Vector<String> connectorWords;
 
@@ -39,7 +39,7 @@ public class Documents {
     }
 
     public Boolean addDocument(String authorName, String title, Vector<String> content, Author author) {
-        Document newDocument = new Document(authorName, title, content,connectorWords);
+        Document newDocument = new Document(authorName, title, content, connectorWords);
         author.addDocument(newDocument);
         Vector<Document> vDocuments;
         if (mDocuments.containsKey(title)) {
@@ -59,51 +59,51 @@ public class Documents {
             vDocuments.add(newDocument);
             mDocuments.put(title, vDocuments);
         }
-        this.updatemWordFrecuency(content, newDocument);
+        //updateWordFrecuency(content);
         return true;
     }
 
-    public Boolean updatemWordFrecuency(Vector<String> content, Document document){
-        Vector<String> words = new Vector<>();
-        for (String s:content) {
-            words = new Vector<>();
-            Pattern pattern = Pattern.compile("([A-Za-z'ÁáÄäÀàÉéËëÈèÍíÏïÌìÓóÖöÒòÚúÜüÙùÑñÇç-])+|.");
-            Matcher matcher = pattern.matcher(s);
-            while (matcher.find()) words.add(matcher.group());
-            for (String st : words) {
-                if(!connectorWords.contains(st) && !st.equals(" ")) {
-                    if (mWordFrecuency.containsKey(st)) {
-                        Vector<Document> documents = mWordFrecuency.get(st);
-                        if(!documents.contains(document))documents.add(document);
-                        mWordFrecuency.put(st,documents);
-                    }
-                    else{
-                        Vector<Document> documents=new Vector<>();
-                        documents.add(document);
-                        mWordFrecuency.put(st, documents);
-                        if(!documents.isEmpty()) mDocuments.put(st,documents);
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
-    public Boolean deleteWordFrecuency(Content content, Document document){
-        Vector<Sentence> sentences=content.getContent();
-        for (Sentence sentence:sentences) {
-            Vector<String> words = sentence.getWords();
-            for (String s:words) {
-                if(!connectorWords.contains(s) && !s.equals(" ")) {
-                    Vector<Document> documents = mWordFrecuency.get(s);
-                    documents.remove(document);
-                    mWordFrecuency.remove(s);
-                    if (!documents.isEmpty())mWordFrecuency.put(s,documents);
-                }
-            }
-        }
-        return true;
-    }
+//    public Boolean updateWordFrecuency(Vector<String> content) {
+//        Vector<String> words = new Vector<>();
+//        for (String s:content) {
+//            words = new Vector<>();
+//            Pattern pattern = Pattern.compile("([A-Za-z'ÁáÄäÀàÉéËëÈèÍíÏïÌìÓóÖöÒòÚúÜüÙùÑñÇç-])+|.");
+//            Matcher matcher = pattern.matcher(s);
+//            while (matcher.find()) words.add(matcher.group());
+//            for (String st : words) {
+//                if(!connectorWords.contains(st) && !st.equals(" ")) {
+//                    if (mWordFrecuency.containsKey(st)) {
+//                        Vector<Document> documents = mWordFrecuency.get(st);
+//                        if(!documents.contains(document))documents.add(document);
+//                        mWordFrecuency.put(st,documents);
+//                    }
+//                    else{
+//                        Vector<Document> documents=new Vector<>();
+//                        documents.add(document);
+//                        mWordFrecuency.put(st, documents);
+//                        if(!documents.isEmpty()) mDocuments.put(st,documents);
+//                    }
+//                }
+//            }
+//        }
+//        return true;
+//    }
+//
+//    public Boolean deleteWordFrecuency(Content content, Document document){
+//        Vector<Sentence> sentences=content.getContent();
+//        for (Sentence sentence:sentences) {
+//            Vector<String> words = sentence.getWords();
+//            for (String s:words) {
+//                if(!connectorWords.contains(s) && !s.equals(" ")) {
+//                    Vector<Document> documents = mWordFrecuency.get(s);
+//                    documents.remove(document);
+//                    mWordFrecuency.remove(s);
+//                    if (!documents.isEmpty())mWordFrecuency.put(s,documents);
+//                }
+//            }
+//        }
+//        return true;
+//    }
 
     public Set<String> getDocumentTitles() {
         return mDocuments.keySet();
@@ -124,7 +124,7 @@ public class Documents {
         docs.remove(d);
         mDocuments.remove(title);
         if (!docs.isEmpty())mDocuments.put(title,docs);
-        this.deleteWordFrecuency(content,d);
+        //this.deleteWordFrecuency(content,d);
         return true;
     }
 
@@ -183,8 +183,8 @@ public class Documents {
         }
     }
         d.updateWordFrecuency(connectorWords);
-        this.deleteWordFrecuency(oldContent,d);
-        this.updatemWordFrecuency(newContent,d);
+        //this.deleteWordFrecuency(oldContent,d);
+        //this.updatemWordFrecuency(newContent,d);
         return true;
 }
 

@@ -12,7 +12,8 @@ public class Sentence implements Comparable<Sentence> {
         Matcher matcher = pattern.matcher(sentence);
         mWords = new Vector<>();
         while (matcher.find())
-            mWords.add(matcher.group());
+            if (!matcher.group().equals(" "))
+                mWords.add(matcher.group());
     }
 
     public String getWord(int index) {
@@ -83,14 +84,14 @@ public class Sentence implements Comparable<Sentence> {
         return 0;
     }
 
-    public static void main(String[] args) {
-        Sentence s1 = new Sentence("String");
-        Sentence s2 = new Sentence("String String");
-        Sentence s3 = new Sentence("String");
-        Sentence s4 = s1;
-
-        System.out.println("s1 no es igual a s2: " + s1.equals(s2));
-
-    }
+//    public static void main(String[] args) {
+//        Sentence s1 = new Sentence("String");
+//        Sentence s2 = new Sentence("String String");
+//        Sentence s3 = new Sentence("String");
+//        Sentence s4 = s1;
+//
+//        System.out.println("s1 no es igual a s2: " + s1.equals(s2));
+//
+//    }
 
 }

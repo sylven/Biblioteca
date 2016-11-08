@@ -56,6 +56,11 @@ public class Document {
         mWordFrequency=mContent.getWordFrecuency(connectorWords);
     }
 
+    public Boolean printContent(){
+        mContent.print();
+        return true;
+    }
+
    /* public String getTituloS(){
         System.out.println("6");
         String s = mTitle.getPalabra(0).getString();

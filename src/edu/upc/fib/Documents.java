@@ -186,6 +186,18 @@ public class Documents {
         return true;
 }
 
+    public Boolean printContent(String author, String title){
+        Vector<Document> docs=mDocuments.get(title);
+        for(Document doc:docs){
+            Sentence sentenceAuthor=doc.getAuthor();
+            String stringAuthor=sentenceAuthor.toString();
+            if(stringAuthor.equals(author)){
+                doc.printContent();
+            }
+        }
+        return true;
+    }
+
 
    /* public String getTituloAutor(Document doc) {
         Set<Sentence> Titulos= mDocuments.keySet();

@@ -36,6 +36,7 @@ public class Main {
                     System.out.println("\n[ Library > Consultas ]----------------------------|");
                     System.out.println("| 1- Lista de títulos de un autor                  |");
                     System.out.println("| 2- Lista de autores que empiecen con un prefijo  |");
+                    System.out.println("| 3- Contenido de un documento por autor y título  |");
                     System.out.println("| 0- Volver atrás                                  |");
                     System.out.println("|--------------------------------------------------|");
                     System.out.print("  >> Escoge una opción: ");
@@ -61,6 +62,13 @@ public class Main {
                                 System.out.println(s);
                             }
                         }
+                    } else if (choice == 3) {
+                        System.out.println("\n[Library > Consulta > Consulta contenido por autor y título ]");
+                        System.out.print("  >> Introduce el autor: ");
+                        String author = scanner.nextLine();
+                        System.out.print("  >> Introduce el título: ");
+                        String title = scanner.nextLine();
+                        library.printContent(author,title);
                     }
                 }
             } else if (choice == 2) {

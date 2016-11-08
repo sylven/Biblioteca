@@ -38,6 +38,16 @@ public class Content {
     public Vector<Sentence> getContent() {
         return mContent;
     }
+
+    public void print(){
+        for (Sentence sentence:mContent){
+            for(int i=0; i<sentence.getSize();++i){
+                String word=sentence.getWord(i);
+                System.out.print(word);
+            }
+            System.out.println();
+        }
+    }
 //    public  HashMap<String, Integer> calcularFrecuenciaPalabras(){
 //        HashMap<String, Integer> ret=new HashMap<String ,Integer>();
 //        Integer value;

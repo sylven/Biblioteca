@@ -1,5 +1,7 @@
 package edu.upc.fib;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.util.*;
 
 public class Library {
@@ -66,6 +68,11 @@ public class Library {
     public Boolean modifyDocumentContent(String authorName, String title, Vector<String> newContent){
         mDocuments.modifyDocumentContent(authorName,title,newContent);
         mAuthors.modifyDocumentContent(authorName,title,newContent);
+        return true;
+    }
+
+    public Boolean printContent(String author, String title){
+        mDocuments.printContent(author,title);
         return true;
     }
 

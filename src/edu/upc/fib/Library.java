@@ -1,7 +1,5 @@
 package edu.upc.fib;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import java.util.*;
 
 public class Library {
@@ -52,11 +50,12 @@ public class Library {
         // Probamos a crear el autor por si no existe, para asegurarnos que el documento se añade a algun autor.
         mAuthors.addAuthor(authorName);
         return mDocuments.addDocument(authorName, title, content, mAuthors.getAuthor(authorName));
+        // si la creacion del documento fue exitosa, añadir al objeto Autores
     }
 
     public Boolean deleteDocument(String authorName, String title){
         mAuthors.deleteDocument(authorName, title);
-        mDocuments.deleteDocument(authorName,title);
+        mDocuments.removeDocument(authorName,title);
         return true;
     }
 

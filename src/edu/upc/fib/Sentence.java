@@ -8,7 +8,7 @@ public class Sentence implements Comparable<Sentence> {
     private Vector<String> mWords;
 
     public Sentence(String sentence) {
-        Pattern pattern = Pattern.compile("([A-Za-z'ÁáÄäÀàÉéËëÈèÍíÏïÌìÓóÖöÒòÚúÜüÙùÑñÇçÑñ-])+|.");
+        Pattern pattern = Pattern.compile("([A-Za-z'ÁáÄäÀàÉéËëÈèÍíÏïÌìÓóÖöÒòÚúÜüÙùÑñÇç-])+|.");
         Matcher matcher = pattern.matcher(sentence);
         mWords = new Vector<>();
         while (matcher.find())

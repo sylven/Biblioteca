@@ -17,6 +17,10 @@ public class Library {
         return mAuthors.getAuthorNames();
     }
 
+    public Boolean existsAuthor(String authorName) {
+        return mAuthors.existsAuthor(authorName);
+    }
+
     public Boolean addAutor(String authorName) {
         return mAuthors.addAuthor(authorName);
     }
@@ -29,6 +33,10 @@ public class Library {
         return mAuthors.removeAuthor(authorName);
     }
 
+    public Vector<String> getAuthorDocumentTitles(String authorName) {
+        return mAuthors.getAuthorDocumentTitles(authorName);
+    }
+
 //    public Set<String> getDocuments() {
 //        return
 //    }
@@ -38,9 +46,7 @@ public class Library {
         return mDocuments.getDocumentTitles();
     }
 
-    public Vector<String> getAuthorDocumentTitles(String authorName) {
-        return mAuthors.getAuthorDocumentTitles(authorName);
-    }
+
 
     public Boolean addDocument(String authorName, String title, Vector<String> content) {
         mAuthors.addAuthor(authorName);

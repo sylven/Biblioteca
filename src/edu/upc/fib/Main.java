@@ -8,7 +8,6 @@ public class Main {
 
      public static void main(String[] args) {
         Library library = new Library();
-
         Scanner scanner = new Scanner(System.in);
 
         // BUG: scanner skipping input after nextInt(), 2 workarounds (consider using 2nd one)
@@ -32,7 +31,6 @@ public class Main {
             if (choice == 0) choice = -1;
             else if (choice == 1) {
                 while (choice != 0) {
-                    //System.out.println("[Menú]");
                     System.out.println("\n[ Library > Consultas ]----------------------------|");
                     System.out.println("| 1- Lista de títulos de un autor                  |");
                     System.out.println("| 2- Lista de autores que empiecen con un prefijo  |");
@@ -46,10 +44,17 @@ public class Main {
                         System.out.println("\n[Library > Consultas > Consulta por autor]");
                         System.out.print("  >> Introduce el nombre del autor: ");
                         String authorName = scanner.nextLine();
-                        Vector<String> authorDocumentTitles = library.getAuthorDocumentTitles(authorName);
-                        if (authorDocumentTitles.size() == 0) System.out.println("(i) No hay autores.");
-                        for (String s : authorDocumentTitles) {
-                            System.out.println(s);
+                        if (library.existsAuthor(authorName)) {
+                            Vector<String> authorDocumentTitles = library.getAuthorDocumentTitles(authorName);
+                            if (authorDocumentTitles.size() == 0) {
+                                System.out.println("(i) El autor \"" + authorName + "\" no tiene documentos.");
+                            } else {
+                                for (String s : authorDocumentTitles) {
+                                    System.out.println(s);
+                                }
+                            }
+                        } else {
+                            System.out.println("(i) El autor no existe.");
                         }
                     } else if (choice == 2) {
                         System.out.println("\n[Library > Consulta > Consulta de autor por prefijo ]");

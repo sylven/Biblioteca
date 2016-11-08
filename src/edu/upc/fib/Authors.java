@@ -12,12 +12,12 @@ public class Authors {
         mAuthors = new TreeMap<>();
     }
 
-    public Boolean containsAuthor(String authorName) {
+    public Boolean existsAuthor(String authorName) {
         return mAuthors.containsKey(authorName);
     }
 
     public Boolean addAuthor(String authorName) {
-        if (!containsAuthor(authorName)) {
+        if (!existsAuthor(authorName)) {
             mAuthors.put(authorName, new Author(authorName));
             return true;
         }
@@ -25,7 +25,7 @@ public class Authors {
     }
 
     public Boolean modifyAuthor(String authorName, String newAuthorName) {
-        if (containsAuthor(authorName)) {
+        if (existsAuthor(authorName)) {
             Author newAutor = mAuthors.get(authorName);
             newAutor.modifyName(newAuthorName);
             mAuthors.remove(authorName);
@@ -36,7 +36,7 @@ public class Authors {
     }
 
     public Boolean removeAuthor(String authorName) {
-        if (containsAuthor(authorName)) {
+        if (existsAuthor(authorName)) {
             mAuthors.remove(authorName);
             return true;
         }
@@ -53,7 +53,7 @@ public class Authors {
         Author author=mAuthors.get(authorName);
         Document doc=author.getDocument(title);
         if(author.deleteDocument(title)) mAuthors.remove(authorName);
-        if (!containsAuthor(newAuthorName)) {
+        if (!existsAuthor(newAuthorName)) {
             mAuthors.put(newAuthorName, new Author(newAuthorName));
         }
         Author newAuthor=mAuthors.get(newAuthorName);
@@ -82,8 +82,9 @@ public class Authors {
     }
 
     public Vector<String> getAuthorDocumentTitles(String authorName) {
-        return mAuthors.get(authorName).getDocumentTitles();
-    }
+        if (mAuthors.containsKey(authorName)) return mAuthors.get(authorName).getDocumentTitles();
+        else return new Vector<>();
+   }
 
 //    public void addDocument(String author, Document document){
 //        mAuthors.get(author).addDocument(document);

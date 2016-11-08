@@ -24,10 +24,12 @@ public class Library {
     }
 
     public Boolean modifyAuthor(String authorName, String newAuthorName) {
+        // Modificar tambien todas las estructuras implicadas
         return mAuthors.modifyAuthor(authorName, newAuthorName);
     }
 
     public Boolean removeAutor(String authorName) {
+        // Modificar tambien todas las estructuras implicadas
         return mAuthors.removeAuthor(authorName);
     }
 

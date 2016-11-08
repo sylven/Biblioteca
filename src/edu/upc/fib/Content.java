@@ -14,7 +14,7 @@ public class Content {
         }
     }
 
-    public HashMap<String, Integer> getWordFrecuency(Vector<String> connectorWords){
+    public HashMap<String, Integer> getWordFrequency(Vector<String> connectorWords){
         //> Decidir si guardar los espacios
         HashMap<String, Integer> wordFrequency = new HashMap<>();
         for (Sentence sentence : mContent) {

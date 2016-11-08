@@ -25,7 +25,7 @@ public class Document {
         mAuthor = new Sentence(authorName);
         mTitle = new Sentence(title);
         mContent = new Content(content);
-        mWordFrequency = mContent.getWordFrecuency(connectorWords);
+        mWordFrequency = mContent.getWordFrequency(connectorWords);
     }
 
     public HashMap<String, Integer> getWordFrequency() {
@@ -56,8 +56,8 @@ public class Document {
         mContent=content;
     }
 
-    public void updateWordFrecuency(Vector<String> connectorWords){
-        mWordFrequency=mContent.getWordFrecuency(connectorWords);
+    public void updateWordFrequency(Vector<String> connectorWords){
+        mWordFrequency=mContent.getWordFrequency(connectorWords);
     }
 
     public Boolean printContent(){

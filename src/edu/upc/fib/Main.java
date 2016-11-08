@@ -82,11 +82,13 @@ public class Main {
                 }
             } else if (choice == 2) {
                 while (choice != 0) {
+
                     System.out.println("\n[ Library > Gestión de autores ]-------------------|");
                     System.out.println("| 1- Ver lista de autores                          |");
                     System.out.println("| 2- Añadir autor                                  |");
                     System.out.println("| 3- Modificar autor                               |");
                     System.out.println("| 4- Eliminar autor                                |");
+                    System.out.println("| 10- Rellenar autores                             |");
                     System.out.println("| 0- Volver atrás                                  |");
                     System.out.println("|--------------------------------------------------|");
                     System.out.print("  >> Escoge una opción: ");
@@ -123,7 +125,10 @@ public class Main {
                         String authorName = scanner.nextLine();
                         if (library.removeAutor(authorName)) System.out.println("(i) Author \""+authorName+"\" eliminado satisfactoriamente.");
                         else System.out.println("(i) No se ha encontrado el autor \""+authorName+"\"");
-                    }
+                    }else if (choice == 10) {
+                    System.out.println("\n[Library > Gestión de autores > Rellenado con autores aaaa..zzzzz");
+                    Main.add_autors(library);
+                }
                 }
             }  else if (choice == 3) {
                 while (choice != 0) {
@@ -203,6 +208,35 @@ public class Main {
                 }
             }
             System.out.println("");
+        }
+    }
+    static void add_autors(Library library) { // genera cadenas de nombres "aaaa" - "zzzz zzzz"
+        for (char i = 'a'; i <= 'z'; ++i) {
+            String temp = new String();
+            temp += i; temp += i;temp += i; temp += i;
+            library.addAutor(temp);
+            temp += i;temp += i;
+            temp = new String();
+            temp += i;temp += i;temp += i;temp += i;
+            temp += ' ';temp += i;
+            temp += i;temp += i;
+            temp += i;
+            library.addAutor(temp);
+        }
+    }
+
+    static void add_books (Library library) { // genera cadenas de nombres "aaaa" - "zzzz zzzz"
+        for (char i = 'a'; i <= 'z'; ++i) {
+            String temp = new String();
+            temp += i; temp += i;temp += i; temp += i;
+            library.addAutor(temp);
+            temp += i;temp += i;
+            temp = new String();
+            temp += i;temp += i;temp += i;temp += i;
+            temp += ' ';temp += i;
+            temp += i;temp += i;
+            temp += i;
+            library.addAutor(temp);
         }
     }
 }

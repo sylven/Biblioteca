@@ -49,8 +49,10 @@ public class Main {
                             if (authorDocumentTitles.size() == 0) {
                                 System.out.println("(i) El autor \"" + authorName + "\" no tiene documentos.");
                             } else {
+                                int i = 1;
                                 for (String s : authorDocumentTitles) {
-                                    System.out.println(s);
+                                    System.out.println(i + ". " + s);
+                                    i++;
                                 }
                             }
                         } else {
@@ -59,12 +61,14 @@ public class Main {
                     } else if (choice == 2) {
                         System.out.println("\n[Library > Consulta > Consulta de autor por prefijo ]");
                         System.out.print("  >> Introduce el prefijo: ");
-                        String author = scanner.nextLine();
-                        Set<String> authors = library.getAuthorsByPrefix(author);
-                        if (authors.size() == 0) System.out.println("(i) No hay autores con ese prefijo.");
+                        String prefijo = scanner.nextLine();
+                        Set<String> authors = library.getAuthorsByPrefix(prefijo);
+                        if (authors.size() == 0) System.out.println("(i) No hay autores con el prefijo " + prefijo + ".");
                         else {
+                            int i = 1;
                             for (String s: authors){
-                                System.out.println(s);
+                                System.out.println(i + ". " + s);
+                                i++;
                             }
                         }
                     } else if (choice == 3) {
@@ -93,8 +97,10 @@ public class Main {
                         Set<String> authorNames = library.getAuthorNames();
                         if (authorNames.size() == 0) System.out.println("(i) No hay autores.");
                         else {
+                            int i = 1;
                             for (String s : authorNames) {
-                                System.out.println(s);
+                                System.out.println(i + ". " + s);
+                                i++;
                             }
                         }
                     } else if (choice == 2) {
@@ -136,8 +142,10 @@ public class Main {
                         Set<String> documentTitles = library.getDocumentTitles();
                         if (documentTitles.size() == 0) System.out.println("(i) No hay documentos.");
                         else {
+                            int i = 1;
                             for (String s : documentTitles) {
-                                System.out.println(s);
+                                System.out.println(i + ". " + s);
+                                i++;
                             }
                         }
                     } else if (choice == 2) {

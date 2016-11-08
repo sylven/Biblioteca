@@ -4,10 +4,7 @@ import javax.print.Doc;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.Vector;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,6 +16,7 @@ public class Documents {
     //> Vector de palabras con su frecuecia global
     private HashMap<String, Integer> mWordFrecuency;
 
+    // Lista de palabras funcionales
     private Vector<String> connectorWords;
 
     public Documents() {
@@ -38,7 +36,7 @@ public class Documents {
         }
     }
 
-    public Boolean addDocument(String authorName, String title, Vector<String> content, Author author) {
+    public boolean addDocument(String authorName, String title, Vector<String> content, Author author) {
         Document newDocument = new Document(authorName, title, content, connectorWords);
         author.addDocument(newDocument);
         Vector<Document> vDocuments;
@@ -51,16 +49,28 @@ public class Documents {
 //            }
 
             vDocuments = mDocuments.get(title);
-            vDocuments.add(newDocument);
-            mDocuments.remove(title);
-            mDocuments.put(title, vDocuments);
         } else {
             vDocuments = new Vector<>();
-            vDocuments.add(newDocument);
-            mDocuments.put(title, vDocuments);
         }
-        //updateWordFrecuency(content);
+        vDocuments.add(newDocument);
+        mDocuments.put(title, vDocuments);
+        updateWordFrecuency(newDocument.getWordFrequency(), true);
         return true;
+    }
+
+    // Recalcular la frecuencia global de todas las palabras despues de cada modificacion no es eficiente
+    // Esta funcion se usara para añadir y quitar frecuencias
+    // Cuando haya modificaciones o borrados, se llamara primero a esta funcion para quitar la frencuencia de las palabras
+    public void updateWordFrecuency(HashMap<String, Integer> wordFrequency, boolean increase) {
+        for (Map.Entry<String, Integer> entry : wordFrequency.entrySet()) {
+            String word = entry.getKey();
+            if (!increase)
+                mWordFrecuency.put(word, mWordFrecuency.get(word) - entry.getValue());
+            else if (mWordFrecuency.containsKey(word))
+                mWordFrecuency.put(word, entry.getValue() + mWordFrecuency.get(word));
+            else
+                mWordFrecuency.put(word, entry.getValue());
+        }
     }
 
 //    public Boolean updateWordFrecuency(Vector<String> content) {
@@ -109,7 +119,7 @@ public class Documents {
         return mDocuments.keySet();
     }
 
-    public Boolean deleteDocument(String authorName, String title){
+    public boolean deleteDocument(String authorName, String title){
         Vector<Document> docs=mDocuments.get(title);
         Content content = null;
         Document d=null;
@@ -128,7 +138,7 @@ public class Documents {
         return true;
     }
 
-    public Boolean modifyDocumentAuthor(String authorName, String title, String newAuthorName){
+    public boolean modifyDocumentAuthor(String authorName, String title, String newAuthorName){
         Vector<Document> docs=mDocuments.get(title);
         for (Document doc:docs){
             Sentence sentenceAuthor=doc.getAuthor();
@@ -141,7 +151,7 @@ public class Documents {
         return true;
     }
 
-    public Boolean modifyDocumentTitle(String authorName, String title, String newTitle){
+    public boolean modifyDocumentTitle(String authorName, String title, String newTitle){
         Vector<Document> docs=mDocuments.get(title);
         Document oldDoc=null;
         for(Document doc:docs){
@@ -168,7 +178,7 @@ public class Documents {
         return true;
     }
 
-    public Boolean modifyDocumentContent(String authorName, String title, Vector<String> newContent){
+    public boolean modifyDocumentContent(String authorName, String title, Vector<String> newContent){
         Vector<Document> docs=mDocuments.get(title);
         Content content= new Content(newContent);
         Content oldContent= null;
@@ -188,7 +198,7 @@ public class Documents {
         return true;
 }
 
-    public Boolean printContent(String author, String title){
+    public boolean printContent(String author, String title){
         Vector<Document> docs=mDocuments.get(title);
         for(Document doc:docs){
             Sentence sentenceAuthor=doc.getAuthor();

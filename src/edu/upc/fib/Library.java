@@ -49,6 +49,7 @@ public class Library {
 
 
     public Boolean addDocument(String authorName, String title, Vector<String> content) {
+        // Probamos a crear el autor por si no existe, para asegurarnos que el documento se añade a algun autor.
         mAuthors.addAuthor(authorName);
         return mDocuments.addDocument(authorName, title, content, mAuthors.getAuthor(authorName));
     }

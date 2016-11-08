@@ -20,7 +20,7 @@ public class Content {
         for (Sentence sentence : mContent) {
             for (int i = 0; i < sentence.getSize(); i++) {
                 String word = sentence.getWord(i);
-                if(!connectorWords.contains(word) && !word.equals(" ")) {
+                if(!connectorWords.contains(word) && word.length() > 1) {
                     //> Ignorar palabras funcionales y signos de puntuación
                     //> Pensar si separar esta operación del constructor de documento y llamarla desde Documentos
                     //> Pensar como pasarle la lista de palabras funcionales a esta clase

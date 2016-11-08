@@ -28,6 +28,10 @@ public class Document {
         mWordFrequency = mContent.getWordFrecuency(connectorWords);
     }
 
+    public HashMap<String, Integer> getWordFrequency() {
+        return mWordFrequency;
+    }
+
     public Sentence getAuthor() {
         return mAuthor;
     }

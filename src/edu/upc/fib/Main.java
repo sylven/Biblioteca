@@ -112,7 +112,7 @@ public class Main {
                         if (library.addAutor(authorName)) {
                             System.out.println("(i) Author \"" + authorName + "\" añadido satisfractoriamente.");
                         } else {
-                            System.out.println("(i) El autor \"" + authorName + "\" ya existe.");
+                            System.out.println("(i) Error: El autor \"" + authorName + "\" ya existe.");
                         }
                     } else if (choice == 3) {
                         System.out.println("\n[Library > Gestión de autores > Modificar autor]");
@@ -124,7 +124,7 @@ public class Main {
                             System.out.println("(i) Author \"" + authorName + "\" modificado a \"" + newAuthorName +
                                     "\" satisfactoriamente.");
                         } else {
-                            System.out.println("(i) No se ha encontrado el autor \"" + authorName + "\".");
+                            System.out.println("(i) Error: No se ha encontrado el autor \"" + authorName + "\".");
                         }
                     } else if (choice == 4) {
                         System.out.println("\n[Library > Gestión de autores > Eliminar autor]");
@@ -133,7 +133,7 @@ public class Main {
                         if (library.removeAuthor(authorName)) {
                             System.out.println("(i) Author \"" + authorName + "\" eliminado satisfactoriamente.");
                         } else {
-                            System.out.println("(i) No se ha encontrado el autor \"" + authorName + "\".");
+                            System.out.println("(i) Error: No se ha encontrado el autor \"" + authorName + "\".");
                         }
                     }
                 }
@@ -167,7 +167,7 @@ public class Main {
                         System.out.print("  >> Introduce el título: ");
                         String title = scanner.nextLine();
 
-                        System.out.println("  >> Introduce el contenido (finalizar con una línea con un 0): ");
+                        System.out.println("  >> Introduce el contenido (finalizar con una línea con un 0):");
                         Vector<String> vContenido = new Vector<>();
                         String content = scanner.nextLine();
                         do {
@@ -178,7 +178,7 @@ public class Main {
                         if (library.addDocument(authorName, title, vContenido)) {
                             System.out.println("(i) Documento añadido satisfactoriamente.");
                         } else {
-                            System.out.println("(i) El documento no se ha añadido porque ya existe.");
+                            System.out.println("(i) Error: El documento no se ha añadido porque ya existe.");
                         }
                     } else if (choice == 3) {
                         System.out.println("\n[Library > Gestión de documentos > Modificar documento]");
@@ -202,23 +202,31 @@ public class Main {
                                     System.out.print("  >> Introduce el nuevo autor del documento: ");
                                     String newAuthorName = scanner.nextLine();
                                     if(library.modifyDocumentAuthor(authorName, title, newAuthorName)) {
-                                        System.out.print("(i) Document modificado satisfactoriamente.");
+                                        System.out.println("(i) Autor del documento modificado satisfactoriamente.");
                                     } else {
-                                        System.out.println("(i) El nuevo autor no existe.");
+                                        System.out.println("(i) Error: El nuevo autor ya tiene un documento con el mismo título.");
                                     }
                                 } else if (choice == 2) {
                                     System.out.print("  >> Introduce el nuevo titulo del documento: ");
                                     String newTitle = scanner.nextLine();
-                                    //if(library.modifyDocumentTitle(authorName,title, newTitle)) System.out.print("(i) Document modificado satisfactoriamente.");
+                                    if(library.modifyDocumentTitle(authorName, title, newTitle)) {
+                                        System.out.println("(i) Título del documento modificado satisfactoriamente.");
+                                    } else {
+                                        System.out.println("(i) Error: El autor ya tenía un documento con el mismo título.");
+                                    }
                                 } else if (choice == 3) {
-                                    System.out.print("  >> Introduce el nuevo contenido del documento(finalizar con una línea con un 0): ");
+                                    System.out.println("  >> Introduce el nuevo contenido del documento (finalizar con una línea con un 0):");
                                     String content = scanner.nextLine();
                                     Vector<String> newContent = new Vector<>();
                                     while (!content.equals("0")) {
                                         newContent.add(content);
                                         content = scanner.nextLine();
                                     }
-                                    //if(library.modifyDocumentContent(authorName,title, newContent)) System.out.print("(i) Document modificado satisfactoriamente.");
+                                    if(library.modifyDocumentContent(authorName, title, newContent)) {
+                                        System.out.println("(i) Contenido del documento modificado satisfactoriamente.");
+                                    } else {
+                                        System.out.println();
+                                    }
                                 }
                             }
                         } else {
@@ -243,4 +251,5 @@ public class Main {
             System.out.println("");
         }
     }
+
 }

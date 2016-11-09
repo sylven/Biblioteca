@@ -13,14 +13,13 @@ public class Authors {
 
     public boolean addAuthor(String authorName) {
         if (!existsAuthor(authorName)) {
-            Author newAuthor = new Author(authorName);
-            mAuthors.put(authorName, newAuthor);
+            mAuthors.put(authorName, new Author(authorName));
             return true;
         }
         return false;
     }
 
-    public boolean modifyAuthor(String authorName, String newAuthorName) {
+    public boolean modifyAuthor(String authorName, String newAuthorName, Documents documents) {
         if (existsAuthor(authorName)) {
             Author newAuthor = mAuthors.get(authorName);
             newAuthor.modifyName(newAuthorName);
@@ -66,48 +65,5 @@ public class Authors {
     public SortedMap<String, Author> getAutorsByPrefix(String prefix){
         return mAuthors.subMap(prefix, prefix + Character.MAX_VALUE);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-//    public Boolean removeDocument(String authorName, String title){
-//        Author author = mAuthors.get(authorName);
-//        if(author.removeDocument(title)) mAuthors.remove(authorName);
-//        return true;
-//    }
-//
-//    public Boolean modifyDocumentAuthor(String authorName, String title, String newAuthorName){
-//        Author author= mAuthors.get(authorName);
-//        Document doc=author.getDocument(title);
-//        if(author.removeDocument(title)) mAuthors.remove(authorName);
-//        if (!existsAuthor(newAuthorName)) {
-//            mAuthors.put(newAuthorName, new Author(newAuthorName));
-//        }
-//        Author newAuthor= mAuthors.get(newAuthorName);
-//        newAuthor.addDocument(doc);
-//        return true;
-//    }
-//
-//    public Boolean modifyDocumentTitle(String authorName, String title, String newTitle){
-//        Author author= mAuthors.get(authorName);
-//        author.modifyDocumentTitle(title, newTitle);
-//        return true;
-//    }
-//
-//    public Boolean modifyDocumentContent(String authorName, String title, Vector<String> newContent){
-//        Author author= mAuthors.get(authorName);
-//        author.modifyDocumentContent(title, newContent);
-//        return true;
-//    }
-//
-
 
 }

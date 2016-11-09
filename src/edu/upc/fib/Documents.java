@@ -1,5 +1,6 @@
 package edu.upc.fib;
 
+import javax.print.Doc;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -111,16 +112,47 @@ public class Documents {
         }
     }
 
-    public boolean modifyDocumentAuthor(Author author, String title, Author newAuthor) {
-        Vector<Document> newVDocuments = mDocuments.get(title);
-        for (Document document : newVDocuments) {
-            String author = document.getAuthor().toString();
-            if (authorName.equals(author)) {
-                document.setAuthor(new Sentence(newAuthorName));
-                return true;
-            }
+    public void modifyDocumentAuthor(Author author, String title, Author newAuthor) {
+        Hashtable<Author, Document> newDocuments = mDocuments.get(title);
+        Document document = newDocuments.get(author);
+        document.setAuthor(newAuthor);
+        newDocuments.put(newAuthor, document);
+        newDocuments.remove(author);
+        mDocuments.replace(title, newDocuments);
+
+        author.removeDocument(title);
+        newAuthor.addDocument(document);
+    }
+
+    public void modifyDocumentTitle(Author author, String title, String newTitle) {
+        Document document = mDocuments.get(title).get(author);
+        document.setTitle(new Sentence(newTitle));
+
+        // Borrar documento de donde estaba
+        mDocuments.get(title).remove(author);
+        if (mDocuments.get(title).size() == 0) {
+            mDocuments.remove(title);
         }
-        return false;
+
+        // Añadir el documento donde tiene que estar
+        Hashtable<Author, Document> newDocuments;
+        if (mDocuments.containsKey(newTitle)) {
+            newDocuments = mDocuments.get(newTitle);
+        } else {
+            newDocuments = new Hashtable<>();
+        }
+        newDocuments.put(author, document);
+        mDocuments.put(newTitle, newDocuments);
+
+        // Modificarlo dentro del autor
+        author.removeDocument(title);
+        author.addDocument(document);
+    }
+
+    public void modifyDocumentContent(Author author, String title, Vector<String> newContent) {
+        updateWordFrequency(mDocuments.get(title).get(author), false);
+        mDocuments.get(title).get(author).setContent(new Content(newContent));
+        updateWordFrequency(mDocuments.get(title).get(author), true);
     }
 
     public boolean removeDocument(Author author, String title) {
@@ -153,115 +185,5 @@ public class Documents {
         }
         return false;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-
-
-
-//
-//    public boolean modifyDocumentTitle(String authorName, String title, String newTitle) {
-//        Vector<Document> docs=mDocuments.get(title);
-//        Document oldDoc=null;
-//        for(Document doc:docs){
-//            Sentence sentenceAuthor=doc.getAuthor();
-//            String stringAuthor=sentenceAuthor.toString();
-//            if(stringAuthor.equals(authorName)){
-//                oldDoc=doc;
-//            }
-//        }
-//        docs.remove(oldDoc);
-//        mDocuments.remove(title);
-//        if(!docs.isEmpty())mDocuments.put(title,docs);
-//        oldDoc.setTitle(new Sentence(newTitle));
-//        if(mDocuments.containsKey(newTitle)){
-//            Vector<Document> documents=mDocuments.get(newTitle);
-//            documents.add(oldDoc);
-//            mDocuments.put(newTitle,documents);
-//        }
-//        else{
-//            Vector<Document> documents =new Vector<>();
-//            documents.add(oldDoc);
-//            mDocuments.put(newTitle,documents);
-//        }
-//        return true;
-//    }
-//
-//    public boolean modifyDocumentContent(String authorName, String title, Vector<String> newContent) {
-//        Vector<Document> docs=mDocuments.get(title);
-//        Content content= new Content(newContent);
-//        Content oldContent= null;
-//        Document d=null;
-//        for (Document doc:docs){
-//            Sentence sentenceAuthor=doc.getAuthor();
-//            String stringAuthor=sentenceAuthor.toString();
-//            if(stringAuthor.equals(authorName)){
-//                d=doc;
-//                oldContent=doc.getContent();
-//                doc.setContent(content);
-//            }
-//        }
-//        d.updateWordFrequency(connectorWords);
-//        //this.deleteWordFrecuency(oldContent,d);
-//        //this.updatemWordFrecuency(newContent,d);
-//        return true;
-//    }
-//
-//    public boolean printContent(String author, String title){
-//        Vector<Document> docs=mDocuments.get(title);
-//        for(Document doc:docs){
-//            Sentence sentenceAuthor=doc.getAuthor();
-//            String stringAuthor=sentenceAuthor.toString();
-//            if(stringAuthor.equals(author)){
-//                doc.printContent();
-//            }
-//        }
-//        return true;
-//    }
-
-
-   /* public String getTituloAutor(Document doc) {
-        Set<Sentence> Titulos= mDocuments.keySet();
-        String ret=new String();
-        System.out.println("12");
-        for(Sentence F: Titulos){
-            System.out.println("13");
-            Vector<Document> docs=mDocuments.get(F);
-            System.out.println(docs.size());
-            for(Document documento: docs){
-                System.out.println("14");
-                if(documento.getTitulo()==doc.getTitulo()) {
-                    System.out.println("15");
-                    ret = documento.getTituloS();
-                }
-            }
-        }
-        return ret;
-    }*/
-
 
 }

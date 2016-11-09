@@ -18,7 +18,7 @@ public class Library {
     }
 
     public boolean modifyAuthor(String authorName, String newAuthorName) {
-        return mAuthors.modifyAuthor(authorName, newAuthorName);
+        return mAuthors.modifyAuthor(authorName, newAuthorName, mDocuments);
     }
 
     public boolean removeAuthor(String authorName) {
@@ -60,23 +60,31 @@ public class Library {
     }
 
     public boolean modifyDocumentAuthor(String authorName, String title, String newAuthorName) {
-        if (mAuthors.existsAuthor(authorName) && mAuthors.existsAuthor(newAuthorName)) {
-            return mDocuments.modifyDocumentAuthor(mAuthors.getAuthor(authorName), title, mAuthors.getAuthor(newAuthorName));
+        addAutor(newAuthorName);
+        if (mAuthors.existsAuthor(authorName)
+                && mAuthors.existsAuthor(newAuthorName)
+                && !existsDocument(newAuthorName, title)) {
+            mDocuments.modifyDocumentAuthor(mAuthors.getAuthor(authorName), title, mAuthors.getAuthor(newAuthorName));
+            return true;
         }
         return false;
+    }
 
+    public boolean modifyDocumentTitle(String authorName, String title, String newTitle) {
+        if (mAuthors.existsAuthor(authorName)
+                && !existsDocument(authorName, newTitle)) {
+            mDocuments.modifyDocumentTitle(mAuthors.getAuthor(authorName), title, newTitle);
+            return true;
+        }
+        return false;
+    }
 
-
-        // Asegurarse que el autor antiguo existe
-        // Quitar documento del autor antiguo
-        // Asegurarse que el nuevo autor existe
-        // Añadir documento al nuevo autor
-
-        // Quitar documento de Documentos y añadir el nuevo con el nuevo autor
-
-        //mDocuments.modifyDocumentAuthor(authorName,title,newAuthorName);
-        //mAuthors.modifyDocumentAuthor(authorName,title,newAuthorName);
-        return true;
+    public boolean modifyDocumentContent(String authorName, String title, Vector<String> newContent) {
+        if (existsDocument(authorName, title)) {
+            mDocuments.modifyDocumentContent(mAuthors.getAuthor(authorName), title, newContent);
+            return true;
+        }
+        return false;
     }
 
     public static void main(String[] args) {
@@ -88,23 +96,6 @@ public class Library {
         library.removeAuthor(authorName2);
     }
 
-
-
-
-
-//
-//    public Boolean modifyDocumentTitle(String authorName, String title, String newTitle){
-//        mDocuments.modifyDocumentTitle(authorName,title,newTitle);
-//        mAuthors.modifyDocumentTitle(authorName,title,newTitle);
-//        return true;
-//    }
-//
-//    public Boolean modifyDocumentContent(String authorName, String title, Vector<String> newContent){
-//        mDocuments.modifyDocumentContent(authorName,title,newContent);
-//        mAuthors.modifyDocumentContent(authorName,title,newContent);
-//        return true;
-//    }
-//
 //    public Boolean printContent(String author, String title){
 //        mDocuments.printContent(author,title);
 //        return true;

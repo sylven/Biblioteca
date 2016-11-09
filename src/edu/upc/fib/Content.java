@@ -33,4 +33,11 @@ public class Content {
         return wordFrequency;
     }
 
+    public Vector<String> toStrings() {
+        Vector<String> vContent = new Vector<>();
+        for (Sentence sentence : mContent) {
+            vContent.add(sentence.toString());
+        }
+        return vContent;
+    }
 }

@@ -42,6 +42,13 @@ public class Library {
         return mDocuments.getDocumentTitles();
     }
 
+    public Vector<String> getDocumentContent(String authorName, String title) {
+        if (existsDocument(authorName, title)) {
+            return mDocuments.getDocumentContent(mAuthors.getAuthor(authorName), title);
+        }
+        return new Vector<>();
+    }
+
     // Mejorar para incluir a los autores?
     public Set<String> getAuthorDocumentTitles(String authorName) {
         return mAuthors.getAuthorDocumentTitles(authorName);

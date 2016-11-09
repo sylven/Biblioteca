@@ -27,6 +27,10 @@ public class Document {
         return mTitle;
     }
 
+    public Content getContent() {
+        return mContent;
+    }
+
     public void setAuthor(Author author) {
         mAuthor = author;
     }

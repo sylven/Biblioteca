@@ -74,11 +74,13 @@ public class Main {
                     } else if (choice == 3) {
                         System.out.println("\n[Library > Consulta > Consulta contenido por autor y título]");
                         System.out.print("  >> Introduce el autor: ");
-                        String author = scanner.nextLine();
+                        String authorName = scanner.nextLine();
                         System.out.print("  >> Introduce el título: ");
                         String title = scanner.nextLine();
-                        System.out.println("To be implemented.");
-                        //library.printContent(author,title);
+                        Vector<String> content = library.getDocumentContent(authorName, title);
+                        for (String s : content) {
+                            System.out.println(s);
+                        }
                     }
                 }
             } else if (choice == 2) {

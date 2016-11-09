@@ -177,6 +177,10 @@ public class Documents {
         return mDocuments.keySet();
     }
 
+    public Vector<String> getDocumentContent(Author author, String title) {
+        return mDocuments.get(title).get(author).getContent().toStrings();
+    }
+
     public boolean existsDocument(Author author, String title) {
         if (mDocuments.containsKey(title)) {
             if (mDocuments.get(title).containsKey(author)) {

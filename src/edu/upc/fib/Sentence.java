@@ -5,33 +5,63 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Sentence implements Comparable<Sentence> {
-    private Vector<String> mWords;
+    private Vector<String> mWords; // Vector de las palabras de la frase
 
     public Sentence(String sentence) {
+        // Expresión regular para partir la frase en palabras, signos y espacios.
         Pattern pattern = Pattern.compile("([A-Za-z'ÁáÄäÀàÉéËëÈèÍíÏïÌìÓóÖöÒòÚúÜüÙùÑñÇç-])+|.");
         Matcher matcher = pattern.matcher(sentence);
         mWords = new Vector<>();
-        while (matcher.find())
-            if (!matcher.group().equals(" "))
+        while (matcher.find()) {
+            if (!matcher.group().equals(" ")) {
                 mWords.add(matcher.group());
+            }
+        }
+    }
+
+    public int getSize() {
+        return mWords.size();
     }
 
     public String getWord(int index) {
         return mWords.get(index);
     }
 
-    // Size or Length?
-    public int getSize() {
-        return mWords.size();
-    }
-
     public String toString() {
+        // Usar StringBuilder ??????????????????????????????????????????????????????????????????????????
         String ret = "";
         for (String word : mWords) {
-            ret += word;
+            if (ret == "") {
+                ret = word;
+            } else {
+                ret += " " + word;
+            }
         }
         return ret;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Size or Length?
+
+
+
 
     public Vector<String> getWords() {
         return mWords;

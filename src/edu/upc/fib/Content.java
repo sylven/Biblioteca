@@ -15,15 +15,12 @@ public class Content {
     }
 
     public HashMap<String, Integer> getWordFrequency(Vector<String> connectorWords){
-        //> Decidir si guardar los espacios
         HashMap<String, Integer> wordFrequency = new HashMap<>();
         for (Sentence sentence : mContent) {
             for (int i = 0; i < sentence.getSize(); i++) {
                 String word = sentence.getWord(i);
+                // Si no es una palabra funcional y su longitud es mayor a 1 carácter => la guardamos
                 if(!connectorWords.contains(word) && word.length() > 1) {
-                    //> Ignorar palabras funcionales y signos de puntuación
-                    //> Pensar si separar esta operación del constructor de documento y llamarla desde Documentos
-                    //> Pensar como pasarle la lista de palabras funcionales a esta clase
                     if (wordFrequency.containsKey(word)) {
                         wordFrequency.put(word, wordFrequency.get(word) + 1);
                     } else {
@@ -34,6 +31,25 @@ public class Content {
         }
         return wordFrequency;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public Vector<Sentence> getContent() {
         return mContent;

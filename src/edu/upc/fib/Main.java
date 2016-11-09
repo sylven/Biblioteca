@@ -45,7 +45,7 @@ public class Main {
                         System.out.print("  >> Introduce el nombre del autor: ");
                         String authorName = scanner.nextLine();
                         if (library.existsAuthor(authorName)) {
-                            Vector<String> authorDocumentTitles = library.getAuthorDocumentTitles(authorName);
+                            Set<String> authorDocumentTitles = library.getAuthorDocumentTitles(authorName);
                             if (authorDocumentTitles.size() == 0) {
                                 System.out.println("(i) El autor \"" + authorName + "\" no tiene documentos.");
                             } else {
@@ -77,7 +77,8 @@ public class Main {
                         String author = scanner.nextLine();
                         System.out.print("  >> Introduce el título: ");
                         String title = scanner.nextLine();
-                        library.printContent(author,title);
+                        System.out.println("To be implemented.");
+                        //library.printContent(author,title);
                     }
                 }
             } else if (choice == 2) {
@@ -95,8 +96,9 @@ public class Main {
                     if (choice == 1) {
                         System.out.println("\n[Library > Gestión de autores > Ver lista de autores]");
                         Set<String> authorNames = library.getAuthorNames();
-                        if (authorNames.size() == 0) System.out.println("(i) No hay autores.");
-                        else {
+                        if (authorNames.size() == 0) {
+                            System.out.println("(i) No hay autores.");
+                        } else {
                             int i = 1;
                             for (String s : authorNames) {
                                 System.out.println(i + ". " + s);
@@ -105,28 +107,34 @@ public class Main {
                         }
                     } else if (choice == 2) {
                         System.out.println("\n[Library > Gestión de autores > Añadir autor]");
-
-                        // Do while hasta que introduzca un valor válido?
                         System.out.print("  >> Introduce el nombre del autor: ");
                         String authorName = scanner.nextLine();
-
-                        if (library.addAutor(authorName)) System.out.println("(i) Author \""+authorName+"\" añadido satisfractoriamente.");
-                        else System.out.println("(i) El autor \""+authorName+"\" ya existe.");
+                        if (library.addAutor(authorName)) {
+                            System.out.println("(i) Author \"" + authorName + "\" añadido satisfractoriamente.");
+                        } else {
+                            System.out.println("(i) El autor \"" + authorName + "\" ya existe.");
+                        }
                     } else if (choice == 3) {
                         System.out.println("\n[Library > Gestión de autores > Modificar autor]");
                         System.out.print("  >> Introduce el nombre del autor: ");
                         String authorName = scanner.nextLine();
                         System.out.print("  >> Introduce el nuevo nombre del autor: ");
                         String newAuthorName = scanner.nextLine();
-                        if (library.modifyAuthor(authorName, newAuthorName))
-                            System.out.println("(i) Author \""+authorName+"\" modificado a \""+newAuthorName+"\" satisfactoriamente.");
-                        else System.out.println("(i) No se ha encontrado el autor \""+authorName+"\".");
+                        if (library.modifyAuthor(authorName, newAuthorName)) {
+                            System.out.println("(i) Author \"" + authorName + "\" modificado a \"" + newAuthorName +
+                                    "\" satisfactoriamente.");
+                        } else {
+                            System.out.println("(i) No se ha encontrado el autor \"" + authorName + "\".");
+                        }
                     } else if (choice == 4) {
                         System.out.println("\n[Library > Gestión de autores > Eliminar autor]");
                         System.out.print("  >> Introduce el nombre del autor: ");
                         String authorName = scanner.nextLine();
-                        if (library.removeAutor(authorName)) System.out.println("(i) Author \""+authorName+"\" eliminado satisfactoriamente.");
-                        else System.out.println("(i) No se ha encontrado el autor \""+authorName+"\".");
+                        if (library.removeAuthor(authorName)) {
+                            System.out.println("(i) Author \"" + authorName + "\" eliminado satisfactoriamente.");
+                        } else {
+                            System.out.println("(i) No se ha encontrado el autor \"" + authorName + "\".");
+                        }
                     }
                 }
             }  else if (choice == 3) {
@@ -167,28 +175,34 @@ public class Main {
                             content = scanner.nextLine();
                         } while (!content.equals("0"));
 
-                        if (library.addDocument(authorName, title, vContenido)) System.out.println("(i) Documento añadido satisfactoriamente.");
-                        else System.out.println("El documento no se ha añadido porque ya existe.");
+                        if (library.addDocument(authorName, title, vContenido)) {
+                            System.out.println("(i) Documento añadido satisfactoriamente.");
+                        } else {
+                            System.out.println("(i) El documento no se ha añadido porque ya existe.");
+                        }
                     } else if (choice == 3) {
                         System.out.println("\n[Library > Gestión de documentos > Modificar documento]");
                         System.out.print("  >> Introduce el nombre del autor: ");
                         String authorName = scanner.nextLine();
                         System.out.print("  >> Introduce el título del documento: ");
                         String title = scanner.nextLine();
-                        System.out.println("| 1- Modificar Autor                               |");
-                        System.out.println("| 2- Modificar Titulo                              |");
-                        System.out.println("| 3- Modificar Contenido                           |");
+                        System.out.println("\n[ Library > Gestión de documentos > Modificar ]----|");
+                        System.out.println("| 1- Modificar autor                               |");
+                        System.out.println("| 2- Modificar título                              |");
+                        System.out.println("| 3- Modificar contenido                           |");
+                        System.out.println("| 0- Volver atrás                                  |");
+                        System.out.println("|--------------------------------------------------|");
                         choice = scanner.nextInt();
                         scanner.nextLine();
-                        if(choice==1){
+                        if(choice == 1){
                             System.out.print("  >> Introduce el nuevo autor del documento: ");
                             String newAuthorName = scanner.nextLine();
-                            if(library.modifyDocumentAuthor(authorName,title, newAuthorName)) System.out.print("(i) Document modificado satisfactoriamente.");
-                        }else if(choice==2){
+                            //if(library.modifyDocumentAuthor(authorName,title, newAuthorName)) System.out.print("(i) Document modificado satisfactoriamente.");
+                        } else if(choice == 2) {
                             System.out.print("  >> Introduce el nuevo titulo del documento: ");
                             String newTitle = scanner.nextLine();
-                            if(library.modifyDocumentTitle(authorName,title, newTitle)) System.out.print("(i) Document modificado satisfactoriamente.");
-                        }else if (choice==3){
+                            //if(library.modifyDocumentTitle(authorName,title, newTitle)) System.out.print("(i) Document modificado satisfactoriamente.");
+                        } else if (choice == 3) {
                             System.out.print("  >> Introduce el nuevo contenido del documento(finalizar con una línea con un 0): ");
                             String content = scanner.nextLine();
                             Vector<String> newContent = new Vector<>();
@@ -196,7 +210,7 @@ public class Main {
                                 newContent.add(content);
                                 content = scanner.nextLine();
                             }
-                            if(library.modifyDocumentContent(authorName,title, newContent)) System.out.print("(i) Document modificado satisfactoriamente.");
+                            //if(library.modifyDocumentContent(authorName,title, newContent)) System.out.print("(i) Document modificado satisfactoriamente.");
                         }
                     } else if (choice == 4) {
                         System.out.println("\n[Library > Gestión de documentos > Eliminar documento]");
@@ -204,7 +218,12 @@ public class Main {
                         String authorName = scanner.nextLine();
                         System.out.print("  >> Introduce el título del documento: ");
                         String title = scanner.nextLine();
-                        if(library.deleteDocument(authorName,title)) System.out.print("(i) Document eliminado satisfactoriamente.");
+                        if (library.removeDocument(authorName, title)) {
+                            System.out.println("(i) Documento eliminado satisfactoriamente.");
+                        } else {
+                            System.out.println("(i) El documento \"" + title + "\" del autor \"" + authorName +
+                                    "\" no existe.");
+                        }
                     }
                 }
             }

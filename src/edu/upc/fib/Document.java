@@ -4,45 +4,52 @@ import java.util.HashMap;
 import java.util.Vector;
 
 public class Document {
-    private Sentence mAuthor;
+    private Author mAuthor;
     private Sentence mTitle;
     private Content mContent;
 
-    //> Vector de palabras y su frecuencia dentro de este documento
-    private HashMap<String, Integer> mWordFrequency;
+    private HashMap<String, Integer> mWordFrequency; // Frecuencia de cada palabra en este documento
+    //private HashMap<String, Integer> mWordsWeight; // Peso de cada palabra en este documento
+    //private HashMap<Document, Integer> mSimilarDocuments; // Documentos parecidos a este
 
-    //> Estructura de datos que calcule el peso de cada palabra dentro de un documento (que se actualiza despues de
-        // cada modificacion o alta
-        // MOVER dentro de documento?
-    private HashMap<String, Integer> mWordsWeight;
-
-    //> Estructura que contenga parecidos entre mDocuments
-        // Probablemente igual que la de los pesos de las palabras
-        // MOVER dentro de documento?
-    private HashMap<Document, Integer> mSimilarDocuments;
-
-    public Document(String authorName, String title, Vector<String> content, Vector<String> connectorWords) {
-        mAuthor = new Sentence(authorName);
+    public Document(Author author, String title, Vector<String> content, Vector<String> connectorWords) {
+        mAuthor = author;
         mTitle = new Sentence(title);
         mContent = new Content(content);
         mWordFrequency = mContent.getWordFrequency(connectorWords);
     }
 
+    public Sentence getTitle() {
+        return mTitle;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public HashMap<String, Integer> getWordFrequency() {
         return mWordFrequency;
     }
 
-    public Sentence getAuthor() {
+
+    public Author getAuthor() {
         return mAuthor;
     }
 
-    public void setAuthor(Sentence author) {
-        mAuthor=author;
+    public void setAuthor(Author author) {
+        mAuthor = author;
     }
 
-    public Sentence getTitle() {
-        return mTitle;
-    }
+
 
     public void setTitle(Sentence title) {
         mTitle=title;

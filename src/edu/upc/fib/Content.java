@@ -1,6 +1,7 @@
 package edu.upc.fib;
 
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.InputMismatchException;
 import java.util.Vector;
 
@@ -14,8 +15,8 @@ public class Content {
         }
     }
 
-    public HashMap<String, Integer> getWordFrequency(Vector<String> connectorWords){
-        HashMap<String, Integer> wordFrequency = new HashMap<>();
+    public Hashtable<String, Integer> getWordFrequency(Vector<String> connectorWords){
+        Hashtable<String, Integer> wordFrequency = new Hashtable<>();
         for (Sentence sentence : mContent) {
             for (int i = 0; i < sentence.getSize(); i++) {
                 String word = sentence.getWord(i);

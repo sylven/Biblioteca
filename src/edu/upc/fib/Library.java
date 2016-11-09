@@ -31,8 +31,7 @@ public class Library {
 
     public boolean addDocument(String authorName, String title, Vector<String> content) {
         addAutor(authorName);
-        Author author = mAuthors.getAuthor(authorName);
-        return mDocuments.addDocument(author, title, content);
+        return mDocuments.addDocument(mAuthors.getAuthor(authorName), title, content);
     }
 
     public boolean removeDocument(String authorName, String title) {
@@ -56,7 +55,18 @@ public class Library {
         return mAuthors.getAutorsByPrefix(prefix).keySet();
     }
 
+    public boolean existsDocument(String authorName, String title) {
+        return mDocuments.existsDocument(mAuthors.getAuthor(authorName), title);
+    }
+
     public boolean modifyDocumentAuthor(String authorName, String title, String newAuthorName) {
+        if (mAuthors.existsAuthor(authorName) && mAuthors.existsAuthor(newAuthorName)) {
+            return mDocuments.modifyDocumentAuthor(mAuthors.getAuthor(authorName), title, mAuthors.getAuthor(newAuthorName));
+        }
+        return false;
+
+
+
         // Asegurarse que el autor antiguo existe
         // Quitar documento del autor antiguo
         // Asegurarse que el nuevo autor existe
@@ -67,6 +77,15 @@ public class Library {
         //mDocuments.modifyDocumentAuthor(authorName,title,newAuthorName);
         //mAuthors.modifyDocumentAuthor(authorName,title,newAuthorName);
         return true;
+    }
+
+    public static void main(String[] args) {
+        Library library = new Library();
+        String authorName = "Patrick Rothfuss";
+        library.addAutor(authorName);
+        String authorName2 = "George R. R. Martin";
+        library.modifyAuthor(authorName, authorName2);
+        library.removeAuthor(authorName2);
     }
 
 

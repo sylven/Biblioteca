@@ -1,6 +1,8 @@
 package edu.upc.fib;
 
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.Vector;
 
 public class Document {
@@ -8,8 +10,8 @@ public class Document {
     private Sentence mTitle;
     private Content mContent;
 
-    private HashMap<String, Integer> mWordFrequency; // Frecuencia de cada palabra en este documento
-    //private HashMap<String, Integer> mWordsWeight; // Peso de cada palabra en este documento
+    private Hashtable<String, Integer> mWordFrequency; // Frecuencia de cada palabra en este documento
+    private Hashtable<String, Double> mWordsWeight; // Peso de cada palabra en este documento
     //private HashMap<Document, Integer> mSimilarDocuments; // Documentos parecidos a este
 
     public Document(Author author, String title, Vector<String> content, Vector<String> connectorWords) {
@@ -23,6 +25,12 @@ public class Document {
         return mTitle;
     }
 
+//    public void updateWordWeight() {
+//        for(Map.Entry<String, Integer> word : mWordFrequency.entrySet()) {
+//
+//            mWordsWeight.put(word.getKey(), Math.log10(mDocuments.size()/word.getValue()));
+//        }
+//    }
 
 
 
@@ -35,8 +43,7 @@ public class Document {
 
 
 
-
-    public HashMap<String, Integer> getWordFrequency() {
+    public Hashtable<String, Integer> getWordFrequency() {
         return mWordFrequency;
     }
 

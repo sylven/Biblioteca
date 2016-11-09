@@ -8,19 +8,22 @@ import java.util.*;
 public class Documents {
     //private TreeMap<String, Vector<Document>> mDocuments; // Vector de documentos con el mismo título
     //private TreeMap<String, HashMap<String, Document>> mDocuments; // Vector de documentos con el mismo título <título, <autor, Document>>
-    private TreeMap<String, HashMap<Author, Document>> mDocuments; // Vector de documentos con el mismo título <título, <Author, Document>>
+    private TreeMap<String, Hashtable<Author, Document>> mDocuments; // Vector de documentos con el mismo título <título, <Author, Document>>
 
-    private HashMap<String, Integer> mWordFrequency; // Frecuencia de cada palabra en todos los documentos <palabra, apariciones>
+    private Hashtable<String, Integer> mWordFrequency; // Frecuencia de cada palabra en todos los documentos <palabra, apariciones>
 
     // MEJORABLE ????????????????????????????????????????????????????????????????
-    private HashMap<String, Vector<Document>> mWordDocuments; // Documentos en los que la palabra aparece <título, Vector<Document>>
+    private Hashtable<String, Vector<Document>> mWordDocuments; // Documentos en los que la palabra aparece <título, Vector<Document>>
+
+    private Hashtable<String, Double> mWordsWeight; // Peso de cada palabra en todos los documentos
 
     private Vector<String> connectorWords; // Lista de palabras funcionales
 
     public Documents() {
         mDocuments = new TreeMap<>();
-        mWordFrequency = new HashMap<>();
-        mWordDocuments = new HashMap<>();
+        mWordFrequency = new Hashtable<>();
+        mWordDocuments = new Hashtable<>();
+        mWordsWeight = new Hashtable<>();
 
         // Cargar palabras funcionales
         connectorWords = new Vector<>();
@@ -42,12 +45,12 @@ public class Documents {
         if (author.addDocument(newDocument)) {
             //Vector<Document> vDocuments;
             //HashMap<String, Document> hDocuments;
-            HashMap<Author, Document> hDocuments;
+            Hashtable<Author, Document> hDocuments;
             if (mDocuments.containsKey(title)) {
                 hDocuments = mDocuments.get(title);
             } else {
                 //hDocuments = new Vector<>();
-                hDocuments = new HashMap<>();
+                hDocuments = new Hashtable<>();
             }
             //hDocuments.add(newDocument);
             //hDocuments.put(author.getName().toString(), newDocument);
@@ -66,7 +69,7 @@ public class Documents {
     // Esta funcion se usara para añadir y quitar frecuencias
     // Cuando haya modificaciones o borrados, se llamara primero a esta funcion para quitar la frencuencia de las palabras
     public void updateWordFrequency(Document document, boolean increase) {
-        HashMap<String, Integer> wordFrequency = document.getWordFrequency();
+        Hashtable<String, Integer> wordFrequency = document.getWordFrequency();
         for (Map.Entry<String, Integer> entry : wordFrequency.entrySet()) {
             String word = entry.getKey();
             if (!increase) {
@@ -99,6 +102,25 @@ public class Documents {
                 mWordDocuments.put(word, newVDocuments);
             }
         }
+        updateWordWeight();
+    }
+
+    public void updateWordWeight() {
+        for(Map.Entry<String, Integer> word : mWordFrequency.entrySet()) {
+            mWordsWeight.put(word.getKey(), Math.log10(mDocuments.size()/word.getValue()));
+        }
+    }
+
+    public boolean modifyDocumentAuthor(Author author, String title, Author newAuthor) {
+        Vector<Document> newVDocuments = mDocuments.get(title);
+        for (Document document : newVDocuments) {
+            String author = document.getAuthor().toString();
+            if (authorName.equals(author)) {
+                document.setAuthor(new Sentence(newAuthorName));
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean removeDocument(Author author, String title) {
@@ -123,6 +145,14 @@ public class Documents {
         return mDocuments.keySet();
     }
 
+    public boolean existsDocument(Author author, String title) {
+        if (mDocuments.containsKey(title)) {
+            if (mDocuments.get(title).containsKey(author)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 
@@ -152,17 +182,7 @@ public class Documents {
 //
 
 
-//    public boolean modifyDocumentAuthor(String authorName, String title, String newAuthorName) {
-//        Vector<Document> newVDocuments = mDocuments.get(title);
-//        for (Document document : newVDocuments) {
-//            String author = document.getAuthor().toString();
-//            if (authorName.equals(author)) {
-//                document.setAuthor(new Sentence(newAuthorName));
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+
 //
 //    public boolean modifyDocumentTitle(String authorName, String title, String newTitle) {
 //        Vector<Document> docs=mDocuments.get(title);

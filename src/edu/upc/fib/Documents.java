@@ -107,6 +107,7 @@ public class Documents {
     }
 
     public void updateWordWeight() {
+        mWordsWeight = new Hashtable<>();
         for(Map.Entry<String, Integer> word : mWordFrequency.entrySet()) {
             mWordsWeight.put(word.getKey(), Math.log10(mDocuments.size()/word.getValue()));
         }

@@ -19,7 +19,7 @@ public class Authors {
         return false;
     }
 
-    public boolean modifyAuthor(String authorName, String newAuthorName, Documents documents) {
+    public boolean modifyAuthor(String authorName, String newAuthorName) {
         if (existsAuthor(authorName)) {
             Author newAuthor = mAuthors.get(authorName);
             newAuthor.modifyName(newAuthorName);
@@ -34,7 +34,7 @@ public class Authors {
         if (existsAuthor(authorName)) {
             // Delete all his documents
             for (String title : getAuthor(authorName).getDocumentTitles()) {
-                //documents.removeDocument(authorName, title);
+                documents.removeDocument(getAuthor(authorName), title);
             }
             mAuthors.remove(authorName);
             return true;

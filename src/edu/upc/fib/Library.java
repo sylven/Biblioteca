@@ -18,7 +18,7 @@ public class Library {
     }
 
     public boolean modifyAuthor(String authorName, String newAuthorName) {
-        return mAuthors.modifyAuthor(authorName, newAuthorName, mDocuments);
+        return mAuthors.modifyAuthor(authorName, newAuthorName);
     }
 
     public boolean removeAuthor(String authorName) {

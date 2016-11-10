@@ -90,6 +90,8 @@ public class Main {
                     System.out.println("| 2- Añadir autor                                  |");
                     System.out.println("| 3- Modificar autor                               |");
                     System.out.println("| 4- Eliminar autor                                |");
+                    System.out.println("| 10- Rellenar BD autores 'aaaa'-'zzzz zzzz'       |");
+                    System.out.println("| 11- Vaciar BD autores                            |");
                     System.out.println("| 0- Volver atrás                                  |");
                     System.out.println("|--------------------------------------------------|");
                     System.out.print("  >> Escoge una opción: ");
@@ -137,6 +139,10 @@ public class Main {
                         } else {
                             System.out.println("(i) Error: No se ha encontrado el autor \"" + authorName + "\".");
                         }
+                    } else if (choice == 10) {
+                        System.out.print("  Base de datos rellenada con autores: 'aaaa'");
+                    } else if (choice == 11) {
+
                     }
                 }
             }  else if (choice == 3) {
@@ -253,5 +259,11 @@ public class Main {
             System.out.println("");
         }
     }
+    public static void add_autores(){
+
+    }
 
 }
+
+//estooy probando el merge al final
+//y pareece que va

@@ -1,6 +1,10 @@
 package edu.upc.fib;
 
+import sun.reflect.generics.tree.Tree;
+
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Library {
     private Documents mDocuments;
@@ -101,6 +105,25 @@ public class Library {
         String authorName2 = "George R. R. Martin";
         library.modifyAuthor(authorName, authorName2);
         library.removeAuthor(authorName2);
+    }
+
+    public static HashMap<String, Vector<String>> getDocumentExpression(String expression){
+        HashMap<String, Vector<String>> results = new HashMap<>();
+        //-----------------------------------------------------------------------------------------
+        Vector<String> expression_cut = new Sentence(expression).getVector();
+
+            // Expresión regular para partir la frase en palabras, signos y espacios.
+            Pattern pattern = Pattern.compile("([A-Za-z0-9'ÁáÄäÀàÉéËëÈèÍíÏïÌìÓóÖöÒòÚúÜüÙùÑñÇç-])+|[^ ]");
+            Matcher matcher = pattern.matcher(expression);
+            expression_cut = new Vector<>();
+            while (matcher.find()) {
+                if (!matcher.group().equals(" ")) {
+                    expression_cut.add(matcher.group());
+                }
+            }
+
+        //-----------------------------------------------------------------------------------------
+        return results;
     }
 
 //    public Boolean printContent(String author, String title){

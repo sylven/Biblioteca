@@ -1,5 +1,6 @@
 package edu.upc.fib;
 
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.Vector;
@@ -35,6 +36,7 @@ public class Main {
                     System.out.println("| 1- Lista de títulos de un autor                  |");
                     System.out.println("| 2- Lista de autores que empiecen con un prefijo  |");
                     System.out.println("| 3- Contenido de un documento por autor y título  |");
+                    System.out.println("| 5- Busqueda por expresión                        |");
                     System.out.println("| 0- Volver atrás                                  |");
                     System.out.println("|--------------------------------------------------|");
                     System.out.print("  >> Escoge una opción: ");
@@ -81,6 +83,14 @@ public class Main {
                         for (String s : content) {
                             System.out.println(s);
                         }
+                    } else if (choice == 5) {
+                        System.out.println("\n[Library > Consulta > Consulta por expresión]");
+                        System.out.print("  >> Introduce la expresión: ");
+                        String expression = scanner.nextLine();
+                        HashMap<String, Vector<String> > content = library.getDocumentExpression(expression);
+                        /*for (String s : content) { // implementar impresion autor + vector obras que cumplen
+                            System.out.println(s);
+                        }*/
                     }
                 }
             } else if (choice == 2) {
@@ -90,8 +100,6 @@ public class Main {
                     System.out.println("| 2- Añadir autor                                  |");
                     System.out.println("| 3- Modificar autor                               |");
                     System.out.println("| 4- Eliminar autor                                |");
-                    System.out.println("| 10- Rellenar BD autores 'aaaa'-'zzzz zzzz'       |");
-                    System.out.println("| 11- Vaciar BD autores                            |");
                     System.out.println("| 0- Volver atrás                                  |");
                     System.out.println("|--------------------------------------------------|");
                     System.out.print("  >> Escoge una opción: ");
@@ -139,10 +147,6 @@ public class Main {
                         } else {
                             System.out.println("(i) Error: No se ha encontrado el autor \"" + authorName + "\".");
                         }
-                    } else if (choice == 10) {
-                        System.out.print("  Base de datos rellenada con autores: 'aaaa'");
-                    } else if (choice == 11) {
-
                     }
                 }
             }  else if (choice == 3) {
@@ -259,11 +263,5 @@ public class Main {
             System.out.println("");
         }
     }
-    public static void add_autores(){
-
-    }
 
 }
-
-//estooy probando el merge al final
-//y pareece que va

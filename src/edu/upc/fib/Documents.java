@@ -1,5 +1,6 @@
 package edu.upc.fib;
 
+import javax.print.Doc;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -103,14 +104,21 @@ public class Documents {
             }
         }
         calculateInverseDocumentFrequency();
-        document.calculateWordsWeight(mInverseDocumentFrequency);
+
+        // Actualizar el peso de todas las palabras dentro de cada document
+        for (Map.Entry<String, Hashtable<Author, Document>> titleSet : mDocuments.entrySet()) {
+            for (Map.Entry<Author, Document> authorSet : titleSet.getValue().entrySet()) {
+                authorSet.getValue().calculateWordsWeight(mInverseDocumentFrequency);
+            }
+        }
     }
 
     public void calculateInverseDocumentFrequency() {
-        mInverseDocumentFrequency = new Hashtable<>();
+        Hashtable<String, Double> newInverseDocumentFrequency = new Hashtable<>();
         for(Map.Entry<String, Double> word : mDocumentFrequency.entrySet()) {
-            mInverseDocumentFrequency.put(word.getKey(), Math.log10(mDocuments.size()/word.getValue()));
+            newInverseDocumentFrequency.put(word.getKey(), Math.log10(mDocuments.size()/word.getValue()));
         }
+        mInverseDocumentFrequency = newInverseDocumentFrequency;
     }
 
     public void modifyDocumentAuthor(Author author, String title, Author newAuthor) {

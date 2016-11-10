@@ -27,8 +27,8 @@ public class Document {
 
     public void calculateWordsWeight(Hashtable<String, Double> inverseDocumentFrequency) {
         Hashtable<String, Double> newWordsWeight = new Hashtable<>();
-        for (Map.Entry<String, Double> entry : inverseDocumentFrequency.entrySet()) {
-            mWordsWeight.put(entry.getKey(), mWordFrequency.get(entry.getKey()) * entry.getValue());
+        for (Map.Entry<String, Double> entry : mWordFrequency.entrySet()) {
+            newWordsWeight.put(entry.getKey(), (0.5 + 0.5 * entry.getValue()) * inverseDocumentFrequency.get(entry.getKey()));
         }
         mWordsWeight = newWordsWeight;
     }

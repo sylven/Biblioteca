@@ -94,18 +94,4 @@ public class Library {
         return false;
     }
 
-    public static void main(String[] args) {
-        Library library = new Library();
-        String authorName = "Patrick Rothfuss";
-        library.addAutor(authorName);
-        String authorName2 = "George R. R. Martin";
-        library.modifyAuthor(authorName, authorName2);
-        library.removeAuthor(authorName2);
-    }
-
-//    public Boolean printContent(String author, String title){
-//        mDocuments.printContent(author,title);
-//        return true;
-//    }
-
 }

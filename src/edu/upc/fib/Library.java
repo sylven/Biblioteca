@@ -119,7 +119,7 @@ public class Library {
             while (matcher.find()) {
                 if (!matcher.group().equals(" ")) {
                     expression_cut.add(matcher.group());
-                }
+                } 
             }
 
         //-----------------------------------------------------------------------------------------

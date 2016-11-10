@@ -1,9 +1,7 @@
 package edu.upc.fib;
 
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.Vector;
+import javax.print.Doc;
+import java.util.*;
 
 public class Document {
     private Author mAuthor;
@@ -11,7 +9,7 @@ public class Document {
     private Content mContent;
     private Vector<String> mConnectorWords;
 
-    private Hashtable<String, Integer> mWordFrequency; // Frecuencia de cada palabra en este documento
+    private Hashtable<String, Double> mWordFrequency; // Frecuencia de cada palabra en este documento
     private Hashtable<String, Double> mWordsWeight; // Peso de cada palabra en este documento
     //private HashMap<Document, Integer> mSimilarDocuments; // Documentos parecidos a este
 
@@ -20,7 +18,19 @@ public class Document {
         mTitle = new Sentence(title);
         mContent = new Content(content);
         mConnectorWords = connectorWords;
+        calculateWordFrequency();
+    }
+
+    public void calculateWordFrequency() {
         mWordFrequency = mContent.getWordFrequency(mConnectorWords);
+    }
+
+    public void calculateWordsWeight(Hashtable<String, Double> inverseDocumentFrequency) {
+        Hashtable<String, Double> newWordsWeight = new Hashtable<>();
+        for (Map.Entry<String, Double> entry : mWordFrequency.entrySet()) {
+            newWordsWeight.put(entry.getKey(), (0.5 + 0.5 * entry.getValue()) * inverseDocumentFrequency.get(entry.getKey()));
+        }
+        mWordsWeight = newWordsWeight;
     }
 
     public Sentence getTitle() {
@@ -41,15 +51,15 @@ public class Document {
 
     public void setContent(Content content) {
         mContent = content;
-        mWordFrequency = mContent.getWordFrequency(mConnectorWords);
+        calculateWordFrequency();
     }
 
-    public Hashtable<String, Integer> getWordFrequency() {
+    public Hashtable<String, Double> getWordFrequency() {
         return mWordFrequency;
     }
 
 
-//    public void updateWordWeight() {
+//    public void calculateInverseDocumentFrequency() {
 //        for(Map.Entry<String, Integer> word : mWordFrequency.entrySet()) {
 //
 //            mWordsWeight.put(word.getKey(), Math.log10(mDocuments.size()/word.getValue()));

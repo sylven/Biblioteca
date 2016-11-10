@@ -11,20 +11,20 @@ public class Documents {
     //private TreeMap<String, HashMap<String, Document>> mDocuments; // Vector de documentos con el mismo título <título, <autor, Document>>
     private TreeMap<String, Hashtable<Author, Document>> mDocuments; // Vector de documentos con el mismo título <título, <Author, Document>>
 
-    private Hashtable<String, Integer> mWordFrequency; // Frecuencia de cada palabra en todos los documentos <palabra, apariciones>
+    private Hashtable<String, Double> mDocumentFrequency; // Frecuencia de cada palabra en todos los documentos <palabra, apariciones>
+
+    private Hashtable<String, Double> mInverseDocumentFrequency; // Peso de cada palabra en todos los documentos
 
     // MEJORABLE ????????????????????????????????????????????????????????????????
     private Hashtable<String, Vector<Document>> mWordDocuments; // Documentos en los que la palabra aparece <título, Vector<Document>>
-
-    private Hashtable<String, Double> mWordsWeight; // Peso de cada palabra en todos los documentos
 
     private Vector<String> connectorWords; // Lista de palabras funcionales
 
     public Documents() {
         mDocuments = new TreeMap<>();
-        mWordFrequency = new Hashtable<>();
+        mDocumentFrequency = new Hashtable<>();
         mWordDocuments = new Hashtable<>();
-        mWordsWeight = new Hashtable<>();
+        mInverseDocumentFrequency = new Hashtable<>();
 
         // Cargar palabras funcionales
         connectorWords = new Vector<>();
@@ -65,24 +65,24 @@ public class Documents {
         return false;
     }
 
-    //> Actualiza mWordFrequency y mWordDocuments
+    //> Actualiza mDocumentFrequency y mWordDocuments
     // Recalcular la frecuencia global de todas las palabras despues de cada modificacion no es eficiente
     // Esta funcion se usara para añadir y quitar frecuencias
     // Cuando haya modificaciones o borrados, se llamara primero a esta funcion para quitar la frencuencia de las palabras
     public void updateWordFrequency(Document document, boolean increase) {
-        Hashtable<String, Integer> wordFrequency = document.getWordFrequency();
-        for (Map.Entry<String, Integer> entry : wordFrequency.entrySet()) {
+        Hashtable<String, Double> wordFrequency = document.getWordFrequency();
+        for (Map.Entry<String, Double> entry : wordFrequency.entrySet()) {
             String word = entry.getKey();
             if (!increase) {
-                if (mWordFrequency.get(word) == 1) {
-                    mWordFrequency.remove(word);
+                if (mDocumentFrequency.get(word) == 1) {
+                    mDocumentFrequency.remove(word);
                 } else {
-                    mWordFrequency.put(word, mWordFrequency.get(word) - entry.getValue());
+                    mDocumentFrequency.put(word, mDocumentFrequency.get(word) - entry.getValue());
                 }
-            } else if (mWordFrequency.containsKey(word)) {
-                mWordFrequency.put(word, entry.getValue() + mWordFrequency.get(word));
+            } else if (mDocumentFrequency.containsKey(word)) {
+                mDocumentFrequency.put(word, entry.getValue() + mDocumentFrequency.get(word));
             } else {
-                mWordFrequency.put(word, entry.getValue());
+                mDocumentFrequency.put(word, entry.getValue());
             }
 
             if (!increase) {
@@ -103,14 +103,22 @@ public class Documents {
                 mWordDocuments.put(word, newVDocuments);
             }
         }
-        updateWordWeight();
+        calculateInverseDocumentFrequency();
+
+        // Actualizar el peso de todas las palabras dentro de cada document
+        for (Map.Entry<String, Hashtable<Author, Document>> titleSet : mDocuments.entrySet()) {
+            for (Map.Entry<Author, Document> authorSet : titleSet.getValue().entrySet()) {
+                authorSet.getValue().calculateWordsWeight(mInverseDocumentFrequency);
+            }
+        }
     }
 
-    public void updateWordWeight() {
-        mWordsWeight = new Hashtable<>();
-        for(Map.Entry<String, Integer> word : mWordFrequency.entrySet()) {
-            mWordsWeight.put(word.getKey(), Math.log10(mDocuments.size()/word.getValue()));
+    public void calculateInverseDocumentFrequency() {
+        Hashtable<String, Double> newInverseDocumentFrequency = new Hashtable<>();
+        for(Map.Entry<String, Double> word : mDocumentFrequency.entrySet()) {
+            newInverseDocumentFrequency.put(word.getKey(), Math.log10(mDocuments.size()/word.getValue()));
         }
+        mInverseDocumentFrequency = newInverseDocumentFrequency;
     }
 
     public void modifyDocumentAuthor(Author author, String title, Author newAuthor) {

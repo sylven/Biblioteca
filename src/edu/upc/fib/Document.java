@@ -1,119 +1,71 @@
 package edu.upc.fib;
 
-import java.util.HashMap;
-import java.util.Vector;
+import javax.print.Doc;
+import java.util.*;
 
 public class Document {
     private Author mAuthor;
     private Sentence mTitle;
     private Content mContent;
+    private Vector<String> mConnectorWords;
 
-    private HashMap<String, Integer> mWordFrequency; // Frecuencia de cada palabra en este documento
-    //private HashMap<String, Integer> mWordsWeight; // Peso de cada palabra en este documento
+    private Hashtable<String, Double> mWordFrequency; // Frecuencia de cada palabra en este documento
+    private Hashtable<String, Double> mWordsWeight; // Peso de cada palabra en este documento
     //private HashMap<Document, Integer> mSimilarDocuments; // Documentos parecidos a este
 
     public Document(Author author, String title, Vector<String> content, Vector<String> connectorWords) {
         mAuthor = author;
         mTitle = new Sentence(title);
         mContent = new Content(content);
-        mWordFrequency = mContent.getWordFrequency(connectorWords);
+        mConnectorWords = connectorWords;
+        calculateWordFrequency();
+    }
+
+    public void calculateWordFrequency() {
+        mWordFrequency = mContent.getWordFrequency(mConnectorWords);
+    }
+
+    public void calculateWordsWeight(Hashtable<String, Double> inverseDocumentFrequency) {
+        Hashtable<String, Double> newWordsWeight = new Hashtable<>();
+        for (Map.Entry<String, Double> entry : mWordFrequency.entrySet()) {
+            newWordsWeight.put(entry.getKey(), (0.5 + 0.5 * entry.getValue()) * inverseDocumentFrequency.get(entry.getKey()));
+        }
+        mWordsWeight = newWordsWeight;
     }
 
     public Sentence getTitle() {
         return mTitle;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public HashMap<String, Integer> getWordFrequency() {
-        return mWordFrequency;
-    }
-
-
-    public Author getAuthor() {
-        return mAuthor;
+    public Content getContent() {
+        return mContent;
     }
 
     public void setAuthor(Author author) {
         mAuthor = author;
     }
 
-
-
     public void setTitle(Sentence title) {
-        mTitle=title;
-    }
-
-    public Content getContent() {
-        return mContent;
+        mTitle = title;
     }
 
     public void setContent(Content content) {
-        mContent=content;
+        mContent = content;
+        calculateWordFrequency();
     }
 
-    public void updateWordFrequency(Vector<String> connectorWords){
-        mWordFrequency=mContent.getWordFrequency(connectorWords);
-    }
-
-    public Boolean printContent(){
-        mContent.print();
-        return true;
-    }
-
-   /* public String getTituloS(){
-        System.out.println("6");
-        String s = mTitle.getPalabra(0).getString();
-        for (int i = 1; i < mTitle.getSize(); i++) {
-            s += mTitle.getPalabra(i).getString();
-        }
-        System.out.println("7");
-        return s;
+    public Hashtable<String, Double> getWordFrequency() {
+        return mWordFrequency;
     }
 
 
-    public Sentence getTitulo() {
-        return mTitle;
-    }*/
-
-//    public Sentence getTitulo() {
-//        return mTitle;
-//    }
-
-    //private static Library Library;
-
-    /*public Boolean ExisteixParaula(String P){
-        return Content.ExisteixParaula(P);
-    }*/
-
-//    public Document(Sentence A, Sentence T, Content C){
-//        /*setAutor(A);
-//        setTitulo(T);
-//        Content = C;
+//    public void calculateInverseDocumentFrequency() {
+//        for(Map.Entry<String, Integer> word : mWordFrequency.entrySet()) {
 //
-//        Library.AfegirDocument(this);*/
+//            mWordsWeight.put(word.getKey(), Math.log10(mDocuments.size()/word.getValue()));
+//        }
 //    }
+//
 
-    /*public Sentence getAutor() {
-        return Author;
-    }*/
 
-    /*public void setAutor(Sentence autor) {
-        Author = autor;
-    }*/
-
-    /*public void setTitulo(Sentence titulo) {
-        Titulo = titulo;
-    }*/
 }

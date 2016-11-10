@@ -1,5 +1,6 @@
 package edu.upc.fib;
 
+import javax.print.Doc;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,19 +9,22 @@ import java.util.*;
 public class Documents {
     //private TreeMap<String, Vector<Document>> mDocuments; // Vector de documentos con el mismo título
     //private TreeMap<String, HashMap<String, Document>> mDocuments; // Vector de documentos con el mismo título <título, <autor, Document>>
-    private TreeMap<String, HashMap<Author, Document>> mDocuments; // Vector de documentos con el mismo título <título, <Author, Document>>
+    private TreeMap<String, Hashtable<Author, Document>> mDocuments; // Vector de documentos con el mismo título <título, <Author, Document>>
 
-    private HashMap<String, Integer> mWordFrequency; // Frecuencia de cada palabra en todos los documentos <palabra, apariciones>
+    private Hashtable<String, Double> mDocumentFrequency; // Frecuencia de cada palabra en todos los documentos <palabra, apariciones>
+
+    private Hashtable<String, Double> mInverseDocumentFrequency; // Peso de cada palabra en todos los documentos
 
     // MEJORABLE ????????????????????????????????????????????????????????????????
-    private HashMap<String, Vector<Document>> mWordDocuments; // Documentos en los que la palabra aparece <título, Vector<Document>>
+    private Hashtable<String, Vector<Document>> mWordDocuments; // Documentos en los que la palabra aparece <título, Vector<Document>>
 
     private Vector<String> connectorWords; // Lista de palabras funcionales
 
     public Documents() {
         mDocuments = new TreeMap<>();
-        mWordFrequency = new HashMap<>();
-        mWordDocuments = new HashMap<>();
+        mDocumentFrequency = new Hashtable<>();
+        mWordDocuments = new Hashtable<>();
+        mInverseDocumentFrequency = new Hashtable<>();
 
         // Cargar palabras funcionales
         connectorWords = new Vector<>();
@@ -42,12 +46,12 @@ public class Documents {
         if (author.addDocument(newDocument)) {
             //Vector<Document> vDocuments;
             //HashMap<String, Document> hDocuments;
-            HashMap<Author, Document> hDocuments;
+            Hashtable<Author, Document> hDocuments;
             if (mDocuments.containsKey(title)) {
                 hDocuments = mDocuments.get(title);
             } else {
                 //hDocuments = new Vector<>();
-                hDocuments = new HashMap<>();
+                hDocuments = new Hashtable<>();
             }
             //hDocuments.add(newDocument);
             //hDocuments.put(author.getName().toString(), newDocument);
@@ -61,24 +65,24 @@ public class Documents {
         return false;
     }
 
-    //> Actualiza mWordFrequency y mWordDocuments
+    //> Actualiza mDocumentFrequency y mWordDocuments
     // Recalcular la frecuencia global de todas las palabras despues de cada modificacion no es eficiente
     // Esta funcion se usara para añadir y quitar frecuencias
     // Cuando haya modificaciones o borrados, se llamara primero a esta funcion para quitar la frencuencia de las palabras
     public void updateWordFrequency(Document document, boolean increase) {
-        HashMap<String, Integer> wordFrequency = document.getWordFrequency();
-        for (Map.Entry<String, Integer> entry : wordFrequency.entrySet()) {
+        Hashtable<String, Double> wordFrequency = document.getWordFrequency();
+        for (Map.Entry<String, Double> entry : wordFrequency.entrySet()) {
             String word = entry.getKey();
             if (!increase) {
-                if (mWordFrequency.get(word) == 1) {
-                    mWordFrequency.remove(word);
+                if (mDocumentFrequency.get(word) == 1) {
+                    mDocumentFrequency.remove(word);
                 } else {
-                    mWordFrequency.put(word, mWordFrequency.get(word) - entry.getValue());
+                    mDocumentFrequency.put(word, mDocumentFrequency.get(word) - entry.getValue());
                 }
-            } else if (mWordFrequency.containsKey(word)) {
-                mWordFrequency.put(word, entry.getValue() + mWordFrequency.get(word));
+            } else if (mDocumentFrequency.containsKey(word)) {
+                mDocumentFrequency.put(word, entry.getValue() + mDocumentFrequency.get(word));
             } else {
-                mWordFrequency.put(word, entry.getValue());
+                mDocumentFrequency.put(word, entry.getValue());
             }
 
             if (!increase) {
@@ -99,6 +103,65 @@ public class Documents {
                 mWordDocuments.put(word, newVDocuments);
             }
         }
+        calculateInverseDocumentFrequency();
+
+        // Actualizar el peso de todas las palabras dentro de cada document
+        for (Map.Entry<String, Hashtable<Author, Document>> titleSet : mDocuments.entrySet()) {
+            for (Map.Entry<Author, Document> authorSet : titleSet.getValue().entrySet()) {
+                authorSet.getValue().calculateWordsWeight(mInverseDocumentFrequency);
+            }
+        }
+    }
+
+    public void calculateInverseDocumentFrequency() {
+        Hashtable<String, Double> newInverseDocumentFrequency = new Hashtable<>();
+        for(Map.Entry<String, Double> word : mDocumentFrequency.entrySet()) {
+            newInverseDocumentFrequency.put(word.getKey(), Math.log10(mDocuments.size()/word.getValue()));
+        }
+        mInverseDocumentFrequency = newInverseDocumentFrequency;
+    }
+
+    public void modifyDocumentAuthor(Author author, String title, Author newAuthor) {
+        Hashtable<Author, Document> newDocuments = mDocuments.get(title);
+        Document document = newDocuments.get(author);
+        document.setAuthor(newAuthor);
+        newDocuments.put(newAuthor, document);
+        newDocuments.remove(author);
+        mDocuments.replace(title, newDocuments);
+
+        author.removeDocument(title);
+        newAuthor.addDocument(document);
+    }
+
+    public void modifyDocumentTitle(Author author, String title, String newTitle) {
+        Document document = mDocuments.get(title).get(author);
+        document.setTitle(new Sentence(newTitle));
+
+        // Borrar documento de donde estaba
+        mDocuments.get(title).remove(author);
+        if (mDocuments.get(title).size() == 0) {
+            mDocuments.remove(title);
+        }
+
+        // Añadir el documento donde tiene que estar
+        Hashtable<Author, Document> newDocuments;
+        if (mDocuments.containsKey(newTitle)) {
+            newDocuments = mDocuments.get(newTitle);
+        } else {
+            newDocuments = new Hashtable<>();
+        }
+        newDocuments.put(author, document);
+        mDocuments.put(newTitle, newDocuments);
+
+        // Modificarlo dentro del autor
+        author.removeDocument(title);
+        author.addDocument(document);
+    }
+
+    public void modifyDocumentContent(Author author, String title, Vector<String> newContent) {
+        updateWordFrequency(mDocuments.get(title).get(author), false);
+        mDocuments.get(title).get(author).setContent(new Content(newContent));
+        updateWordFrequency(mDocuments.get(title).get(author), true);
     }
 
     public boolean removeDocument(Author author, String title) {
@@ -123,125 +186,17 @@ public class Documents {
         return mDocuments.keySet();
     }
 
+    public Vector<String> getDocumentContent(Author author, String title) {
+        return mDocuments.get(title).get(author).getContent().toStrings();
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-
-
-//    public boolean modifyDocumentAuthor(String authorName, String title, String newAuthorName) {
-//        Vector<Document> newVDocuments = mDocuments.get(title);
-//        for (Document document : newVDocuments) {
-//            String author = document.getAuthor().toString();
-//            if (authorName.equals(author)) {
-//                document.setAuthor(new Sentence(newAuthorName));
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    public boolean modifyDocumentTitle(String authorName, String title, String newTitle) {
-//        Vector<Document> docs=mDocuments.get(title);
-//        Document oldDoc=null;
-//        for(Document doc:docs){
-//            Sentence sentenceAuthor=doc.getAuthor();
-//            String stringAuthor=sentenceAuthor.toString();
-//            if(stringAuthor.equals(authorName)){
-//                oldDoc=doc;
-//            }
-//        }
-//        docs.remove(oldDoc);
-//        mDocuments.remove(title);
-//        if(!docs.isEmpty())mDocuments.put(title,docs);
-//        oldDoc.setTitle(new Sentence(newTitle));
-//        if(mDocuments.containsKey(newTitle)){
-//            Vector<Document> documents=mDocuments.get(newTitle);
-//            documents.add(oldDoc);
-//            mDocuments.put(newTitle,documents);
-//        }
-//        else{
-//            Vector<Document> documents =new Vector<>();
-//            documents.add(oldDoc);
-//            mDocuments.put(newTitle,documents);
-//        }
-//        return true;
-//    }
-//
-//    public boolean modifyDocumentContent(String authorName, String title, Vector<String> newContent) {
-//        Vector<Document> docs=mDocuments.get(title);
-//        Content content= new Content(newContent);
-//        Content oldContent= null;
-//        Document d=null;
-//        for (Document doc:docs){
-//            Sentence sentenceAuthor=doc.getAuthor();
-//            String stringAuthor=sentenceAuthor.toString();
-//            if(stringAuthor.equals(authorName)){
-//                d=doc;
-//                oldContent=doc.getContent();
-//                doc.setContent(content);
-//            }
-//        }
-//        d.updateWordFrequency(connectorWords);
-//        //this.deleteWordFrecuency(oldContent,d);
-//        //this.updatemWordFrecuency(newContent,d);
-//        return true;
-//    }
-//
-//    public boolean printContent(String author, String title){
-//        Vector<Document> docs=mDocuments.get(title);
-//        for(Document doc:docs){
-//            Sentence sentenceAuthor=doc.getAuthor();
-//            String stringAuthor=sentenceAuthor.toString();
-//            if(stringAuthor.equals(author)){
-//                doc.printContent();
-//            }
-//        }
-//        return true;
-//    }
-
-
-   /* public String getTituloAutor(Document doc) {
-        Set<Sentence> Titulos= mDocuments.keySet();
-        String ret=new String();
-        System.out.println("12");
-        for(Sentence F: Titulos){
-            System.out.println("13");
-            Vector<Document> docs=mDocuments.get(F);
-            System.out.println(docs.size());
-            for(Document documento: docs){
-                System.out.println("14");
-                if(documento.getTitulo()==doc.getTitulo()) {
-                    System.out.println("15");
-                    ret = documento.getTituloS();
-                }
+    public boolean existsDocument(Author author, String title) {
+        if (mDocuments.containsKey(title)) {
+            if (mDocuments.get(title).containsKey(author)) {
+                return true;
             }
         }
-        return ret;
-    }*/
-
+        return false;
+    }
 
 }

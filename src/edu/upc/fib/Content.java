@@ -1,8 +1,6 @@
 package edu.upc.fib;
 
-import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.Vector;
+import java.util.*;
 
 public class Content {
     private Vector<Sentence> mContent;
@@ -14,8 +12,9 @@ public class Content {
         }
     }
 
-    public HashMap<String, Integer> getWordFrequency(Vector<String> connectorWords){
-        HashMap<String, Integer> wordFrequency = new HashMap<>();
+    public Hashtable<String, Double> getWordFrequency(Vector<String> connectorWords){
+        Hashtable<String, Double> wordFrequency = new Hashtable<>();
+        double maxFrequency = 0;
         for (Sentence sentence : mContent) {
             for (int i = 0; i < sentence.getSize(); i++) {
                 String word = sentence.getWord(i);
@@ -24,90 +23,25 @@ public class Content {
                     if (wordFrequency.containsKey(word)) {
                         wordFrequency.put(word, wordFrequency.get(word) + 1);
                     } else {
-                        wordFrequency.put(word, 1);
+                        wordFrequency.put(word, (double) 1);
+                    }
+                    if (wordFrequency.get(word) > maxFrequency) {
+                        maxFrequency = wordFrequency.get(word);
                     }
                 }
             }
         }
+        for (Map.Entry<String, Double> entry : wordFrequency.entrySet()) {
+            wordFrequency.replace(entry.getKey(), entry.getValue()/maxFrequency);
+        }
         return wordFrequency;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public Vector<Sentence> getContent() {
-        return mContent;
-    }
-
-    public void print(){
-        for (Sentence sentence:mContent){
-            for(int i=0; i<sentence.getSize();++i){
-                String word=sentence.getWord(i);
-                System.out.print(word);
-            }
-            System.out.println();
+    public Vector<String> toStrings() {
+        Vector<String> vContent = new Vector<>();
+        for (Sentence sentence : mContent) {
+            vContent.add(sentence.toString());
         }
+        return vContent;
     }
-//    public  HashMap<String, Integer> calcularFrecuenciaPalabras(){
-//        HashMap<String, Integer> ret=new HashMap<String ,Integer>();
-//        Integer value;
-//        String S;
-//        for(Sentence F: mContent) {
-//            for(int i=0; i<F.getSize();++i){
-//                S=F.getParaula(i);
-//                if(ret.containsKey(S)){
-//                    value=ret.get(S);
-//                    ++value;
-//                    ret.replace(S,value);
-//                }
-//                else{
-//                    ret.put(S,1);
-//                }
-//            }
-//        }
-//        /*Set<String> Prova=ret.keySet();
-//        for (String St: Prova) {
-//            System.out.println("\n" + St + " " + ret.get(St));
-//        }*/
-//        return ret;
-//    }
-
-//    public HashMap<String, Integer> calcularFrecuenciaPalabras() {
-//        return new HashMap<>();
-//    }
-
-    //private Sentence[] Content;
-
-    //private SparseVector Palabras; Pot fer productes vectorials que es el que necessitem per fer les comparacions de mDocuments
-
-    // Retorna el HashMap poblat amb la freqüència de les paraules
-
-
-    /*public Boolean ExisteixParaula(String P){
-        return true;
-    }*/
-
-    /*public Sentence[] getContenido() {
-        return Content;
-    }*/
-
-    /*public void setContenido(Sentence[] contenido) {
-        Content = contenido;
-    }*/
 }

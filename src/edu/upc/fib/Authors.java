@@ -3,75 +3,53 @@ package edu.upc.fib;
 import java.util.*;
 
 public class Authors {
-    //> TreeMap de autores (donde cada autor tendrá un vector con los punteros o ids de los mDocuments de los que es autor)
-        // Separar en una clase aparte?
-        // Crear una clase que implementa TreeMap y hacernos una versión con funcionalidades que necesitemos?
-    TreeMap<String, Author> mAuthors;
+    private TreeMap<String, Author> mAuthors; // Estructura que contiene todos los autores <autor, Author>
 
     public Authors() {
         mAuthors = new TreeMap<>();
     }
 
-    public Boolean existsAuthor(String authorName) {
+    // Gestión de autores
+
+    public boolean addAuthor(String authorName) {
+        if (!existsAuthor(authorName)) {
+            Author newAuthor = new Author(authorName);
+            mAuthors.put(authorName, newAuthor);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean modifyAuthor(String authorName, String newAuthorName) {
+        if (existsAuthor(authorName)) {
+            Author newAuthor = mAuthors.get(authorName);
+            newAuthor.modifyName(newAuthorName);
+            mAuthors.remove(authorName);
+            mAuthors.put(newAuthorName, newAuthor);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeAuthor(String authorName, Documents documents) {
+        if (existsAuthor(authorName)) {
+            // Delete all his documents
+            for (String title : getAuthor(authorName).getDocumentTitles()) {
+                //documents.removeDocument(authorName, title);
+            }
+            mAuthors.remove(authorName);
+            return true;
+        }
+        return false;
+    }
+
+    // Métodos auxiliares de gestión de autores
+
+    public boolean existsAuthor(String authorName) {
         return mAuthors.containsKey(authorName);
     }
 
-    public Boolean addAuthor(String authorName) {
-        if (!existsAuthor(authorName)) {
-            mAuthors.put(authorName, new Author(authorName));
-            return true;
-        }
-        return false;
-    }
-
-    public Boolean modifyAuthor(String authorName, String newAuthorName) {
-        if (existsAuthor(authorName)) {
-            Author newAutor = mAuthors.get(authorName);
-            newAutor.modifyName(newAuthorName);
-            mAuthors.remove(authorName);
-            mAuthors.put(newAuthorName, newAutor);
-            return true;
-        }
-        return false;
-    }
-
-    public Boolean removeAuthor(String authorName) {
-        if (existsAuthor(authorName)) {
-            mAuthors.remove(authorName);
-            return true;
-        }
-        return false;
-    }
-
-    public Boolean deleteDocument(String authorName, String title){
-        Author author = mAuthors.get(authorName);
-        if(author.deleteDocument(title)) mAuthors.remove(authorName);
-        return true;
-    }
-
-    public Boolean modifyDocumentAuthor(String authorName, String title, String newAuthorName){
-        Author author=mAuthors.get(authorName);
-        Document doc=author.getDocument(title);
-        if(author.deleteDocument(title)) mAuthors.remove(authorName);
-        if (!existsAuthor(newAuthorName)) {
-            mAuthors.put(newAuthorName, new Author(newAuthorName));
-        }
-        Author newAuthor=mAuthors.get(newAuthorName);
-        newAuthor.addDocument(doc);
-        return true;
-    }
-
-    public Boolean modifyDocumentTitle(String authorName, String title, String newTitle){
-        Author author=mAuthors.get(authorName);
-        author.modifyDocumentTitle(title, newTitle);
-        return true;
-    }
-
-    public Boolean modifyDocumentContent(String authorName, String title, Vector<String> newContent){
-        Author author=mAuthors.get(authorName);
-        author.modifyDocumentContent(title, newContent);
-        return true;
-    }
+    // Consultas de autores
 
     public Author getAuthor(String authorName) {
         return mAuthors.get(authorName);
@@ -81,42 +59,55 @@ public class Authors {
         return mAuthors.keySet();
     }
 
-    public Vector<String> getAuthorDocumentTitles(String authorName) {
-        if (mAuthors.containsKey(authorName)) return mAuthors.get(authorName).getDocumentTitles();
-        else return new Vector<>();
-   }
+    public Set<String> getAuthorDocumentTitles(String author) {
+        return getAuthor(author).getDocumentTitles();
+    }
 
-//    public void addDocument(String author, Document document){
-//        mAuthors.get(author).addDocument(document);
+    public SortedMap<String, Author> getAutorsByPrefix(String prefix){
+        return mAuthors.subMap(prefix, prefix + Character.MAX_VALUE);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+//    public Boolean removeDocument(String authorName, String title){
+//        Author author = mAuthors.get(authorName);
+//        if(author.removeDocument(title)) mAuthors.remove(authorName);
+//        return true;
 //    }
-
-
-
-
-
-
-
-//    // Adds a document to the author
-//    public void addDocumentToAuthor() {
 //
+//    public Boolean modifyDocumentAuthor(String authorName, String title, String newAuthorName){
+//        Author author= mAuthors.get(authorName);
+//        Document doc=author.getDocument(title);
+//        if(author.removeDocument(title)) mAuthors.remove(authorName);
+//        if (!existsAuthor(newAuthorName)) {
+//            mAuthors.put(newAuthorName, new Author(newAuthorName));
+//        }
+//        Author newAuthor= mAuthors.get(newAuthorName);
+//        newAuthor.addDocument(doc);
+//        return true;
 //    }
+//
+//    public Boolean modifyDocumentTitle(String authorName, String title, String newTitle){
+//        Author author= mAuthors.get(authorName);
+//        author.modifyDocumentTitle(title, newTitle);
+//        return true;
+//    }
+//
+//    public Boolean modifyDocumentContent(String authorName, String title, Vector<String> newContent){
+//        Author author= mAuthors.get(authorName);
+//        author.modifyDocumentContent(title, newContent);
+//        return true;
+//    }
+//
 
-   /* public Vector<Document> consultarDocumentos(String AuthorName){
-        Sentence F=new Sentence(AuthorName);
-        if(mAuthors.containsKey(F)) System.out.println("4");
-        Vector<Document> ret =mAuthors.get(F);
-        System.out.println(ret.size());
-        return ret;
-    }*/
 
-     public SortedMap<String, Author> getAutorsByPrefix(String prefix){
-         return mAuthors.subMap(prefix, prefix + Character.MAX_VALUE);
-         //return mAuthors.subMap(prefix, true, prefix + Character.MAX_VALUE, true);
-//         NavigableMap<String, Author> nm = mAuthors;
-//         //return (NavigableMap) mAuthors.subMap(prefix, true, prefix + Character.toString(Character.MAX_VALUE), true);
-//         String s = prefix + Character.toString(Character.MAX_VALUE);
-//         return mAuthors.subMap(prefix, prefix + Character.MAX_VALUE);
-//         return nm.subMap(prefix, new StringBuilder().append(prefix).append('z').toString());
-//         ;
-     }
 }

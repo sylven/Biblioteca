@@ -1,79 +1,103 @@
 package edu.upc.fib;
 
+import javax.print.Doc;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.Vector;
 
-public class Author {
-    private Sentence mName;
-    private Vector<Document> mDocuments;
+public class Author implements Comparable<Author> {
+    private Sentence mName; // Nombre del autor
+    //private Vector<Document> mDocuments; // Lista de documentos de los que es autor
+    private HashMap<String, Document> mDocuments; // Lista de documentos de los que es autor <titulo, Document>
 
     public Author(String name) {
         mName = new Sentence(name);
-        mDocuments = new Vector<>();
+        //mDocuments = new Vector<>();
+        mDocuments = new HashMap<>();
     }
 
-    public void addDocument(Document document) {
-        // Comprobar si ya existe (o hacerlo automatico, quizas un hashmap?)
-        mDocuments.add(document);
-    }
+    // Gestión del autor
 
     public void modifyName(String newName) {
         mName = new Sentence(newName);
     }
 
-    public Vector<String> getDocumentTitles() {
-        Vector<String> documentTitles = new Vector<>();
-        for (Document document : mDocuments) {
-            documentTitles.add(document.getTitle().toString());
+    public boolean addDocument(Document document) {
+        // Comprobar que un documento con el mismo título no existe ya ???????????????????????????????????????
+        String title = document.getTitle().toString();
+        if (!mDocuments.containsKey(title)) {
+            mDocuments.put(title, document);
+            return true;
         }
-        return documentTitles;
-    }
-
-    public Boolean deleteDocument(String title){
-        Document d=null;
-        for (Document doc: mDocuments){
-            Sentence fTitle=doc.getTitle();
-            String sTitle=fTitle.toString();
-            if(sTitle.equals(title)){
-                d=doc;
-            }
-        }
-        mDocuments.remove(d);
-        if(mDocuments.isEmpty())return true;
         return false;
     }
 
-    public Document getDocument(String title){
-        for (Document doc:mDocuments){
-            Sentence fTitle=doc.getTitle();
-            String sTitle=fTitle.toString();
-            if(sTitle.equals(title)){
-                return doc;
-            }
+    public boolean removeDocument(String title){
+        if (mDocuments.containsKey(title)) {
+            mDocuments.remove(title);
+            return true;
         }
-        return null;
+        return false;
     }
 
-    public Boolean modifyDocumentTitle(String title, String newTitle){
-        for (Document doc:mDocuments){
-            Sentence fTitle=doc.getTitle();
-            String sTitle=fTitle.toString();
-            if(sTitle.equals(title)){
-                doc.setTitle(new Sentence(newTitle));
-            }
-        }
-        return true;
+    public Sentence getName() {
+        return mName;
     }
 
-    public Boolean modifyDocumentContent(String title, Vector<String> newContent){
-        Content content= new Content(newContent);
-        for (Document doc:mDocuments){
-            Sentence fTitle=doc.getTitle();
-            String sTitle=fTitle.toString();
-            if(sTitle.equals(title)){
-                doc.setContent(content);
-            }
-        }
-        return true;
+    public Set<String> getDocumentTitles() {
+        return mDocuments.keySet();
     }
+
+    @Override
+    public int compareTo(Author o) {
+        return mName.toString().compareTo(o.getName().toString());
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//    public Document getDocument(String title){
+//        for (Document doc:mDocuments){
+//            Sentence fTitle=doc.getTitle();
+//            String sTitle=fTitle.toString();
+//            if(sTitle.equals(title)){
+//                return doc;
+//            }
+//        }
+//        return null;
+//    }
+//
+//    public Boolean modifyDocumentTitle(String title, String newTitle){
+//        for (Document doc:mDocuments){
+//            Sentence fTitle=doc.getTitle();
+//            String sTitle=fTitle.toString();
+//            if(sTitle.equals(title)){
+//                doc.setTitle(new Sentence(newTitle));
+//            }
+//        }
+//        return true;
+//    }
+//
+//    public Boolean modifyDocumentContent(String title, Vector<String> newContent){
+//        Content content= new Content(newContent);
+//        for (Document doc:mDocuments){
+//            Sentence fTitle=doc.getTitle();
+//            String sTitle=fTitle.toString();
+//            if(sTitle.equals(title)){
+//                doc.setContent(content);
+//            }
+//        }
+//        return true;
+//    }
 }

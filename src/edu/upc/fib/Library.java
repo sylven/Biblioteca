@@ -1,5 +1,6 @@
 package edu.upc.fib;
 
+import javafx.util.Pair;
 import sun.reflect.generics.tree.Tree;
 
 import java.util.*;
@@ -51,6 +52,22 @@ public class Library {
             return mDocuments.getDocumentContent(mAuthors.getAuthor(authorName), title);
         }
         return new Vector<>();
+    }
+
+    public List<Pair<String, String>> getSimilarDocuments(String authorName, String title, int nDocuments) {
+        if (existsDocument(authorName, title)) {
+            List<Map.Entry<Document, Double>> similarDocuments = mDocuments.getSimilarDocuments(mAuthors.getAuthor(authorName), title);
+            List<Pair<String, String>> resultsList = new ArrayList<>();
+            int i = 0;
+            for (Map.Entry<Document, Double> result : similarDocuments) {
+                resultsList.add(new Pair(result.getKey().getTitle().toString(), result.getKey().getAuthor().getName().toString()));
+                if (i >= nDocuments) {
+                    break;
+                }
+            }
+             return resultsList;
+        }
+        return new ArrayList<>();
     }
 
     // Mejorar para incluir a los autores?

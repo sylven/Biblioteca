@@ -9,7 +9,7 @@ public class Sentence {
 
     public Sentence(String sentence) {
         // Expresión regular para partir la frase en palabras, signos y espacios.
-        Pattern pattern = Pattern.compile("([A-Za-z'ÁáÄäÀàÉéËëÈèÍíÏïÌìÓóÖöÒòÚúÜüÙùÑñÇç-])+|.");
+        Pattern pattern = Pattern.compile("([A-Za-z'ÁáÄäÀàÉéËëÈèÍíÏïÌìÓóÖöÒòÚúÜüÙùÑñÇç-])+|[0-9]+|[^ ]");
         Matcher matcher = pattern.matcher(sentence);
         mWords = new Vector<>();
         while (matcher.find()) {
@@ -37,7 +37,7 @@ public class Sentence {
         for (String word : mWords) {
             if (ret.equals("")) {
                 ret = word;
-            } else if (!ret.equals("") && (word.equals("!") || word.equals("?") || word.equals(",") || word.equals(".") || word.equals(":"))) {
+            } else if (!ret.equals("") && (ret.substring(ret.length() - 1).equals("(") || ret.substring(ret.length() - 1).equals("«") || word.equals("!") || word.equals("?") || word.equals(",") || word.equals(".") || word.equals(":") || word.equals(")"))) {
                 // Controlar de otra forma los momentos en los que no hay que poner espacio
                 ret += word;
             } else {

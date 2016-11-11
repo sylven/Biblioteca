@@ -1,5 +1,7 @@
 package edu.upc.fib;
 
+import sun.reflect.generics.tree.Tree;
+
 import javax.print.Doc;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -31,7 +33,7 @@ public class Documents {
         try (BufferedReader br = new BufferedReader(new FileReader("empty.sp"))) {
             String line = br.readLine();
             while (line != null) {
-                connectorWords.add(new String(line));
+                connectorWords.add(new String(line).toLowerCase());
                 line = br.readLine();
             }
         } catch (IOException e) {
@@ -188,6 +190,24 @@ public class Documents {
 
     public Vector<String> getDocumentContent(Author author, String title) {
         return mDocuments.get(title).get(author).getContent().toStrings();
+    }
+
+    public List<Map.Entry<Document, Double>> getSimilarDocuments(Author author, String title) {
+        TreeMap<Document, Double> similarDocuments = new TreeMap<>();
+        Document document = mDocuments.get(title).get(author);
+        for (Map.Entry<String, Hashtable<Author, Document>> titleSet : mDocuments.entrySet()) {
+            for (Map.Entry<Author, Document> authorSet : titleSet.getValue().entrySet()) {
+                if (authorSet.getValue() != document) {
+                    similarDocuments.put(authorSet.getValue(), authorSet.getValue().getCosinus(document));
+                }
+            }
+        }
+
+        // Convertir a List y ordenar por valor
+        List<Map.Entry<Document, Double>> similarDocumentsList = new ArrayList(similarDocuments.entrySet());
+        Collections.sort(similarDocumentsList, (obj1, obj2) -> ((Comparable)((Map.Entry)(obj2)).getValue()).compareTo(((Map.Entry)(obj1)).getValue()));
+
+        return similarDocumentsList;
     }
 
     public boolean existsDocument(Author author, String title) {

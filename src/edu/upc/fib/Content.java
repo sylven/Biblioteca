@@ -19,14 +19,14 @@ public class Content {
             for (int i = 0; i < sentence.getSize(); i++) {
                 String word = sentence.getWord(i);
                 // Si no es una palabra funcional y su longitud es mayor a 1 carácter => la guardamos
-                if(!connectorWords.contains(word) && word.length() > 1) {
+                if(!connectorWords.contains(word.toLowerCase()) && word.length() > 1) {
                     if (wordFrequency.containsKey(word)) {
-                        wordFrequency.put(word, wordFrequency.get(word) + 1);
+                        wordFrequency.put(word.toLowerCase(), wordFrequency.get(word) + 1);
                     } else {
-                        wordFrequency.put(word, (double) 1);
+                        wordFrequency.put(word.toLowerCase(), (double) 1);
                     }
-                    if (wordFrequency.get(word) > maxFrequency) {
-                        maxFrequency = wordFrequency.get(word);
+                    if (wordFrequency.get(word.toLowerCase()) > maxFrequency) {
+                        maxFrequency = wordFrequency.get(word.toLowerCase());
                     }
                 }
             }

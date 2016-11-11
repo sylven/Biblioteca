@@ -112,6 +112,8 @@ public class Library {
                     expression_cut.add(matcher.group());
                 } 
             }
+        boolean basicA = false;
+        boolean basicB = false;
 
         //-----------------------------------------------------------------------------------------
         return results;

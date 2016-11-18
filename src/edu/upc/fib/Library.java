@@ -1,5 +1,6 @@
 package edu.upc.fib;
 
+import javafx.util.Pair;
 import sun.reflect.generics.tree.Tree;
 
 import java.util.*;
@@ -53,6 +54,22 @@ public class Library {
         return new Vector<>();
     }
 
+    public List<Pair<String, String>> getSimilarDocuments(String authorName, String title, int nDocuments) {
+        if (existsDocument(authorName, title)) {
+            List<Map.Entry<Document, Double>> similarDocuments = mDocuments.getSimilarDocuments(mAuthors.getAuthor(authorName), title);
+            List<Pair<String, String>> resultsList = new ArrayList<>();
+            int i = 0;
+            for (Map.Entry<Document, Double> result : similarDocuments) {
+                resultsList.add(new Pair(result.getKey().getTitle().toString(), result.getKey().getAuthor().getName().toString()));
+                if (i >= nDocuments) {
+                    break;
+                }
+            }
+             return resultsList;
+        }
+        return new ArrayList<>();
+    }
+
     // Mejorar para incluir a los autores?
     public Set<String> getAuthorDocumentTitles(String authorName) {
         return mAuthors.getAuthorDocumentTitles(authorName);
@@ -98,13 +115,67 @@ public class Library {
         return false;
     }
 
-    public static void main(String[] args) {
-        Library library = new Library();
-        String authorName = "Patrick Rothfuss";
-        library.addAutor(authorName);
-        String authorName2 = "George R. R. Martin";
-        library.modifyAuthor(authorName, authorName2);
-        library.removeAuthor(authorName2);
+    //((a|b)|(c|d)|e|f)
+
+    public static Vector<Document> getDocumentExpression_rec(Vector<String> expression_cut){
+
+        int a = 0;
+        int z = expression_cut.size()-1;
+        int numparentesis = 0;
+        for(int i = 0; i < expression_cut.size(); i++){
+            if (expression_cut.get(i).equals("(")) {numparentesis++;}
+        }
+
+        int cont=0;
+        int separador=0;
+        for(int i=a; i<z;++i){
+            if (expression_cut.get(i).equals("(")) ++cont;
+            else if (expression_cut.get(i).equals(")")) --cont;
+            else if((expression_cut.get(i).equals("|") | expression_cut.get(i).equals("&")) & cont==0) separador=i;
+        }
+
+        if(separador==0 & expression_cut.get(a).equals("(") & expression_cut.get(z).equals(")")){
+            expression_cut.remove(a);
+            expression_cut.remove(z);
+            getDocumentExpression_rec(expression_cut);
+        }
+
+        if(separador!=0) {
+            Vector<String> s1 = new Vector<>();
+            for (int i = a; i < separador; ++i) {
+                s1.add(expression_cut.get(i));
+            }
+
+            Vector<String> s2 = new Vector<>();
+            for (int i = separador + 1; i <= z; ++i) {
+                s2.add(expression_cut.get(i));
+            }
+
+            Vector<Document> d1 = getDocumentExpression_rec(s1);
+            Vector<Document> d2 = getDocumentExpression_rec(s2);
+
+            if (expression_cut.get(separador).equals("|")) {
+
+            }
+
+            if (expression_cut.get(separador).equals("&")) {
+
+            }
+        }
+
+        else if(separador==0){
+            if(expression_cut.get(0).equals("{")){
+
+            }
+            else if(expression_cut.equals("!")){
+
+            }
+            else {
+
+            }
+        }
+
+        return null;
     }
 
     public static HashMap<String, Vector<String>> getDocumentExpression(String expression){
@@ -112,23 +183,22 @@ public class Library {
         //-----------------------------------------------------------------------------------------
         Vector<String> expression_cut = new Sentence(expression).getVector();
 
-            // Expresión regular para partir la frase en palabras, signos y espacios.
-            Pattern pattern = Pattern.compile("([A-Za-z0-9'ÁáÄäÀàÉéËëÈèÍíÏïÌìÓóÖöÒòÚúÜüÙùÑñÇç-])+|[^ ]");
-            Matcher matcher = pattern.matcher(expression);
-            expression_cut = new Vector<>();
-            while (matcher.find()) {
-                if (!matcher.group().equals(" ")) {
-                    expression_cut.add(matcher.group());
-                } 
+        // Expresión regular para partir la frase en palabras, signos y espacios.
+        Pattern pattern = Pattern.compile("([A-Za-z0-9'ÁáÄäÀàÉéËëÈèÍíÏïÌìÓóÖöÒòÚúÜüÙùÑñÇç-])+|[^ ]");
+        Matcher matcher = pattern.matcher(expression);
+        expression_cut = new Vector<>();
+        while (matcher.find()) {
+            if (!matcher.group().equals(" ")) {
+                expression_cut.add(matcher.group());
             }
+        }
+
+        Vector<Document> result= getDocumentExpression_rec(expression_cut);
 
         //-----------------------------------------------------------------------------------------
         return results;
     }
 
-//    public Boolean printContent(String author, String title){
-//        mDocuments.printContent(author,title);
-//        return true;
-//    }
-
 }
+
+

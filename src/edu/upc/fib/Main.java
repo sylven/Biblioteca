@@ -107,9 +107,12 @@ public class Main {
                         }
                     } else if (choice == 5) {
                         System.out.println("\n[Library > Consulta > Consulta por expresión]");
-                        System.out.print("  >> Introduce la expresión: ");
-                        String expression = scanner.nextLine();
-                        HashMap<String, Vector<String> > content = library.getDocumentExpression(expression);
+                        System.out.print("  >> Introduce la expresión a buscar(booleana): ");
+                        String expression1 = scanner.nextLine();
+                        System.out.print("  >> Introduce la expresión sobre la que buscar: ");
+                        String expression2 = scanner.nextLine();
+                        library.verifyExpression(expression1, expression2);
+                        //HashMap<String, Vector<String> > content = library.getDocumentExpression(expression);
                         /*for (String s : content) { // implementar impresion autor + vector obras que cumplen
                             System.out.println(s);
                         }*/

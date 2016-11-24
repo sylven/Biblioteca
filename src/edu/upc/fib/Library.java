@@ -281,10 +281,8 @@ public class Library {
                 }
                 return verifyExpression_rec(expression_cut_1,expressionToTest);
             }
-            if (expression_cut.elementAt(0).equals("{")) {}
-            if (expression_cut.elementAt(0).equals("\"")) {
-
-            }
+            if (expression_cut.elementAt(0).equals("{")) {return test_brackets(expression_cut, expressionToTest);}
+            if (expression_cut.elementAt(0).equals("\"")) {return test_quotes(expression_cut, expressionToTest);}
         }
         else{//cortar y llamar con 2 trozos
             for(int i = 0; i < expression_cut.size(); i++){
@@ -303,7 +301,7 @@ public class Library {
                 expression_cut_2.add(expression_cut.get(i));
             }
 
-            if (expression_cut.elementAt(pos_op).equals("|")){//hola
+            if (expression_cut.elementAt(pos_op).equals("|")){
                 return ( verifyExpression_rec(expression_cut_1, expressionToTest) || verifyExpression_rec(expression_cut_2, expressionToTest) );
             }
             else if (expression_cut.elementAt(pos_op).equals("&")){
@@ -313,8 +311,30 @@ public class Library {
                 return !( verifyExpression_rec(expression_cut_1, expressionToTest) && verifyExpression_rec(expression_cut_2, expressionToTest) );
             }
         }
-        return false;
+        /*if(expression_cut.size() == 1){*/return expressionToTest.contains(expression_cut.elementAt(0));//}
+        /*else {return false;}*/
     }
+    private boolean test_quotes(Vector<String> expression_cut, Vector<String> expressionToTest ) {
+        boolean contents = false;
+        for (int i = 0; i < expressionToTest.size() && !contents; i++) {
+            //if(elementos coincidien)for{si llego al final return true}
+            if (expressionToTest.elementAt(i).equals(expression_cut.elementAt(0))) {
+                contents = true;
+                for (int j = i; j - i < expression_cut.size() && contents && expressionToTest.size() < j; j++) {
+                    contents = expressionToTest.elementAt(j).equals(expression_cut.elementAt(j - i));
+                }
+            }
+        }
+        return contents;
+    }
+    private boolean test_brackets(Vector<String> expression_cut, Vector<String> expressionToTest ) {
+        boolean contents = false;
+        for(int i = 0; i < expression_cut.size() && ! contents; i++) {
+            contents = expressionToTest.contains(expression_cut.elementAt(i));
+        }
+        return contents;
+    }
+
 }
 
 

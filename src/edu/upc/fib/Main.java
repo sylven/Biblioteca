@@ -111,7 +111,12 @@ public class Main {
                         String expression1 = scanner.nextLine();
                         System.out.print("  >> Introduce la expresión sobre la que buscar: ");
                         String expression2 = scanner.nextLine();
-                        library.verifyExpression(expression1, expression2);
+                        if( library.verifyExpression(expression1, expression2)){
+                            System.out.print("La frase cumple la expresión");
+                        }
+                        else{
+                            System.out.print("La frase **NO** cumple la expresión");
+                        }
                         //HashMap<String, Vector<String> > content = library.getDocumentExpression(expression);
                         /*for (String s : content) { // implementar impresion autor + vector obras que cumplen
                             System.out.println(s);

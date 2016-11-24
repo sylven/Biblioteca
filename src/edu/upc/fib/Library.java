@@ -287,6 +287,12 @@ public class Library {
             }
         }
         else{//cortar y llamar con 2 trozos
+            for(int i = 0; i < expression_cut.size(); i++){
+                if(expression_cut.elementAt(i).equals("|") || expression_cut.elementAt(i).equals("&")){
+                    pos_op = i; i =expression_cut.size();
+                }
+            }
+
             Vector<String> expression_cut_1 = new Vector<>();
             for (int i = 0; i < pos_op; ++i) {
                 expression_cut_1.add(expression_cut.get(i));

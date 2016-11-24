@@ -303,7 +303,7 @@ public class Library {
                 expression_cut_2.add(expression_cut.get(i));
             }
 
-            if (expression_cut.elementAt(pos_op).equals("|")){
+            if (expression_cut.elementAt(pos_op).equals("|")){//hola
                 return ( verifyExpression_rec(expression_cut_1, expressionToTest) || verifyExpression_rec(expression_cut_2, expressionToTest) );
             }
             else if (expression_cut.elementAt(pos_op).equals("&")){

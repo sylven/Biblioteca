@@ -267,10 +267,7 @@ public class Library {
                 if (expression_cut.elementAt(i).equals("\"")){pos_op = i+1;}
             }
         }
-        /*else if (expression_cut.elementAt(pos_op).equals("!")){//negar resultado--------------------------------------------------------------------------
-            negate_result = true;
-            pos_op++;
-        }*/
+
         if (pos_op >= expression_cut.size()){//principio y final es mismo parentesi o expresion[ "- - -", {- - -}, (- - -) ]
             //recortar esos signos y retornar llamada pues estamos en caso base
             // si hay paréntesis, podría haber mas operaciones internas, en cambio, los otros, son operacion molecular
@@ -285,30 +282,83 @@ public class Library {
             if (expression_cut.elementAt(0).equals("\"")) {return test_quotes(expression_cut, expressionToTest);}
         }
         else{//cortar y llamar con 2 trozos
-            for(int i = 0; i < expression_cut.size() && pos_op == 0; i++){
-                if(expression_cut.elementAt(i).equals("|") || expression_cut.elementAt(i).equals("&")){
-                    pos_op = i; i =expression_cut.size();
+            if(expression_cut.elementAt(0).equals("!")){
+                if(expression_cut.elementAt(1).equals("(")){
+                    prof =1;
+                    for (int i = 2; i < expression_cut.size() || prof!=0; i++) {
+                        if(prof == 0){
+                            pos_op = i;
+                            i = expression_cut.size();
+                        }
+                        else if (expression_cut.elementAt(i).equals("(")) {
+                            prof++;
+                        } else if (expression_cut.elementAt(i).equals(")")) {
+                            prof--;
+                        }
+                        if(prof == 0){pos_op = i+1;i = expression_cut.size();}
+                    }
+                }
+                else if(expression_cut.elementAt(1).equals("{")){
+                    for(int i = 0; i < expression_cut.size() && pos_op == 0; i++){
+                        if(expression_cut.elementAt(i).equals("}")){
+                            pos_op = i+1; i =expression_cut.size();
+                        }
+                    }
+                }
+                else if(expression_cut.elementAt(1).equals("\"")){
+                    for(int i = 0; i < expression_cut.size() && pos_op == 0; i++){
+                        if(expression_cut.elementAt(i).equals("\"")){
+                            pos_op = i+1; i =expression_cut.size();
+                        }
+                    }
+                }
+                else{//contiene solo un elemento simple a negar
+                    pos_op = 2;
+                }
+                if(pos_op >= expression_cut.size()){//un elemento a negar
+                    Vector<String> expression_cut_1 = new Vector<>();
+                    for (int i = 1; i < pos_op; ++i) {
+                        expression_cut_1.add(expression_cut.get(i));
+                    }
+                    return !verifyExpression_rec(expression_cut_1, expressionToTest);
+                }
+                else{//dos o mas
+                    Vector<String> expression_cut_1 = new Vector<>();
+                    for (int i = 1; i < pos_op; ++i) {
+                        expression_cut_1.add(expression_cut.get(i));
+                    }
+
+                    Vector<String> expression_cut_2 = new Vector<>();
+                    for (int i = pos_op + 1; i < expression_cut.size(); ++i) {
+                        expression_cut_2.add(expression_cut.get(i));
+                    }
+                    if(expression_cut.elementAt(pos_op).equals("|")){return ( !verifyExpression_rec(expression_cut_1, expressionToTest) || verifyExpression_rec(expression_cut_2, expressionToTest) );}
+                    else {return ( !verifyExpression_rec(expression_cut_1, expressionToTest) && verifyExpression_rec(expression_cut_2, expressionToTest) );}
                 }
             }
+            else{
+                for(int i = 0; i < expression_cut.size() && pos_op == 0; i++){
+                    if(expression_cut.elementAt(i).equals("|") || expression_cut.elementAt(i).equals("&")){
+                        pos_op = i; i =expression_cut.size();
+                    }
+                }
 
-            Vector<String> expression_cut_1 = new Vector<>();
-            for (int i = 0; i < pos_op; ++i) {
-                expression_cut_1.add(expression_cut.get(i));
-            }
+                Vector<String> expression_cut_1 = new Vector<>();
+                for (int i = 0; i < pos_op; ++i) {
+                    expression_cut_1.add(expression_cut.get(i));
+                }
 
-            Vector<String> expression_cut_2 = new Vector<>();
-            for (int i = pos_op + 1; i < expression_cut.size(); ++i) {
-                expression_cut_2.add(expression_cut.get(i));
-            }
+                Vector<String> expression_cut_2 = new Vector<>();
+                for (int i = pos_op + 1; i < expression_cut.size(); ++i) {
+                    expression_cut_2.add(expression_cut.get(i));
+                }
 
-            if (expression_cut.elementAt(pos_op).equals("|")){
-                return ( verifyExpression_rec(expression_cut_1, expressionToTest) || verifyExpression_rec(expression_cut_2, expressionToTest) );
-            }
-            else if (expression_cut.elementAt(pos_op).equals("&")){
-                return ( verifyExpression_rec(expression_cut_1, expressionToTest) && verifyExpression_rec(expression_cut_2, expressionToTest) );
-            }
-            else if (expression_cut.elementAt(pos_op).equals("!")){
-                return !( verifyExpression_rec(expression_cut_1, expressionToTest) && verifyExpression_rec(expression_cut_2, expressionToTest) );
+                if (expression_cut.elementAt(pos_op).equals("|")){
+                    return ( verifyExpression_rec(expression_cut_1, expressionToTest) || verifyExpression_rec(expression_cut_2, expressionToTest) );
+                }
+                else if (expression_cut.elementAt(pos_op).equals("&")){
+                    return ( verifyExpression_rec(expression_cut_1, expressionToTest) && verifyExpression_rec(expression_cut_2, expressionToTest) );
+                }
             }
         }
         /*if(expression_cut.size() == 1){*/return expressionToTest.contains(expression_cut.elementAt(0));//}

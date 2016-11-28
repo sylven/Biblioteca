@@ -7,6 +7,7 @@ import java.util.*;
 public class Main {
 
      public static void main(String[] args) {
+         GraphicMain.main(null);//--------------------------------------------->si se comenta, se usa main en consola<---------------------------------------------
         Library library = new Library();
         Scanner scanner = new Scanner(System.in);
 

@@ -1,6 +1,8 @@
 package edu.upc.fib;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Javier on 28/11/2016.
@@ -14,6 +16,15 @@ public class GraphicMain {
     private JButton añadirDocumentosDePruebaButton;
     private JButton vaciarPapeleraButton;
 
+    public GraphicMain() {
+        vaciarPapeleraButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //main(null);
+            }
+        });
+    }
+
     public static void main(String[] args) {
 
         JFrame mainFrame = new JFrame("Biblioteca");
@@ -21,5 +32,9 @@ public class GraphicMain {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.pack();
         mainFrame.setVisible(true);
+
     }
+
+
+    //public static void
 }

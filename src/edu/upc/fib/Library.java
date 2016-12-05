@@ -18,7 +18,7 @@ public class Library {
 
      // Gestión de autores
 
-    public boolean addAutor(String authorName) {
+    public boolean addAuthor(String authorName) {
         return mAuthors.addAuthor(authorName);
     }
 
@@ -35,7 +35,7 @@ public class Library {
     }
 
     public boolean addDocument(String authorName, String title, Vector<String> content) {
-        addAutor(authorName);
+        addAuthor(authorName);
         return mDocuments.addDocument(mAuthors.getAuthor(authorName), title, content);
     }
 
@@ -88,7 +88,7 @@ public class Library {
     }
 
     public boolean modifyDocumentAuthor(String authorName, String title, String newAuthorName) {
-        addAutor(newAuthorName);
+        addAuthor(newAuthorName);
         if (mAuthors.existsAuthor(authorName)
                 && mAuthors.existsAuthor(newAuthorName)
                 && !existsDocument(newAuthorName, title)) {

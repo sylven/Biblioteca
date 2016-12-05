@@ -152,7 +152,7 @@ public class Main {
                         System.out.println("\n[Library > Gestión de autores > Añadir autor]");
                         System.out.print("  >> Introduce el nombre del autor: ");
                         String authorName = scanner.nextLine();
-                        if (library.addAutor(authorName)) {
+                        if (library.addAuthor(authorName)) {
                             System.out.println("(i) Author \"" + authorName + "\" añadido satisfractoriamente.");
                         } else {
                             System.out.println("(i) Error: El autor \"" + authorName + "\" ya existe.");

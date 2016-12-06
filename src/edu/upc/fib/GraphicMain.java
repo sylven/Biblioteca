@@ -1,6 +1,7 @@
 package edu.upc.fib;
 
 import javax.swing.*;
+import javax.swing.text.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
@@ -156,8 +157,8 @@ public class GraphicMain {
                 }
                 else{
                     Vector<String> content = new Vector<String>();
-                    content.add(textPaneLibraryGestionAddContent.toString());
-                    domainControler.addDocument(textFieldLibraryGestionAddAuthor.toString(), textFieldLibraryGestionAddTitle.toString(), content);
+                    content.add(textPaneLibraryGestionAddContent.getText());
+                    domainControler.addDocument(textFieldLibraryGestionAddAuthor.getText(), textFieldLibraryGestionAddTitle.getText(), content);
                     JOptionPane.showMessageDialog(null, "Obra añadida correctamente");
                     textFieldLibraryGestionAddAuthor.setText("");
                     textFieldLibraryGestionAddTitle.setText("");
@@ -177,6 +178,25 @@ public class GraphicMain {
                     for(String title: titles) {
                         info.add(0,title);
                         ++i;
+                    }
+                }
+            }
+        });
+        buttonLibraryGestionListLoad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textPaneLibraryGestionList.setText("");
+                if(textFieldLibraryGestionListAuthor.getText().length() == 0 || textFieldLibraryGestionListTitle.getText().length() == 0){
+                    JOptionPane.showMessageDialog(null, "Algún campo está vacio, por favor, verifíquelo y pulse \"Cargar Contenido de la obra\" de nuevo");
+                }
+                else{
+                    Vector<String> content = domainControler.getDocumentContent(textFieldLibraryGestionListAuthor.getText(), textFieldLibraryGestionListTitle.getText());
+                    javax.swing.text.Document doc = textPaneLibraryGestionList.getDocument();
+                    for(String sentence:content){
+                        try {
+                            textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
+                        }
+                        catch(Exception exc) { System.out.println(e); }
                     }
                 }
             }

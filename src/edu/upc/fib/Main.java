@@ -10,6 +10,7 @@ public class Main {
          GraphicMain.main(null);//--------------------------------------------->si se comenta, se usa main en consola<---------------------------------------------
         Library library = new Library();
         Scanner scanner = new Scanner(System.in);
+         DomainController domainController= new DomainController();
 
         // BUG: scanner skipping input after nextInt(), 2 workarounds (consider using 2nd one)
         // http://stackoverflow.com/questions/13102045/scanner-is-skipping-nextline-after-using-next-nextint-or-other-nextfoo

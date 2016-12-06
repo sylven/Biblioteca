@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
+import java.util.Set;
 import java.util.StringJoiner;
 import java.util.Vector;
 
@@ -61,6 +62,8 @@ public class GraphicMain {
     private JButton buttonConsultsSeemsAuthor;
     private JTextField textFieldConsultsSeemsTitle;
     private JButton buttonConsultsSeemsTitle;
+    private JList list1;
+    private JButton showContentButton;
 
 
     public GraphicMain() {
@@ -159,6 +162,22 @@ public class GraphicMain {
                     textFieldLibraryGestionAddAuthor.setText("");
                     textFieldLibraryGestionAddTitle.setText("");
                     textPaneLibraryGestionAddContent.setText("");
+                }
+            }
+        });
+        listTitlesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Set<String> titles=domainControler.getAuthorDocumentTitles(textFieldConsutlsTitleAuthor.getText());
+                if(titles.isEmpty()) JOptionPane.showMessageDialog(null, "El Autor no existe o no tiene ninguna obra");
+                else{
+                    DefaultListModel info = new DefaultListModel();
+                    JList listConsutlsTitleAuthor = new JList(info);
+                    int i=0;
+                    for(String title: titles) {
+                        info.add(0,title);
+                        ++i;
+                    }
                 }
             }
         });

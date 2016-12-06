@@ -4,13 +4,14 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
+import java.util.StringJoiner;
 import java.util.Vector;
 
 /**
  * Created by Javier on 28/11/2016.
  */
 public class GraphicMain {
-    Library library = new Library();
+    DomainController domainControler = new DomainController();
     private JTabbedPane tabbedPane1;
     private JPanel panel1;
     private JTabbedPane tabbedPane2;
@@ -84,7 +85,7 @@ public class GraphicMain {
                             "Sus propuestas más repetidas consisten en la construcción de un muro a lo largo de la frontera con México y una política dura contra la inmigración ilegal, además de una prohibición temporal de la entrada de musulmanes en los Estados Unidos.",
                             "En lo económico, aboga por modificar la política comercial del país y fortalecer la producción nacional en detrimento de la deslocalización, en consonancia con posiciones proteccionistas."};
                     Vector<String> vStrings = new Vector(Arrays.asList(content));
-                    library.addDocument("Wikipedia", "Donald Trump", vStrings);
+                    domainControler.addDocument("Wikipedia", "Donald Trump", vStrings);
                     String[] content2 = {"El presidente de los Estados Unidos (en inglés, President of the United States; acrónimo: POTUS) es el jefe de Estado y de Gobierno de los Estados Unidos.",
                             "Es el más alto cargo político del país por influencia y reconocimiento.",
                             "El presidente lidera el poder ejecutivo del Gobierno federal.",
@@ -100,7 +101,7 @@ public class GraphicMain {
                             "El 9 de noviembre de 2016, el candidato por el Partido Republicano, Donald Trump, resultó electo en las elecciones presidenciales.",
                             "Desde principios del siglo XX, el papel hegemónico de los Estados Unidos en el escenario político y económico internacional ha llevado al presidente de este país a ser una figura conocida a nivel global y, debido a la condición del país como única superpotencia, en 2009 la revista Forbes calificaba a su titular como «la persona más poderosa del mundo»."};
                     Vector<String> vStrings2 = new Vector(Arrays.asList(content2));
-                    library.addDocument("Wikipedia", "Presidente de los Estados Unidos", vStrings2);
+                    domainControler.addDocument("Wikipedia", "Presidente de los Estados Unidos", vStrings2);
                     String[] content3 = {"Android es un sistema operativo basado en el núcleo Linux.",
                             "Fue diseñado principalmente para dispositivos móviles con pantalla táctil, como teléfonos inteligentes, tablets o tabléfonos; y también para relojes inteligentes, televisores y automóviles.",
                             "Inicialmente fue desarrollado por Android Inc., empresa que Google respaldó económicamente y más tarde, en 2005, la compró.",
@@ -112,7 +113,7 @@ public class GraphicMain {
                             "La versión básica de Android es conocida como Android Open Source Project (AOSP).",
                             "El 25 de junio de 2014 en la Conferencia de Desarrolladores Google I/O, Google mostró una evolución de la marca Android, con el fin de unificar tanto el hardware como el software y ampliar mercados."};
                     Vector<String> vStrings3 = new Vector(Arrays.asList(content3));
-                    library.addDocument("Wikipedia", "Android", vStrings3);
+                    domainControler.addDocument("Wikipedia", "Android", vStrings3);
                     String[] content4 = {"iOS es un sistema operativo móvil de la multinacional Apple Inc.",
                             "Originalmente desarrollado para el iPhone (iPhone OS), después se ha usado en dispositivos como el iPod touch y el iPad.",
                             "No permite la instalación de iOS en hardware de terceros.",
@@ -129,17 +130,36 @@ public class GraphicMain {
                             "iOS se deriva de macOS, que a su vez está basado en Darwin BSD, y por lo tanto es un sistema operativo Tipo Unix.",
                             "iOS cuenta con cuatro capas de abstracción: la capa del núcleo del sistema operativo, la capa de \"Servicios Principales\", la capa de \"Medios\" y la capa de \"Cocoa Touch\"."};
                     Vector<String> vStrings4 = new Vector(Arrays.asList(content4));
-                    library.addDocument("Wikipedia", "iOs", vStrings4);
+                    domainControler.addDocument("Wikipedia", "iOs", vStrings4);
                     String[] content5 = {"Un automóvil de turismo, también conocido simplemente como turismo o automóvil o automotor, es el tipo de automóvil destinado al transporte de personas, con al menos cuatro ruedas y un máximo de nueve plazas incluido el conductor."};
                     Vector<String> vStrings5 = new Vector(Arrays.asList(content5));
-                    library.addDocument("Wikipedia", "Automóvil de turismo", vStrings5);
+                    domainControler.addDocument("Wikipedia", "Automóvil de turismo", vStrings5);
                 }
             }
         });
         buttonTestResetRenewLibrary.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                library = new Library();
+                domainControler = new DomainController();
+            }
+        });
+
+        buttonLibraryGestionAddSaveIt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(textFieldLibraryGestionAddAuthor.getText().length() == 0 || textFieldLibraryGestionAddTitle.getText().length() == 0 ||textPaneLibraryGestionAddContent.getText().length() == 0){
+                    JOptionPane.showMessageDialog(null, "Algún campo está vacio, por favor, verifíquelo y pulse \"Almacenar obra\" de nuevo");
+
+                }
+                else{
+                    Vector<String> content = new Vector<String>();
+                    content.add(textPaneLibraryGestionAddContent.toString());
+                    domainControler.addDocument(textFieldLibraryGestionAddAuthor.toString(), textFieldLibraryGestionAddTitle.toString(), content);
+                    JOptionPane.showMessageDialog(null, "Obra añadida correctamente");
+                    textFieldLibraryGestionAddAuthor.setText("");
+                    textFieldLibraryGestionAddTitle.setText("");
+                    textPaneLibraryGestionAddContent.setText("");
+                }
             }
         });
     }

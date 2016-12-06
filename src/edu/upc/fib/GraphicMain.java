@@ -1,12 +1,10 @@
 package edu.upc.fib;
 
 import javax.swing.*;
-import javax.swing.text.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.Set;
-import java.util.StringJoiner;
 import java.util.Vector;
 
 /**
@@ -41,7 +39,7 @@ public class GraphicMain {
     private JButton buttonConsultsContentAuthor;
     private JTextField textFieldConsultsContentTitle;
     private JButton buttonConsultsContentTitle;
-    private JTextArea textAreaConsultsContent;
+    private JTextPane textPanelConsultsContent;
     private JTextField textFieldConsultsSeemsNumberOfDocs;
     private JButton buttonConsultsSeemsMethodeB;
     private JButton buttonConsultsSeemsMethodeA;
@@ -191,10 +189,27 @@ public class GraphicMain {
                 }
                 else{
                     Vector<String> content = domainControler.getDocumentContent(textFieldLibraryGestionListAuthor.getText(), textFieldLibraryGestionListTitle.getText());
-                    javax.swing.text.Document doc = textPaneLibraryGestionList.getDocument();
                     for(String sentence:content){
                         try {
                             textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
+                        }
+                        catch(Exception exc) { System.out.println(e); }
+                    }
+                }
+            }
+        });
+        showContentButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textPanelConsultsContent.setText("");
+                if(textFieldConsultsContentAuthor.getText().length() == 0 || textFieldConsultsContentTitle.getText().length() == 0){
+                    JOptionPane.showMessageDialog(null, "Algún campo está vacio, por favor, verifíquelo y pulse \"Mostrar Contenido\" de nuevo");
+                }
+                else{
+                    Vector<String> content = domainControler.getDocumentContent(textFieldConsultsContentAuthor.getText(), textFieldConsultsContentTitle.getText());
+                    for(String sentence:content){
+                        try {
+                            textPanelConsultsContent.getStyledDocument().insertString(textPanelConsultsContent.getStyledDocument().getLength(), sentence, null);
                         }
                         catch(Exception exc) { System.out.println(e); }
                     }

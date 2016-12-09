@@ -23,7 +23,6 @@ public class GraphicMain {
     private JButton buttonLibraryGestionListAuthor;
     private JTextField textFieldLibraryGestionListTitle;
     private JButton buttonLibraryGestionListLoad;
-    JScrollPane scroll1 = new JScrollPane();
     private JTextPane textPaneLibraryGestionList;
     private JButton buttonLibraryGestionListModify;
     private JButton buttonLibraryGestionListSaveChanges;
@@ -61,7 +60,6 @@ public class GraphicMain {
     private JButton buttonConsultsSeemsAuthor;
     private JTextField textFieldConsultsSeemsTitle;
     private JButton buttonConsultsSeemsTitle;
-    private JList list1;
     private JButton showContentButton;
 
 
@@ -214,6 +212,27 @@ public class GraphicMain {
                         catch(Exception exc) { System.out.println(e); }
                     }
                 }
+            }
+        });
+
+
+        listTitlesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String consultString = new String(textFieldConsutlsTitleAuthor.getText());
+                Set<String> authorDocumentTitles =  domainControler.getAuthorDocumentTitles(consultString);
+                int i = 1;
+                DefaultListModel<String> resultset = new DefaultListModel<String>();
+                //for (String s : authorDocumentTitles) {
+                for (i = 0; i < 10;i++) {
+                    //System.out.println(i + ". " + s);
+                    //listConsutlsTitleAuthor.add(s.getChars();)
+                    //resultset.addElement(s);
+                    resultset.addElement("pene " + i);
+                    //i++;
+                }
+                listConsutlsTitleAuthor = new JList(resultset);
+                listConsutlsTitleAuthor.setVisible(true);
             }
         });
     }

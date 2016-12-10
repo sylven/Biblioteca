@@ -61,6 +61,7 @@ public class GraphicMain {
     private JTextField textFieldConsultsSeemsTitle;
     private JButton buttonConsultsSeemsTitle;
     private JButton showContentButton;
+    private SelectionDialog frame1;
 
 
     public GraphicMain() {
@@ -233,6 +234,12 @@ public class GraphicMain {
                 }
                 listConsutlsTitleAuthor = new JList(resultset);
                 listConsutlsTitleAuthor.setVisible(true);
+            }
+        });
+        buttonConsutlsTitleAuthor11.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame1 = new SelectionDialog();
             }
         });
     }

@@ -239,7 +239,8 @@ public class GraphicMain {
         buttonConsutlsTitleAuthor11.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame1 = new SelectionDialog();
+                SelectionDialog selectiondialog = new SelectionDialog();
+                selectiondialog.feedlist();
             }
         });
     }

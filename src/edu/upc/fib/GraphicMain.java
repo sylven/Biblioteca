@@ -12,6 +12,10 @@ import java.util.Vector;
  */
 public class GraphicMain {
     DomainController domainControler = new DomainController();
+    private boolean modifyingDocument=false;
+    private String authorModyfied;
+    private String titleModyfied;
+    private String contentModyfied;
     private JTabbedPane tabbedPane1;
     private JPanel panel1;
     private JTabbedPane tabbedPane2;
@@ -161,6 +165,7 @@ public class GraphicMain {
                         textFieldLibraryGestionAddTitle.setText("");
                         textPaneLibraryGestionAddContent.setText("");
                     }
+                    else JOptionPane.showMessageDialog(null, "Esta obra no existe");
                 }
             }
         });
@@ -237,11 +242,44 @@ public class GraphicMain {
                 }
                 else{
                     if(domainControler.removeDocument(textFieldLibraryGestionListAuthor.getText(), textFieldLibraryGestionListTitle.getText())) {
-                        JOptionPane.showMessageDialog(null, "Obra añadida correctamente");
+                        JOptionPane.showMessageDialog(null, "Obra eliminada correctamente");
                         textFieldLibraryGestionListAuthor.setText("");
                         textFieldLibraryGestionListTitle.setText("");
                         textPaneLibraryGestionList.setText("");
                     }
+                }
+            }
+        });
+        buttonLibraryGestionListModify.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(modifyingDocument==false) {
+                    if (textFieldLibraryGestionListAuthor.getText().length() == 0 || textFieldLibraryGestionListTitle.getText().length() == 0) {
+                        JOptionPane.showMessageDialog(null, "Algún campo está vacio, por favor, verifíquelo y pulse \"Modificar\" de nuevo");
+                    }
+                    JOptionPane.showMessageDialog(null, "Modifica los campos que quieras y haz clic en \"Guardar Cambios\" cuando hayas terminado");
+                    modifyingDocument = true;
+                    authorModyfied=textFieldLibraryGestionListAuthor.getText();
+                    titleModyfied=textFieldLibraryGestionListTitle.getText();
+                    buttonLibraryGestionListModify.setText("Guardar Cambios");
+                }
+                else{
+                    if (textFieldLibraryGestionListAuthor.getText().length() == 0 || textFieldLibraryGestionListTitle.getText().length() == 0) {
+                        JOptionPane.showMessageDialog(null, "Algún campo está vacio, por favor, verifíquelo y pulse \"Guardar Cambios\" de nuevo");
+                    }
+                    if (authorModyfied!=textFieldLibraryGestionListAuthor.getText()){
+                        domainControler.modifyDocumentAuthor(authorModyfied,titleModyfied,textFieldLibraryGestionListAuthor.getText());
+                    }
+                    if (titleModyfied!=textFieldLibraryGestionListTitle.getText()){
+                        domainControler.modifyDocumentTitle(authorModyfied,titleModyfied,textFieldLibraryGestionListTitle.getText());
+                    }
+                    if (contentModyfied!=textPaneLibraryGestionList.getText()){
+                        domainControler.modifyDocumentContent(authorModyfied,titleModyfied,textPaneLibraryGestionList.getText());
+                    }
+                        JOptionPane.showMessageDialog(null, "Cambios guardados");
+
+                    modifyingDocument=false;
+                    buttonLibraryGestionListModify.setText("Modificar");
                 }
             }
         });

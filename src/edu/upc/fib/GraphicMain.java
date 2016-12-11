@@ -29,7 +29,6 @@ public class GraphicMain {
     private JButton buttonLibraryGestionListLoad;
     private JTextPane textPaneLibraryGestionList;
     private JButton buttonLibraryGestionListModify;
-    private JButton buttonLibraryGestionListSaveChanges;
     private JButton buttonLibraryGestionAddSingle;
     private JButton buttonLibraryGestionAddFolder;
     private JTextField textFieldLibraryGestionAddAuthor;

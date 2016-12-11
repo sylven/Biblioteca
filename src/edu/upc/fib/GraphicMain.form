@@ -777,18 +777,6 @@
                           <text value="Eliminar obra"/>
                         </properties>
                       </component>
-                      <component id="c04d9" class="javax.swing.JButton" binding="buttonLibraryGestionListSaveChanges">
-                        <constraints>
-                          <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                            <minimum-size width="200" height="-1"/>
-                            <preferred-size width="200" height="-1"/>
-                            <maximum-size width="200" height="-1"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <text value="Guardar cambios"/>
-                        </properties>
-                      </component>
                       <vspacer id="1fca4">
                         <constraints>
                           <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">

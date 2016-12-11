@@ -155,26 +155,11 @@ public class GraphicMain {
                 else{
                     Vector<String> content = new Vector<String>();
                     content.add(textPaneLibraryGestionAddContent.getText());
-                    domainControler.addDocument(textFieldLibraryGestionAddAuthor.getText(), textFieldLibraryGestionAddTitle.getText(), content);
-                    JOptionPane.showMessageDialog(null, "Obra añadida correctamente");
-                    textFieldLibraryGestionAddAuthor.setText("");
-                    textFieldLibraryGestionAddTitle.setText("");
-                    textPaneLibraryGestionAddContent.setText("");
-                }
-            }
-        });
-        listTitlesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Set<String> titles=domainControler.getAuthorDocumentTitles(textFieldConsutlsTitleAuthor.getText());
-                if(titles.isEmpty()) JOptionPane.showMessageDialog(null, "El Autor no existe o no tiene ninguna obra");
-                else{
-                    DefaultListModel info = new DefaultListModel();
-                    JList listConsutlsTitleAuthor = new JList(info);
-                    int i=0;
-                    for(String title: titles) {
-                        info.add(0,title);
-                        ++i;
+                    if(domainControler.addDocument(textFieldLibraryGestionAddAuthor.getText(), textFieldLibraryGestionAddTitle.getText(), content)) {
+                        JOptionPane.showMessageDialog(null, "Obra añadida correctamente");
+                        textFieldLibraryGestionAddAuthor.setText("");
+                        textFieldLibraryGestionAddTitle.setText("");
+                        textPaneLibraryGestionAddContent.setText("");
                     }
                 }
             }
@@ -229,7 +214,7 @@ public class GraphicMain {
                     //System.out.println(i + ". " + s);
                     //listConsutlsTitleAuthor.add(s.getChars();)
                     //resultset.addElement(s);
-                    resultset.addElement("pene " + i);
+                    resultset.addElement("element " + i);
                     //i++;
                 }
                 listConsutlsTitleAuthor = new JList(resultset);
@@ -242,6 +227,22 @@ public class GraphicMain {
                 SelectionDialog selectiondialog = new SelectionDialog();
                 selectiondialog.main();
                 selectiondialog.feedlist();
+            }
+        });
+        buttonLibraryGestionListDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(textFieldLibraryGestionListAuthor.getText().length() == 0 || textFieldLibraryGestionListTitle.getText().length() == 0){
+                    JOptionPane.showMessageDialog(null, "Algún campo está vacio, por favor, verifíquelo y pulse \"Eliminar obra\" de nuevo");
+                }
+                else{
+                    if(domainControler.removeDocument(textFieldLibraryGestionListAuthor.getText(), textFieldLibraryGestionListTitle.getText())) {
+                        JOptionPane.showMessageDialog(null, "Obra añadida correctamente");
+                        textFieldLibraryGestionListAuthor.setText("");
+                        textFieldLibraryGestionListTitle.setText("");
+                        textPaneLibraryGestionList.setText("");
+                    }
+                }
             }
         });
     }

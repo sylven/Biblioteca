@@ -240,6 +240,7 @@ public class GraphicMain {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SelectionDialog selectiondialog = new SelectionDialog();
+                selectiondialog.main();
                 selectiondialog.feedlist();
             }
         });

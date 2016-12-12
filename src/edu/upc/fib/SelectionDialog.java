@@ -11,20 +11,20 @@ public class SelectionDialog extends JFrame {
     private JButton aceptarButton;
     private JButton cancelarButton;
 
-    public SelectionDialog(){}
+    public SelectionDialog(){
 
-    public static void main(){
-        JFrame frame1 = new JFrame("Seleccione un elemento de la lista y pulse aceptar:");
-        frame1.setContentPane(new SelectionDialog().panel1);
-        frame1.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        frame1.pack();
-        frame1.setLocationRelativeTo(null);
-        frame1.setVisible(true);
-        frame1.setResizable(false);
-
+        setContentPane(panel1);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        pack();
+        setVisible(true);
+        feedlist();
     }
+
     public void feedlist(){
-        String[] ar = {"one", "two", "three"};
-        JList list1 = new JList(ar);
+
+        DefaultListModel lista = new DefaultListModel();
+        lista.addElement("pene");
+        list1.setModel(lista);
+
     }
 }

@@ -10,7 +10,7 @@ import java.util.Vector;
 /**
  * Created by Javier on 28/11/2016.
  */
-public class GraphicMain {
+public class GraphicMain extends JFrame {
     DomainController domainControler = new DomainController();
     private boolean modifyingDocument=false;
     private String authorModyfied;
@@ -66,8 +66,17 @@ public class GraphicMain {
     private JButton showContentButton;
     private SelectionDialog frame1;
 
-
     public GraphicMain() {
+        //JFrame mainFrame = new JFrame("Biblioteca");
+        setContentPane(panel1);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        GraphicMain2();
+        setVisible(true);
+    }
+
+
+    public void GraphicMain2() {
         buttonTestResetRenewLibrary.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -229,8 +238,6 @@ public class GraphicMain {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SelectionDialog selectiondialog = new SelectionDialog();
-                selectiondialog.main();
-                selectiondialog.feedlist();
             }
         });
         buttonLibraryGestionListDelete.addActionListener(new ActionListener() {

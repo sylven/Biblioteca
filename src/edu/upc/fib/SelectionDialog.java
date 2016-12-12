@@ -23,8 +23,9 @@ public class SelectionDialog extends JFrame {
     public void feedlist(){
 
         DefaultListModel lista = new DefaultListModel();
-        lista.addElement("pene");
+        for(int i = 1; i < 101; i++){lista.addElement("pene"+ i);}
         list1.setModel(lista);
+
 
     }
 }

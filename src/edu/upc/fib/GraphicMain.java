@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
 
@@ -73,6 +74,18 @@ public class GraphicMain extends JFrame {
         pack();
         GraphicMain2();
         setVisible(true);
+        buttonAuthorGestionListAdd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean result = domainControler.addAuthor(textFieldAuthorGestionList.getText().toString());
+                if (result && ! (textFieldAuthorGestionList.getText().toString().length() == 0)){
+                    textFieldAuthorGestionList.setText("");
+                    JOptionPane.showMessageDialog(null, "Autor añadido correctamente");
+
+                }
+                else{JOptionPane.showMessageDialog(null, "ERROR, el autor ya existía o el campo está vacío");}
+            }
+        });
     }
 
 
@@ -239,6 +252,16 @@ public class GraphicMain extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 SelectionDialog selectiondialog = new SelectionDialog();
+                Set<String> authorsStarting = new HashSet<String>();
+                //authorsStarting = domainControler.getAuthorsByPrefix(textFieldConsutlsTitleAuthor.toString());
+                authorsStarting.add("opt1");//<-----------------------------------------------------------------------------------------
+                authorsStarting.add("opt2");
+                authorsStarting.add("opt3");
+                authorsStarting.add("opt");
+                //selectiondialog.feedlist();
+                //while(selectiondialog.isVisible()){}//no se como esperar a cerrar el otro cuadro, pero funcionaria si se esperase
+                String result  = selectiondialog.feedlist(authorsStarting);
+                textFieldConsutlsTitleAuthor.setText(result);
             }
         });
         buttonLibraryGestionListDelete.addActionListener(new ActionListener() {

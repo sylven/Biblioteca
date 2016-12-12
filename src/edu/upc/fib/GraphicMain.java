@@ -84,6 +84,21 @@ public class GraphicMain extends JFrame {
 
                 }
                 else{JOptionPane.showMessageDialog(null, "ERROR, el autor ya existía o el campo está vacío");}
+                update_listAuthorGestionList();
+            }
+        });
+        buttonAuthorGestionListCharge.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                update_listAuthorGestionList();
+            }
+        });
+        buttonAuthorGestionListDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean result = domainControler.removeAuthor(listAuthorGestionList.getSelectedValue().toString());
+                if(!result){JOptionPane.showMessageDialog(null, "ERROR! No se pudo borar... El autor tiene obras!");}
+                update_listAuthorGestionList();
             }
         });
     }
@@ -186,7 +201,7 @@ public class GraphicMain extends JFrame {
                         textFieldLibraryGestionAddTitle.setText("");
                         textPaneLibraryGestionAddContent.setText("");
                     }
-                    else JOptionPane.showMessageDialog(null, "Esta obra no existe");
+                    else JOptionPane.showMessageDialog(null, "Esta obra ya existe");
                 }
             }
         });
@@ -313,6 +328,17 @@ public class GraphicMain extends JFrame {
                 }
             }
         });
+    }
+    private void update_listAuthorGestionList(){
+        Set<String> authorsStarting = new HashSet<String>();
+        authorsStarting = domainControler.getAuthorNames();
+        DefaultListModel lista = new DefaultListModel();
+        int i = 1;
+        for (String s: authorsStarting){
+            lista.addElement(s);
+            i++;
+        }
+        listAuthorGestionList.setModel(lista);
     }
 
     public static void main(String[] args) {

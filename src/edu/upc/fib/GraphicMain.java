@@ -237,6 +237,7 @@ public class GraphicMain extends JFrame {
         buttonConsutlsTitleAuthor11.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 SelectionDialog selectiondialog = new SelectionDialog();
             }
         });

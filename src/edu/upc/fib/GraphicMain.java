@@ -142,6 +142,26 @@ public class GraphicMain extends JFrame {
                 selectiondialog.feedlist(booksof, textFieldConsultsSeemsTitle);
             }
         });
+        buttonLibraryGestionListAuthor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SelectionDialog selectiondialog = new SelectionDialog();
+                Set<String> authorsStarting = new HashSet<String>();
+                String pref = textFieldLibraryGestionListAuthor.getText().toString();
+                authorsStarting = domainControler.getAuthorsByPrefix(pref);
+                selectiondialog.feedlist(authorsStarting, textFieldLibraryGestionListAuthor);
+            }
+        });
+        buttonLibraryGestionListTitle.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SelectionDialog selectiondialog = new SelectionDialog();
+                Set<String> booksof = new HashSet<String>();
+                String pref = textFieldLibraryGestionListAuthor.getText().toString();
+                booksof = domainControler.getAuthorDocumentTitles(pref);
+                selectiondialog.feedlist(booksof, textFieldLibraryGestionListTitle);
+            }
+        });
     }
 
 

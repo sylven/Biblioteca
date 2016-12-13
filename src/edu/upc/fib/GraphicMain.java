@@ -65,7 +65,7 @@ public class GraphicMain extends JFrame {
     private JTextField textFieldConsultsSeemsTitle;
     private JButton buttonConsultsSeemsTitle;
     private JButton showContentButton;
-    private SelectionDialog frame1;
+
 
     public GraphicMain() {
         //JFrame mainFrame = new JFrame("Biblioteca");
@@ -74,6 +74,7 @@ public class GraphicMain extends JFrame {
         pack();
         GraphicMain2();
         setVisible(true);
+
         buttonAuthorGestionListAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -246,7 +247,7 @@ public class GraphicMain extends JFrame {
         listTitlesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String consultString = new String(textFieldConsutlsTitleAuthor.getText());
+                /*String consultString = new String(textFieldConsutlsTitleAuthor.getText());
                 Set<String> authorDocumentTitles =  domainControler.getAuthorDocumentTitles(consultString);
                 int i = 1;
                 DefaultListModel<String> resultset = new DefaultListModel<String>();
@@ -259,7 +260,16 @@ public class GraphicMain extends JFrame {
                     //i++;
                 }
                 listConsutlsTitleAuthor = new JList(resultset);
-                listConsutlsTitleAuthor.setVisible(true);
+                listConsutlsTitleAuthor.setVisible(true);*/
+                Set<String> authorDocuments = new HashSet<String>();
+                authorDocuments = domainControler.getAuthorDocumentTitles(textFieldConsutlsTitleAuthor.getText().toString());
+                DefaultListModel lista = new DefaultListModel();
+                int i = 1;
+                for (String s: authorDocuments){
+                    lista.addElement(s);
+                    i++;
+                }
+                listConsutlsTitleAuthor.setModel(lista);
             }
         });
         buttonConsutlsTitleAuthor11.addActionListener(new ActionListener() {

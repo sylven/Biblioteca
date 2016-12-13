@@ -278,13 +278,13 @@ public class GraphicMain extends JFrame {
 
                 SelectionDialog selectiondialog = new SelectionDialog();
                 Set<String> authorsStarting = new HashSet<String>();
-                authorsStarting = domainControler.getAuthorsByPrefix(textFieldConsutlsTitleAuthor.toString());
+                String pref = textFieldConsutlsTitleAuthor.getText().toString();
+                authorsStarting = domainControler.getAuthorsByPrefix(pref);
                 /*authorsStarting.add("opt1");//<-----------------------------------------------------------------------------------------
                 authorsStarting.add("opt2");
                 authorsStarting.add("opt3");
                 authorsStarting.add("opt");*/
                 //selectiondialog.feedlist();
-                //while(selectiondialog.isVisible()){}//no se como esperar a cerrar el otro cuadro, pero funcionaria si se esperase
                 selectiondialog.feedlist(authorsStarting, textFieldConsutlsTitleAuthor);
                 //textFieldConsutlsTitleAuthor.setText(result);
             }

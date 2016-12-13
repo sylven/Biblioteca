@@ -65,6 +65,7 @@ public class GraphicMain extends JFrame {
     private JButton buttonConsultsSeemsTitle;
     private JButton showContentButton;
     private JSpinner spinnerbuttonConsultsSeems;
+    private JButton buttonLibraryGestionAddAuthor;
 
 
     public GraphicMain() {
@@ -160,6 +161,16 @@ public class GraphicMain extends JFrame {
                 String pref = textFieldLibraryGestionListAuthor.getText().toString();
                 booksof = domainControler.getAuthorDocumentTitles(pref);
                 selectiondialog.feedlist(booksof, textFieldLibraryGestionListTitle);
+            }
+        });
+        buttonLibraryGestionAddAuthor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SelectionDialog selectiondialog = new SelectionDialog();
+                Set<String> authorsStarting = new HashSet<String>();
+                String pref = textFieldLibraryGestionAddAuthor.getText().toString();
+                authorsStarting = domainControler.getAuthorsByPrefix(pref);
+                selectiondialog.feedlist(authorsStarting, textFieldLibraryGestionAddAuthor);
             }
         });
     }

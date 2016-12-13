@@ -34,7 +34,7 @@ public class GraphicMain extends JFrame {
     private JButton buttonLibraryGestionAddFolder;
     private JTextField textFieldLibraryGestionAddAuthor;
     private JTextField textFieldLibraryGestionAddTitle;
-    private JTextField textFieldConsutlsTitleAuthor;
+    public JTextField textFieldConsutlsTitleAuthor;
     private JButton buttonConsutlsTitleAuthor11;
     private JList listConsutlsTitleAuthor;
     private JButton listTitlesButton;
@@ -278,15 +278,15 @@ public class GraphicMain extends JFrame {
 
                 SelectionDialog selectiondialog = new SelectionDialog();
                 Set<String> authorsStarting = new HashSet<String>();
-                //authorsStarting = domainControler.getAuthorsByPrefix(textFieldConsutlsTitleAuthor.toString());
-                authorsStarting.add("opt1");//<-----------------------------------------------------------------------------------------
+                authorsStarting = domainControler.getAuthorsByPrefix(textFieldConsutlsTitleAuthor.toString());
+                /*authorsStarting.add("opt1");//<-----------------------------------------------------------------------------------------
                 authorsStarting.add("opt2");
                 authorsStarting.add("opt3");
-                authorsStarting.add("opt");
+                authorsStarting.add("opt");*/
                 //selectiondialog.feedlist();
                 //while(selectiondialog.isVisible()){}//no se como esperar a cerrar el otro cuadro, pero funcionaria si se esperase
-                String result  = selectiondialog.feedlist(authorsStarting);
-                textFieldConsutlsTitleAuthor.setText(result);
+                selectiondialog.feedlist(authorsStarting, textFieldConsutlsTitleAuthor);
+                //textFieldConsutlsTitleAuthor.setText(result);
             }
         });
         buttonLibraryGestionListDelete.addActionListener(new ActionListener() {

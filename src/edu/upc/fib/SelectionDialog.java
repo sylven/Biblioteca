@@ -14,10 +14,9 @@ public class SelectionDialog extends JFrame {
     private JList list1;
     private JButton aceptarButton;
     private JButton cancelarButton;
-    String selection;
+    JTextField textField;
 
     public SelectionDialog(){
-
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         pack();
@@ -26,24 +25,24 @@ public class SelectionDialog extends JFrame {
         aceptarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                selection = list1.getSelectedValue().toString();
+                textField.setText(list1.getSelectedValue().toString());
                 dispose();
             }
         });
         cancelarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                selection = "";
                 dispose();
             }
         });
     }
 
-    public String feedlist(Set<String> authors){
+    public void feedlist(Set<String> authors, JTextField textField_ext){
 
         /*DefaultListModel lista = new DefaultListModel();
         for(int i = 1; i < 101; i++){lista.addElement("pene"+ i);}
         list1.setModel(lista);*/
+        textField = textField_ext;
         DefaultListModel lista = new DefaultListModel();
         int i = 1;
         for (String s: authors){
@@ -51,7 +50,6 @@ public class SelectionDialog extends JFrame {
             i++;
         }
         list1.setModel(lista);
-        return selection;
     }
     public void feedlist1a100(){
         DefaultListModel lista = new DefaultListModel();

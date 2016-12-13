@@ -43,7 +43,6 @@ public class GraphicMain extends JFrame {
     private JTextField textFieldConsultsContentTitle;
     private JButton buttonConsultsContentTitle;
     private JTextPane textPanelConsultsContent;
-    private JTextField textFieldConsultsSeemsNumberOfDocs;
     private JButton buttonConsultsSeemsMethodeB;
     private JButton buttonConsultsSeemsMethodeA;
     private JList listConsultsSeems;
@@ -65,6 +64,7 @@ public class GraphicMain extends JFrame {
     private JTextField textFieldConsultsSeemsTitle;
     private JButton buttonConsultsSeemsTitle;
     private JButton showContentButton;
+    private JSpinner spinnerbuttonConsultsSeems;
 
 
     public GraphicMain() {
@@ -100,6 +100,46 @@ public class GraphicMain extends JFrame {
                 boolean result = domainControler.removeAuthor(listAuthorGestionList.getSelectedValue().toString());
                 if(!result){JOptionPane.showMessageDialog(null, "ERROR! No se pudo borar... El autor tiene obras!");}
                 update_listAuthorGestionList();
+            }
+        });
+        buttonConsultsContentAuthor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SelectionDialog selectiondialog = new SelectionDialog();
+                Set<String> authorsStarting = new HashSet<String>();
+                String pref = textFieldConsultsContentAuthor.getText().toString();
+                authorsStarting = domainControler.getAuthorsByPrefix(pref);
+                selectiondialog.feedlist(authorsStarting, textFieldConsultsContentAuthor);
+            }
+        });
+        buttonConsultsContentTitle.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SelectionDialog selectiondialog = new SelectionDialog();
+                Set<String> booksof = new HashSet<String>();
+                String pref = textFieldConsultsContentAuthor.getText().toString();
+                booksof = domainControler.getAuthorDocumentTitles(pref);
+                selectiondialog.feedlist(booksof, textFieldConsultsContentTitle);
+            }
+        });
+        buttonConsultsSeemsAuthor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SelectionDialog selectiondialog = new SelectionDialog();
+                Set<String> authorsStarting = new HashSet<String>();
+                String pref = textFieldConsultsSeemsAuthor.getText().toString();
+                authorsStarting = domainControler.getAuthorsByPrefix(pref);
+                selectiondialog.feedlist(authorsStarting, textFieldConsultsSeemsAuthor);
+            }
+        });
+        buttonConsultsSeemsTitle.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SelectionDialog selectiondialog = new SelectionDialog();
+                Set<String> booksof = new HashSet<String>();
+                String pref = textFieldConsultsSeemsAuthor.getText().toString();
+                booksof = domainControler.getAuthorDocumentTitles(pref);
+                selectiondialog.feedlist(booksof, textFieldConsultsSeemsTitle);
             }
         });
     }
@@ -280,13 +320,8 @@ public class GraphicMain extends JFrame {
                 Set<String> authorsStarting = new HashSet<String>();
                 String pref = textFieldConsutlsTitleAuthor.getText().toString();
                 authorsStarting = domainControler.getAuthorsByPrefix(pref);
-                /*authorsStarting.add("opt1");//<-----------------------------------------------------------------------------------------
-                authorsStarting.add("opt2");
-                authorsStarting.add("opt3");
-                authorsStarting.add("opt");*/
-                //selectiondialog.feedlist();
                 selectiondialog.feedlist(authorsStarting, textFieldConsutlsTitleAuthor);
-                //textFieldConsutlsTitleAuthor.setText(result);
+
             }
         });
         buttonLibraryGestionListDelete.addActionListener(new ActionListener() {

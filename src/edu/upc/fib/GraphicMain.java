@@ -14,6 +14,8 @@ import java.util.Vector;
 public class GraphicMain extends JFrame {
     DomainController domainControler = new DomainController();
     private boolean modifyingDocument=false;
+    private boolean modifyingAuthor=false;
+    private String authorModyfied2;
     private String authorModyfied;
     private String titleModyfied;
     private String contentModyfied;
@@ -53,7 +55,7 @@ public class GraphicMain extends JFrame {
     private JButton buttonAuthorGestionListCharge;
     private JTextField textFieldAuthorGestionList;
     private JButton buttonAuthorGestionListAdd;
-    private JButton ButtonAuthorGestionListModify;
+    private JButton buttonAuthorGestionListModify;
     private JButton buttonAuthorGestionListDelete;
     private JButton buttonLibraryGestionListTitle;
     private JButton buttonLibraryGestionListDelete;
@@ -101,6 +103,29 @@ public class GraphicMain extends JFrame {
                 boolean result = domainControler.removeAuthor(listAuthorGestionList.getSelectedValue().toString());
                 if(!result){JOptionPane.showMessageDialog(null, "ERROR! No se pudo borar... El autor tiene obras!");}
                 update_listAuthorGestionList();
+            }
+        });
+        buttonAuthorGestionListModify.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!modifyingAuthor){
+                    JOptionPane.showMessageDialog(null, "Modifica el nombre y haz clic en \"Guardar Cambios\" cuando hayas terminado");
+                    modifyingAuthor = true;
+                    authorModyfied2=listAuthorGestionList.getSelectedValue().toString();
+                    buttonAuthorGestionListModify.setText("Guardar Cambios");
+                    textFieldAuthorGestionList.setText(authorModyfied2);
+                }
+                else{
+                    if (textFieldAuthorGestionList.getText().length() == 0) {
+                        JOptionPane.showMessageDialog(null, "El campo de Autor está vacio, por favor, verifíquelo y pulse \"Guardar Cambios\" de nuevo");
+                    }
+                    if (domainControler.modifyAuthor(authorModyfied2, textFieldAuthorGestionList.getText())) {
+                        JOptionPane.showMessageDialog(null, "Cambios guardados");
+                    }
+                    modifyingAuthor=false;
+                    buttonAuthorGestionListModify.setText("Modificar");
+                    update_listAuthorGestionList();
+                }
             }
         });
         buttonConsultsContentAuthor.addActionListener(new ActionListener() {

@@ -1,6 +1,7 @@
 package edu.upc.fib;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
@@ -202,6 +203,7 @@ public class GraphicMain extends JFrame {
 
 
     public void GraphicMain2() {
+        textPaneLibraryGestionList.setEditable(false);
         buttonTestResetRenewLibrary.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -404,6 +406,12 @@ public class GraphicMain extends JFrame {
                         JOptionPane.showMessageDialog(null, "Algún campo está vacio, por favor, verifíquelo y pulse \"Modificar\" de nuevo");
                     }
                     JOptionPane.showMessageDialog(null, "Modifica los campos que quieras y haz clic en \"Guardar Cambios\" cuando hayas terminado");
+                    textFieldLibraryGestionListAuthor.setBackground(Color.GREEN);
+                    textFieldLibraryGestionListTitle.setBackground(Color.GREEN);
+                    textPaneLibraryGestionList.setBackground(Color.GREEN);
+                    textPaneLibraryGestionList.setEditable(true);
+
+
                     modifyingDocument = true;
                     authorModyfied=textFieldLibraryGestionListAuthor.getText();
                     titleModyfied=textFieldLibraryGestionListTitle.getText();
@@ -423,6 +431,10 @@ public class GraphicMain extends JFrame {
                         domainControler.modifyDocumentContent(authorModyfied,titleModyfied,textPaneLibraryGestionList.getText());
                     }
                         JOptionPane.showMessageDialog(null, "Cambios guardados");
+                    textFieldLibraryGestionListAuthor.setBackground(Color.WHITE);
+                    textFieldLibraryGestionListTitle.setBackground(Color.WHITE);
+                    textPaneLibraryGestionList.setBackground(Color.WHITE);
+                    textPaneLibraryGestionList.setEditable(false);
 
                     modifyingDocument=false;
                     buttonLibraryGestionListModify.setText("Modificar");

@@ -71,10 +71,18 @@ public class GraphicMain extends JFrame {
     public GraphicMain() {
         //JFrame mainFrame = new JFrame("Biblioteca");
         setContentPane(panel1);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         pack();
         GraphicMain2();
         setVisible(true);
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+           @Override
+           public void windowClosing(java.awt.event.WindowEvent e) {
+               domainControler.saveStatuts();
+               System.exit(0);
+           }
+        });
 
         buttonAuthorGestionListAdd.addActionListener(new ActionListener() {
             @Override

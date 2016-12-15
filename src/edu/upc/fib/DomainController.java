@@ -76,4 +76,8 @@ public class DomainController {
     public Boolean removeDocument(String AuthorName, String title){
         return library.removeDocument(AuthorName, title);
     }
+
+    public void saveStatuts() {
+        library.saveStatus();
+    }
 }

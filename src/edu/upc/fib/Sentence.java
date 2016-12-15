@@ -1,10 +1,11 @@
 package edu.upc.fib;
 
+import java.io.Serializable;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Sentence {
+public class Sentence implements Serializable {
     private Vector<String> mWords; // Vector de las palabras de la frase
 
     public Sentence(String sentence) {

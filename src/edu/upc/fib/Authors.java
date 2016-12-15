@@ -1,8 +1,9 @@
 package edu.upc.fib;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Authors {
+public class Authors implements Serializable {
     private TreeMap<String, Author> mAuthors; // Estructura que contiene todos los autores <autor, Author>
 
     public Authors() {

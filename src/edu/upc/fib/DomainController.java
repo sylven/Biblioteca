@@ -8,7 +8,11 @@ import java.util.Vector;
 
 public class DomainController {
 
-    public Library library = new Library();
+    private Library library;
+
+    public DomainController() {
+        library = new Library();
+    }
 
     public Set<String> getAuthorDocumentTitles(String authorName){
         return library.getAuthorDocumentTitles(authorName);

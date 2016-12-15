@@ -1,12 +1,13 @@
 package edu.upc.fib;
 
 import javax.print.Doc;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Set;
 import java.util.Vector;
 
-public class Author implements Comparable<Author> {
+public class Author implements Comparable<Author>, Serializable {
     private Sentence mName; // Nombre del autor
     //private Vector<Document> mDocuments; // Lista de documentos de los que es autor
     private Hashtable<String, Document> mDocuments; // Lista de documentos de los que es autor <titulo, Document>

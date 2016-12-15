@@ -3,20 +3,44 @@ package edu.upc.fib;
 import javafx.util.Pair;
 import sun.reflect.generics.tree.Tree;
 
+import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Library {
+public class Library implements Serializable {
     private Documents mDocuments;
     private Authors mAuthors;
 
     public Library() {
         mDocuments = new Documents();
         mAuthors = new Authors();
+        loadStatus();
     }
 
      // Gestión de autores
+
+    public void saveStatus() {
+        try {
+            FileOutputStream fout = new FileOutputStream("library.dat");
+            ObjectOutputStream oos = new ObjectOutputStream(fout);
+            oos.writeObject(mDocuments);
+            oos.writeObject(mAuthors);
+            oos.close();
+        }
+        catch (Exception e) { e.printStackTrace(); }
+    }
+
+    public void loadStatus() {
+        try {
+            FileInputStream fin = new FileInputStream("library.dat");
+            ObjectInputStream ois = new ObjectInputStream(fin);
+            mDocuments = (Documents) ois.readObject();
+            mAuthors = (Authors) ois.readObject();
+            ois.close();
+        }
+        catch (Exception e) { e.printStackTrace(); }
+    }
 
     public boolean addAuthor(String authorName) {
         return mAuthors.addAuthor(authorName);

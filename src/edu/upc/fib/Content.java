@@ -1,8 +1,9 @@
 package edu.upc.fib;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Content {
+public class Content implements Serializable {
     private Vector<Sentence> mContent;
 
     public Content(Vector<String> content) {

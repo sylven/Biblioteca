@@ -6,9 +6,10 @@ import javax.print.Doc;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 
-public class Documents {
+public class Documents implements Serializable {
     //private TreeMap<String, Vector<Document>> mDocuments; // Vector de documentos con el mismo título
     //private TreeMap<String, HashMap<String, Document>> mDocuments; // Vector de documentos con el mismo título <título, <autor, Document>>
     private TreeMap<String, Hashtable<Author, Document>> mDocuments; // Vector de documentos con el mismo título <título, <Author, Document>>

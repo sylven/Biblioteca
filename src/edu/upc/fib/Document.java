@@ -1,9 +1,10 @@
 package edu.upc.fib;
 
 import javax.print.Doc;
+import java.io.Serializable;
 import java.util.*;
 
-public class Document implements Comparable<Document>{
+public class Document implements Comparable<Document>, Serializable {
     private Author mAuthor;
     private Sentence mTitle;
     private Content mContent;

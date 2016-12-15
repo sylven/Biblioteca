@@ -4,10 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
+
+import javafx.util.Pair;
 
 public class GraphicMain extends JFrame {
     DomainController domainControler = new DomainController();
@@ -202,6 +201,25 @@ public class GraphicMain extends JFrame {
                 String pref = textFieldLibraryGestionAddAuthor.getText().toString();
                 authorsStarting = domainControler.getAuthorsByPrefix(pref);
                 selectiondialog.feedlist(authorsStarting, textFieldLibraryGestionAddAuthor);
+            }
+        });
+        buttonConsultsSeemsMethodeA.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(textFieldConsultsSeemsAuthor.getText().length() == 0 || textFieldConsultsSeemsTitle.getText().length() == 0 ||(Integer)spinnerbuttonConsultsSeems.getValue() == 0){
+                    JOptionPane.showMessageDialog(null, "Algún campo está vacio, por favor, verifíquelo y pulse \"Valor de Búsqueda\" de nuevo");
+
+                }
+                java.util.List<Pair<String, String>> similarDocuments= domainControler.getSimilarDocuments(textFieldConsultsSeemsAuthor.getText(), textFieldConsultsSeemsTitle.getText(), (Integer)spinnerbuttonConsultsSeems.getValue());
+                DefaultListModel lista = new DefaultListModel();
+                int i = 1;
+                String document;
+                for (Pair<String,String> s: similarDocuments){
+                    document=s.getValue() + " - " + s.getKey();
+                    lista.addElement(document);
+                    i++;
+                }
+                listConsultsSeems.setModel(lista);
             }
         });
     }

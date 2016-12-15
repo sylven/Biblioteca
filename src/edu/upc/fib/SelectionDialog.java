@@ -6,9 +6,6 @@ import java.awt.event.ActionListener;
 import java.util.Set;
 import java.util.Vector;
 
-/**
- * Created by Javier on 10/12/2016.
- */
 public class SelectionDialog extends JFrame {
     private JPanel panel1;
     private JList list1;

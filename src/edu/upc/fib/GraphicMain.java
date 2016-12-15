@@ -9,9 +9,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
 
-/**
- * Created by Javier on 28/11/2016.
- */
 public class GraphicMain extends JFrame {
     DomainController domainControler = new DomainController();
     private boolean modifyingDocument=false;

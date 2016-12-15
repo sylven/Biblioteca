@@ -6,12 +6,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
-/**
- * Created by Pau on 5/12/2016.
- */
 public class DomainController {
 
-    Library library = new Library();
+    public Library library = new Library();
 
     public Set<String> getAuthorDocumentTitles(String authorName){
         return library.getAuthorDocumentTitles(authorName);

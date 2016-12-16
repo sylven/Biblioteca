@@ -250,15 +250,10 @@ public class GraphicMain extends JFrame {
                 JPanel contentpane = new JPanel();
                 int seleccion=selectionwindowfile.showOpenDialog(contentpane);
                 if(seleccion==JFileChooser.APPROVE_OPTION) {
-
-                    //Seleccionamos el fichero
                     File fichero = selectionwindowfile.getSelectedFile();
-                    String fullcontent = new String();
-                    fullcontent = fichero.getAbsoluteFile().toString();
                     String author = new String();
                     String title = new String();
                     Vector<String> content = new Vector();
-                    String cadena;
                     try {
                         convertTodocument(fichero.toString(), content);
                     } catch (IOException e1) {
@@ -393,6 +388,37 @@ public class GraphicMain extends JFrame {
                     textFieldConsultsSeemsAuthor.setText(author);
                     textFieldConsultsSeemsTitle.setText(title);
                     JOptionPane.showMessageDialog(null, "Seleciona el número de documentos a mostrar y haz clic en el valor de busqueda que desees");
+                }
+            }
+        });
+        buttonLibraryGestionAddFolder.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser selectionwindowfile = new JFileChooser();
+                selectionwindowfile.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                JPanel contentpane = new JPanel();
+                int seleccion=selectionwindowfile.showOpenDialog(contentpane);
+                if(seleccion==JFileChooser.APPROVE_OPTION) {
+                    File fichero = selectionwindowfile.getSelectedFile();
+                    File[] listOfFiles = fichero.listFiles();
+                    int totaladded = 0;
+                    for(int i = 0; i < listOfFiles.length; i++){
+                        String author = new String();
+                        String title = new String();
+                        Vector<String> content = new Vector();
+                        try {
+                            if(listOfFiles[i].toString().endsWith(".txt") ||listOfFiles[i].toString().endsWith(".TXT") ){
+                                convertTodocument(/*fichero.toString() +*/ listOfFiles[i].toString(), content);
+                                author = content.firstElement();
+                                content.remove(0);
+                                title = content.firstElement();
+                                content.remove(0);
+                                if(domainControler.addDocument(author, title, content)){totaladded++;}
+                            }
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                    JOptionPane.showMessageDialog(null, "Se han añadido " + totaladded + " documentos");
                 }
             }
         });

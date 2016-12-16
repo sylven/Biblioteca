@@ -80,4 +80,8 @@ public class DomainController {
     public void saveStatuts() {
         library.saveStatus();
     }
+
+    public void restartStatus(){
+        library.restartStatus();
+    }
 }

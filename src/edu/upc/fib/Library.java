@@ -18,6 +18,11 @@ public class Library implements Serializable {
         loadStatus();
     }
 
+
+    public void restartStatus(){
+        mDocuments = new Documents();
+        mAuthors = new Authors();
+    }
      // Gestión de autores
 
     public void saveStatus() {

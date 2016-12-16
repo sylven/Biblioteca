@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 import javafx.util.Pair;
@@ -133,6 +134,7 @@ public class GraphicMain extends JFrame {
                     else {
                         JOptionPane.showMessageDialog(null, "Modifica el nombre y haz clic en \"Guardar Cambios\" cuando hayas terminado");
                         modifyingAuthor = true;
+                        textFieldAuthorGestionList.setBackground(Color.GREEN);
                         authorModyfied2 = listAuthorGestionList.getSelectedValue().toString();
                         buttonAuthorGestionListModify.setText("Guardar Cambios");
                         textFieldAuthorGestionList.setText(authorModyfied2);
@@ -146,6 +148,7 @@ public class GraphicMain extends JFrame {
                         JOptionPane.showMessageDialog(null, "Cambios guardados");
                     }
                     modifyingAuthor=false;
+                    textFieldAuthorGestionList.setBackground(Color.WHITE);
                     buttonAuthorGestionListModify.setText("Modificar");
                     update_listAuthorGestionList();
                 }
@@ -250,16 +253,44 @@ public class GraphicMain extends JFrame {
 
                     //Seleccionamos el fichero
                     File fichero = selectionwindowfile.getSelectedFile();
-                    String fullcontent = new String();
-                    fullcontent = fichero.getAbsoluteFile().toString();
                     String author = new String();
                     String title = new String();
+                    String frase = new String();
                     Vector<String> content = new Vector();
-                    //convertir fichero a elementos-------------------------------------------------------
-                    JOptionPane.showMessageDialog(null, fichero.toString());
-                    JOptionPane.showMessageDialog(null, fullcontent);
+                    String todo= null;
+                    try {
+                        todo = readFile(fichero);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                    int i=0;
+                    int j=0;
+                    boolean found=false;
+                    while(i<todo.length()&& !found){
+                        if(todo.charAt(i)=='\n'){
+                            author=todo.substring(0,i-1);
+                            j=i;
+                            found=true;
+                        }
+                        ++i;
+                    }
+                    found=false;
+                    while(i<todo.length()&& !found){
+                        if(todo.charAt(i)=='\n'){
+                            title=todo.substring(j+1,i-1);
+                            found=true;
+                        }
+                        ++i;
+                    }
 
-                    //domainControler.addDocument(author, title, content);
+                    frase=todo.substring(i-1);
+                    content.add(frase);
+
+
+                    //convertir fichero a elementos-------------------------------------------------------
+                    domainControler.addDocument(author, title, content);
+                    JOptionPane.showMessageDialog(null, "Obra añadida correctamente");
+
                 }
             }
         });
@@ -390,12 +421,6 @@ public class GraphicMain extends JFrame {
 
     public void GraphicMain2() {
         textPaneLibraryGestionList.setEditable(false);
-        buttonTestResetRenewLibrary.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //main(null);
-            }
-        });
         buttonTestResetAddTest.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -466,7 +491,8 @@ public class GraphicMain extends JFrame {
         buttonTestResetRenewLibrary.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                domainControler = new DomainController();
+                domainControler.restartStatus();
+                JOptionPane.showMessageDialog(null, "Libreria Vacia");
             }
         });
 
@@ -640,6 +666,23 @@ public class GraphicMain extends JFrame {
             i++;
         }
         listAuthorGestionList.setModel(lista);
+    }
+
+    private String readFile(File fichero) throws IOException {
+
+
+        StringBuilder fileContents = new StringBuilder((int)fichero.length());
+        Scanner scanner = new Scanner(fichero);
+        String lineSeparator = System.getProperty("line.separator");
+
+        try {
+            while(scanner.hasNextLine()) {
+                fileContents.append(scanner.nextLine() + lineSeparator);
+            }
+            return fileContents.toString();
+        } finally {
+            scanner.close();
+        }
     }
 
     public static void main(String[] args) {

@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
+import java.util.function.BooleanSupplier;
 
 import javafx.util.Pair;
 
@@ -253,44 +253,24 @@ public class GraphicMain extends JFrame {
 
                     //Seleccionamos el fichero
                     File fichero = selectionwindowfile.getSelectedFile();
+                    String fullcontent = new String();
+                    fullcontent = fichero.getAbsoluteFile().toString();
                     String author = new String();
                     String title = new String();
-                    String frase = new String();
                     Vector<String> content = new Vector();
-                    String todo= null;
+                    String cadena;
                     try {
-                        todo = readFile(fichero);
+                        convertTodocument(fichero.toString(), content);
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
-                    int i=0;
-                    int j=0;
-                    boolean found=false;
-                    while(i<todo.length()&& !found){
-                        if(todo.charAt(i)=='\n'){
-                            author=todo.substring(0,i-1);
-                            j=i;
-                            found=true;
-                        }
-                        ++i;
-                    }
-                    found=false;
-                    while(i<todo.length()&& !found){
-                        if(todo.charAt(i)=='\n'){
-                            title=todo.substring(j+1,i-1);
-                            found=true;
-                        }
-                        ++i;
-                    }
-
-                    frase=todo.substring(i-1);
-                    content.add(frase);
-
-
-                    //convertir fichero a elementos-------------------------------------------------------
-                    domainControler.addDocument(author, title, content);
-                    JOptionPane.showMessageDialog(null, "Obra añadida correctamente");
-
+                    author = content.firstElement();
+                    content.remove(0);
+                    title = content.firstElement();
+                    content.remove(0);
+                    Boolean resutlt = domainControler.addDocument(author, title, content);
+                    if(resutlt){JOptionPane.showMessageDialog(null, "El documento de \"" + author +"\" con título \"" + title + "\" ha sido añadido satisfactoriamente");}
+                    else {JOptionPane.showMessageDialog(null, "Error, el documento ya está importado?");}
                 }
             }
         });
@@ -557,20 +537,6 @@ public class GraphicMain extends JFrame {
         listTitlesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*String consultString = new String(textFieldConsutlsTitleAuthor.getText());
-                Set<String> authorDocumentTitles =  domainControler.getAuthorDocumentTitles(consultString);
-                int i = 1;
-                DefaultListModel<String> resultset = new DefaultListModel<String>();
-                //for (String s : authorDocumentTitles) {
-                for (i = 0; i < 10;i++) {
-                    //System.out.println(i + ". " + s);
-                    //listConsutlsTitleAuthor.add(s.getChars();)
-                    //resultset.addElement(s);
-                    resultset.addElement("element " + i);
-                    //i++;
-                }
-                listConsutlsTitleAuthor = new JList(resultset);
-                listConsutlsTitleAuthor.setVisible(true);*/
                 Set<String> authorDocuments = new HashSet<String>();
                 authorDocuments = domainControler.getAuthorDocumentTitles(textFieldConsutlsTitleAuthor.getText().toString());
                 DefaultListModel lista = new DefaultListModel();
@@ -698,6 +664,17 @@ public class GraphicMain extends JFrame {
     private void createUIComponents() {
         // TODO: place custom component creation code here
     }
+    private void convertTodocument(String route, Vector<String> content) throws FileNotFoundException, IOException{
+        String cadena;
+        FileReader f = new FileReader(route);
+        BufferedReader b = new BufferedReader(f);
+        while((cadena = b.readLine())!=null) {
+            content.add(cadena);
+        }
+        b.close();
+
+    }
+
 
 
     //public static void

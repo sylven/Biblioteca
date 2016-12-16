@@ -18,6 +18,11 @@ public class Library implements Serializable {
         loadStatus();
     }
 
+
+    public void restartStatus(){
+        mDocuments = new Documents();
+        mAuthors = new Authors();
+    }
      // Gestión de autores
 
     public void saveStatus() {
@@ -85,6 +90,7 @@ public class Library implements Serializable {
             int i = 0;
             for (Map.Entry<Document, Double> result : similarDocuments) {
                 resultsList.add(new Pair(result.getKey().getTitle().toString(), result.getKey().getAuthor().getName().toString()));
+                ++i;
                 if (i >= nDocuments) {
                     break;
                 }

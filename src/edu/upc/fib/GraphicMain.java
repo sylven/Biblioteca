@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 import javafx.util.Pair;
@@ -66,6 +67,11 @@ public class GraphicMain extends JFrame {
     private JButton showContentButton;
     private JSpinner spinnerbuttonConsultsSeems;
     private JButton buttonLibraryGestionAddAuthor;
+    private JButton buttonListTitleShowDocument;
+    private JButton buttonListSimilarShowDocument;
+    private JButton buttonListExpressionShowDocument;
+    private JButton buttonListTitleSimilarDocuments;
+    private JButton buttonListExpressionSimilarDocuments;
 
 
     public GraphicMain() {
@@ -106,20 +112,33 @@ public class GraphicMain extends JFrame {
         buttonAuthorGestionListDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean result = domainControler.removeAuthor(listAuthorGestionList.getSelectedValue().toString());
-                if(!result){JOptionPane.showMessageDialog(null, "ERROR! No se pudo borar... El autor tiene obras!");}
-                update_listAuthorGestionList();
+                if(listAuthorGestionList.isSelectionEmpty()){
+                    JOptionPane.showMessageDialog(null, "Selecciona un autor y luego haz clic en \"Eliminar\"");
+                }
+                else {
+                    boolean result = domainControler.removeAuthor(listAuthorGestionList.getSelectedValue().toString());
+                    if (!result) {
+                        JOptionPane.showMessageDialog(null, "ERROR! No se pudo borar... El autor tiene obras!");
+                    }
+                    update_listAuthorGestionList();
+                }
             }
         });
         buttonAuthorGestionListModify.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(!modifyingAuthor){
-                    JOptionPane.showMessageDialog(null, "Modifica el nombre y haz clic en \"Guardar Cambios\" cuando hayas terminado");
-                    modifyingAuthor = true;
-                    authorModyfied2=listAuthorGestionList.getSelectedValue().toString();
-                    buttonAuthorGestionListModify.setText("Guardar Cambios");
-                    textFieldAuthorGestionList.setText(authorModyfied2);
+                    if(listAuthorGestionList.isSelectionEmpty()){
+                         JOptionPane.showMessageDialog(null, "Selecciona un autor y luego haz clic en \"Modificar\"");
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "Modifica el nombre y haz clic en \"Guardar Cambios\" cuando hayas terminado");
+                        modifyingAuthor = true;
+                        textFieldAuthorGestionList.setBackground(Color.GREEN);
+                        authorModyfied2 = listAuthorGestionList.getSelectedValue().toString();
+                        buttonAuthorGestionListModify.setText("Guardar Cambios");
+                        textFieldAuthorGestionList.setText(authorModyfied2);
+                    }
                 }
                 else{
                     if (textFieldAuthorGestionList.getText().length() == 0) {
@@ -129,6 +148,7 @@ public class GraphicMain extends JFrame {
                         JOptionPane.showMessageDialog(null, "Cambios guardados");
                     }
                     modifyingAuthor=false;
+                    textFieldAuthorGestionList.setBackground(Color.WHITE);
                     buttonAuthorGestionListModify.setText("Modificar");
                     update_listAuthorGestionList();
                 }
@@ -216,7 +236,7 @@ public class GraphicMain extends JFrame {
                 int i = 1;
                 String document;
                 for (Pair<String,String> s: similarDocuments){
-                    document=s.getValue() + " - " + s.getKey();
+                    document=s.getValue() + "/" + s.getKey();
                     lista.addElement(document);
                     i++;
                 }
@@ -233,16 +253,166 @@ public class GraphicMain extends JFrame {
 
                     //Seleccionamos el fichero
                     File fichero = selectionwindowfile.getSelectedFile();
-                    String fullcontent = new String();
-                    fullcontent = fichero.getAbsoluteFile().toString();
                     String author = new String();
                     String title = new String();
+                    String frase = new String();
                     Vector<String> content = new Vector();
-                    //convertir fichero a elementos-------------------------------------------------------
-                    JOptionPane.showMessageDialog(null, fichero.toString());
-                    JOptionPane.showMessageDialog(null, fullcontent);
+                    String todo= null;
+                    try {
+                        todo = readFile(fichero);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                    int i=0;
+                    int j=0;
+                    boolean found=false;
+                    while(i<todo.length()&& !found){
+                        if(todo.charAt(i)=='\n'){
+                            author=todo.substring(0,i-1);
+                            j=i;
+                            found=true;
+                        }
+                        ++i;
+                    }
+                    found=false;
+                    while(i<todo.length()&& !found){
+                        if(todo.charAt(i)=='\n'){
+                            title=todo.substring(j+1,i-1);
+                            found=true;
+                        }
+                        ++i;
+                    }
 
-                    //domainControler.addDocument(author, title, content);
+                    frase=todo.substring(i-1);
+                    content.add(frase);
+
+
+                    //convertir fichero a elementos-------------------------------------------------------
+                    domainControler.addDocument(author, title, content);
+                    JOptionPane.showMessageDialog(null, "Obra añadida correctamente");
+
+                }
+            }
+        });
+        buttonListTitleShowDocument.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(listConsutlsTitleAuthor.isSelectionEmpty()){
+                    JOptionPane.showMessageDialog(null, "Selecciona un Documento y luego haz clic en \"Visualizar Documento\"");
+                }
+                else {
+                    String author = textFieldConsutlsTitleAuthor.getText();
+                    String title = listConsutlsTitleAuthor.getSelectedValue().toString();
+                    tabbedPane1.setSelectedIndex(2);
+                    tabbedPane4.setSelectedIndex(0);
+                    textFieldLibraryGestionListAuthor.setText(author);
+                    textFieldLibraryGestionListTitle.setText(title);
+                    Vector<String> content = domainControler.getDocumentContent(author, title);
+                    for (String sentence : content) {
+                        try {
+                            textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
+                        } catch (Exception exc) {
+                            System.out.println(e);
+                        }
+                    }
+                }
+            }
+        });
+        buttonListSimilarShowDocument.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(listConsultsSeems.isSelectionEmpty()){
+                    JOptionPane.showMessageDialog(null, "Selecciona un Documento y luego haz clic en \"Visualizar Documento\"");
+                }
+                else {
+                    String documentIdentifyer = listConsultsSeems.getSelectedValue().toString();
+                    String author = null;
+                    String title = null;
+                    for (int i = 0; i < documentIdentifyer.length(); ++i) {
+                        if (documentIdentifyer.charAt(i) == '/') {
+                            author = documentIdentifyer.substring(0, i);
+                            title = documentIdentifyer.substring(i + 1);
+                        }
+                    }
+                    tabbedPane1.setSelectedIndex(2);
+                    tabbedPane4.setSelectedIndex(0);
+                    textFieldLibraryGestionListAuthor.setText(author);
+                    textFieldLibraryGestionListTitle.setText(title);
+                    Vector<String> content = domainControler.getDocumentContent(author, title);
+                    for (String sentence : content) {
+                        try {
+                            textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
+                        } catch (Exception exc) {
+                            System.out.println(e);
+                        }
+                    }
+                }
+            }
+        });
+        buttonListExpressionShowDocument.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(listConsultsExpression.isSelectionEmpty()){
+                    JOptionPane.showMessageDialog(null, "Selecciona un Documento y luego haz clic en \"Visualizar Documento\"");
+                }
+                String documentIdentifyer=listConsultsExpression.getSelectedValue().toString();
+                String author=null;
+                String title=null;
+                for(int i=0;i<documentIdentifyer.length();++i) {
+                    if(documentIdentifyer.charAt(i)=='/'){
+                        author=documentIdentifyer.substring(0,i);
+                        title=documentIdentifyer.substring(i+1);
+                    }
+                }
+                tabbedPane1.setSelectedIndex(2);
+                tabbedPane4.setSelectedIndex(0);
+                textFieldLibraryGestionListAuthor.setText(author);
+                textFieldLibraryGestionListTitle.setText(title);
+                Vector<String> content = domainControler.getDocumentContent(author, title);
+                for(String sentence:content){
+                    try {
+                        textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
+                    }
+                    catch(Exception exc) { System.out.println(e); }
+                }
+            }
+        });
+        buttonListTitleSimilarDocuments.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(listConsutlsTitleAuthor.isSelectionEmpty()){
+                    JOptionPane.showMessageDialog(null, "Selecciona un Documento y luego haz clic en \"Visualizar Documentos Parecidos\"");
+                }
+                else {
+                    String author = textFieldConsutlsTitleAuthor.getText();
+                    String title = listConsutlsTitleAuthor.getSelectedValue().toString();
+                    tabbedPane2.setSelectedIndex(2);
+                    textFieldConsultsSeemsAuthor.setText(author);
+                    textFieldConsultsSeemsTitle.setText(title);
+                    JOptionPane.showMessageDialog(null, "Seleciona el número de documentos a mostrar y haz clic en el valor de busqueda que desees");
+                }
+            }
+        });
+        buttonListExpressionSimilarDocuments.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(listConsultsExpression.isSelectionEmpty()){
+                    JOptionPane.showMessageDialog(null, "Selecciona un Documento y luego haz clic en \"Visualizar Documentos Parecidos\"");
+                }
+                else {
+                    String documentIdentifyer = listConsultsExpression.getSelectedValue().toString();
+                    String author = null;
+                    String title = null;
+                    for (int i = 0; i < documentIdentifyer.length(); ++i) {
+                        if (documentIdentifyer.charAt(i) == '/') {
+                            author = documentIdentifyer.substring(0, i);
+                            title = documentIdentifyer.substring(i + 1);
+                        }
+                    }
+                    tabbedPane2.setSelectedIndex(2);
+                    textFieldConsultsSeemsAuthor.setText(author);
+                    textFieldConsultsSeemsTitle.setText(title);
+                    JOptionPane.showMessageDialog(null, "Seleciona el número de documentos a mostrar y haz clic en el valor de busqueda que desees");
                 }
             }
         });
@@ -251,12 +421,6 @@ public class GraphicMain extends JFrame {
 
     public void GraphicMain2() {
         textPaneLibraryGestionList.setEditable(false);
-        buttonTestResetRenewLibrary.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //main(null);
-            }
-        });
         buttonTestResetAddTest.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -327,7 +491,8 @@ public class GraphicMain extends JFrame {
         buttonTestResetRenewLibrary.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                domainControler = new DomainController();
+                domainControler.restartStatus();
+                JOptionPane.showMessageDialog(null, "Libreria Vacia");
             }
         });
 
@@ -452,17 +617,19 @@ public class GraphicMain extends JFrame {
                     if (textFieldLibraryGestionListAuthor.getText().length() == 0 || textFieldLibraryGestionListTitle.getText().length() == 0) {
                         JOptionPane.showMessageDialog(null, "Algún campo está vacio, por favor, verifíquelo y pulse \"Modificar\" de nuevo");
                     }
-                    JOptionPane.showMessageDialog(null, "Modifica los campos que quieras y haz clic en \"Guardar Cambios\" cuando hayas terminado");
-                    textFieldLibraryGestionListAuthor.setBackground(Color.GREEN);
-                    textFieldLibraryGestionListTitle.setBackground(Color.GREEN);
-                    textPaneLibraryGestionList.setBackground(Color.GREEN);
-                    textPaneLibraryGestionList.setEditable(true);
+                    else {
+                        JOptionPane.showMessageDialog(null, "Modifica los campos que quieras y haz clic en \"Guardar Cambios\" cuando hayas terminado");
+                        textFieldLibraryGestionListAuthor.setBackground(Color.GREEN);
+                        textFieldLibraryGestionListTitle.setBackground(Color.GREEN);
+                        textPaneLibraryGestionList.setBackground(Color.GREEN);
+                        textPaneLibraryGestionList.setEditable(true);
 
 
-                    modifyingDocument = true;
-                    authorModyfied=textFieldLibraryGestionListAuthor.getText();
-                    titleModyfied=textFieldLibraryGestionListTitle.getText();
-                    buttonLibraryGestionListModify.setText("Guardar Cambios");
+                        modifyingDocument = true;
+                        authorModyfied = textFieldLibraryGestionListAuthor.getText();
+                        titleModyfied = textFieldLibraryGestionListTitle.getText();
+                        buttonLibraryGestionListModify.setText("Guardar Cambios");
+                    }
                 }
                 else{
                     if (textFieldLibraryGestionListAuthor.getText().length() == 0 || textFieldLibraryGestionListTitle.getText().length() == 0) {
@@ -499,6 +666,23 @@ public class GraphicMain extends JFrame {
             i++;
         }
         listAuthorGestionList.setModel(lista);
+    }
+
+    private String readFile(File fichero) throws IOException {
+
+
+        StringBuilder fileContents = new StringBuilder((int)fichero.length());
+        Scanner scanner = new Scanner(fichero);
+        String lineSeparator = System.getProperty("line.separator");
+
+        try {
+            while(scanner.hasNextLine()) {
+                fileContents.append(scanner.nextLine() + lineSeparator);
+            }
+            return fileContents.toString();
+        } finally {
+            scanner.close();
+        }
     }
 
     public static void main(String[] args) {

@@ -229,16 +229,21 @@ public class GraphicMain extends JFrame {
                 JFileChooser selectionwindowfile = new JFileChooser();
                 JPanel contentpane = new JPanel();
                 int seleccion=selectionwindowfile.showOpenDialog(contentpane);
-                if(seleccion==JFileChooser.APPROVE_OPTION){
+                if(seleccion==JFileChooser.APPROVE_OPTION) {
 
                     //Seleccionamos el fichero
-                    File fichero=selectionwindowfile.getSelectedFile();
+                    File fichero = selectionwindowfile.getSelectedFile();
+                    String fullcontent = new String();
+                    fullcontent = fichero.getAbsoluteFile().toString();
                     String author = new String();
                     String title = new String();
                     Vector<String> content = new Vector();
                     //convertir fichero a elementos-------------------------------------------------------
+                    JOptionPane.showMessageDialog(null, fichero.toString());
+                    JOptionPane.showMessageDialog(null, fullcontent);
 
-                domainControler.addDocument(author, title, content);
+                    //domainControler.addDocument(author, title, content);
+                }
             }
         });
     }

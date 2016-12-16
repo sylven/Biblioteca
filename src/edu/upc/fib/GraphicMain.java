@@ -111,20 +111,32 @@ public class GraphicMain extends JFrame {
         buttonAuthorGestionListDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean result = domainControler.removeAuthor(listAuthorGestionList.getSelectedValue().toString());
-                if(!result){JOptionPane.showMessageDialog(null, "ERROR! No se pudo borar... El autor tiene obras!");}
-                update_listAuthorGestionList();
+                if(listAuthorGestionList.isSelectionEmpty()){
+                    JOptionPane.showMessageDialog(null, "Selecciona un autor y luego haz clic en \"Eliminar\"");
+                }
+                else {
+                    boolean result = domainControler.removeAuthor(listAuthorGestionList.getSelectedValue().toString());
+                    if (!result) {
+                        JOptionPane.showMessageDialog(null, "ERROR! No se pudo borar... El autor tiene obras!");
+                    }
+                    update_listAuthorGestionList();
+                }
             }
         });
         buttonAuthorGestionListModify.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(!modifyingAuthor){
-                    JOptionPane.showMessageDialog(null, "Modifica el nombre y haz clic en \"Guardar Cambios\" cuando hayas terminado");
-                    modifyingAuthor = true;
-                    authorModyfied2=listAuthorGestionList.getSelectedValue().toString();
-                    buttonAuthorGestionListModify.setText("Guardar Cambios");
-                    textFieldAuthorGestionList.setText(authorModyfied2);
+                    if(listAuthorGestionList.isSelectionEmpty()){
+                         JOptionPane.showMessageDialog(null, "Selecciona un autor y luego haz clic en \"Modificar\"");
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null, "Modifica el nombre y haz clic en \"Guardar Cambios\" cuando hayas terminado");
+                        modifyingAuthor = true;
+                        authorModyfied2 = listAuthorGestionList.getSelectedValue().toString();
+                        buttonAuthorGestionListModify.setText("Guardar Cambios");
+                        textFieldAuthorGestionList.setText(authorModyfied2);
+                    }
                 }
                 else{
                     if (textFieldAuthorGestionList.getText().length() == 0) {
@@ -254,49 +266,64 @@ public class GraphicMain extends JFrame {
         buttonListTitleShowDocument.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String author=textFieldConsutlsTitleAuthor.getText();
-                String title=listConsutlsTitleAuthor.getSelectedValue().toString();
-                tabbedPane1.setSelectedIndex(2);
-                tabbedPane4.setSelectedIndex(0);
-                textFieldLibraryGestionListAuthor.setText(author);
-                textFieldLibraryGestionListTitle.setText(title);
-                Vector<String> content = domainControler.getDocumentContent(author, title);
-                for(String sentence:content){
-                    try {
-                        textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
+                if(listConsutlsTitleAuthor.isSelectionEmpty()){
+                    JOptionPane.showMessageDialog(null, "Selecciona un Documento y luego haz clic en \"Visualizar Documento\"");
+                }
+                else {
+                    String author = textFieldConsutlsTitleAuthor.getText();
+                    String title = listConsutlsTitleAuthor.getSelectedValue().toString();
+                    tabbedPane1.setSelectedIndex(2);
+                    tabbedPane4.setSelectedIndex(0);
+                    textFieldLibraryGestionListAuthor.setText(author);
+                    textFieldLibraryGestionListTitle.setText(title);
+                    Vector<String> content = domainControler.getDocumentContent(author, title);
+                    for (String sentence : content) {
+                        try {
+                            textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
+                        } catch (Exception exc) {
+                            System.out.println(e);
+                        }
                     }
-                    catch(Exception exc) { System.out.println(e); }
                 }
             }
         });
         buttonListSimilarShowDocument.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String documentIdentifyer=listConsultsSeems.getSelectedValue().toString();
-                String author=null;
-                String title=null;
-                for(int i=0;i<documentIdentifyer.length();++i) {
-                    if(documentIdentifyer.charAt(i)=='/'){
-                        author=documentIdentifyer.substring(0,i);
-                        title=documentIdentifyer.substring(i+1);
-                    }
+                if(listConsultsSeems.isSelectionEmpty()){
+                    JOptionPane.showMessageDialog(null, "Selecciona un Documento y luego haz clic en \"Visualizar Documento\"");
                 }
-                tabbedPane1.setSelectedIndex(2);
-                tabbedPane4.setSelectedIndex(0);
-                textFieldLibraryGestionListAuthor.setText(author);
-                textFieldLibraryGestionListTitle.setText(title);
-                Vector<String> content = domainControler.getDocumentContent(author, title);
-                for(String sentence:content){
-                    try {
-                        textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
+                else {
+                    String documentIdentifyer = listConsultsSeems.getSelectedValue().toString();
+                    String author = null;
+                    String title = null;
+                    for (int i = 0; i < documentIdentifyer.length(); ++i) {
+                        if (documentIdentifyer.charAt(i) == '/') {
+                            author = documentIdentifyer.substring(0, i);
+                            title = documentIdentifyer.substring(i + 1);
+                        }
                     }
-                    catch(Exception exc) { System.out.println(e); }
+                    tabbedPane1.setSelectedIndex(2);
+                    tabbedPane4.setSelectedIndex(0);
+                    textFieldLibraryGestionListAuthor.setText(author);
+                    textFieldLibraryGestionListTitle.setText(title);
+                    Vector<String> content = domainControler.getDocumentContent(author, title);
+                    for (String sentence : content) {
+                        try {
+                            textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
+                        } catch (Exception exc) {
+                            System.out.println(e);
+                        }
+                    }
                 }
             }
         });
         buttonListExpressionShowDocument.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(listConsultsExpression.isSelectionEmpty()){
+                    JOptionPane.showMessageDialog(null, "Selecciona un Documento y luego haz clic en \"Visualizar Documento\"");
+                }
                 String documentIdentifyer=listConsultsExpression.getSelectedValue().toString();
                 String author=null;
                 String title=null;
@@ -322,30 +349,40 @@ public class GraphicMain extends JFrame {
         buttonListTitleSimilarDocuments.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String author=textFieldConsutlsTitleAuthor.getText();
-                String title=listConsutlsTitleAuthor.getSelectedValue().toString();
-                tabbedPane2.setSelectedIndex(2);
-                textFieldConsultsSeemsAuthor.setText(author);
-                textFieldConsultsSeemsTitle.setText(title);
-                JOptionPane.showMessageDialog(null, "Seleciona el número de documentos a mostrar y haz clic en el valor de busqueda que desees");
+                if(listConsutlsTitleAuthor.isSelectionEmpty()){
+                    JOptionPane.showMessageDialog(null, "Selecciona un Documento y luego haz clic en \"Visualizar Documentos Parecidos\"");
+                }
+                else {
+                    String author = textFieldConsutlsTitleAuthor.getText();
+                    String title = listConsutlsTitleAuthor.getSelectedValue().toString();
+                    tabbedPane2.setSelectedIndex(2);
+                    textFieldConsultsSeemsAuthor.setText(author);
+                    textFieldConsultsSeemsTitle.setText(title);
+                    JOptionPane.showMessageDialog(null, "Seleciona el número de documentos a mostrar y haz clic en el valor de busqueda que desees");
+                }
             }
         });
         buttonListExpressionSimilarDocuments.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String documentIdentifyer=listConsultsExpression.getSelectedValue().toString();
-                String author=null;
-                String title=null;
-                for(int i=0;i<documentIdentifyer.length();++i) {
-                    if(documentIdentifyer.charAt(i)=='/'){
-                        author=documentIdentifyer.substring(0,i);
-                        title=documentIdentifyer.substring(i+1);
-                    }
+                if(listConsultsExpression.isSelectionEmpty()){
+                    JOptionPane.showMessageDialog(null, "Selecciona un Documento y luego haz clic en \"Visualizar Documentos Parecidos\"");
                 }
-                tabbedPane2.setSelectedIndex(2);
-                textFieldConsultsSeemsAuthor.setText(author);
-                textFieldConsultsSeemsTitle.setText(title);
-                JOptionPane.showMessageDialog(null, "Seleciona el número de documentos a mostrar y haz clic en el valor de busqueda que desees");
+                else {
+                    String documentIdentifyer = listConsultsExpression.getSelectedValue().toString();
+                    String author = null;
+                    String title = null;
+                    for (int i = 0; i < documentIdentifyer.length(); ++i) {
+                        if (documentIdentifyer.charAt(i) == '/') {
+                            author = documentIdentifyer.substring(0, i);
+                            title = documentIdentifyer.substring(i + 1);
+                        }
+                    }
+                    tabbedPane2.setSelectedIndex(2);
+                    textFieldConsultsSeemsAuthor.setText(author);
+                    textFieldConsultsSeemsTitle.setText(title);
+                    JOptionPane.showMessageDialog(null, "Seleciona el número de documentos a mostrar y haz clic en el valor de busqueda que desees");
+                }
             }
         });
     }
@@ -554,17 +591,19 @@ public class GraphicMain extends JFrame {
                     if (textFieldLibraryGestionListAuthor.getText().length() == 0 || textFieldLibraryGestionListTitle.getText().length() == 0) {
                         JOptionPane.showMessageDialog(null, "Algún campo está vacio, por favor, verifíquelo y pulse \"Modificar\" de nuevo");
                     }
-                    JOptionPane.showMessageDialog(null, "Modifica los campos que quieras y haz clic en \"Guardar Cambios\" cuando hayas terminado");
-                    textFieldLibraryGestionListAuthor.setBackground(Color.GREEN);
-                    textFieldLibraryGestionListTitle.setBackground(Color.GREEN);
-                    textPaneLibraryGestionList.setBackground(Color.GREEN);
-                    textPaneLibraryGestionList.setEditable(true);
+                    else {
+                        JOptionPane.showMessageDialog(null, "Modifica los campos que quieras y haz clic en \"Guardar Cambios\" cuando hayas terminado");
+                        textFieldLibraryGestionListAuthor.setBackground(Color.GREEN);
+                        textFieldLibraryGestionListTitle.setBackground(Color.GREEN);
+                        textPaneLibraryGestionList.setBackground(Color.GREEN);
+                        textPaneLibraryGestionList.setEditable(true);
 
 
-                    modifyingDocument = true;
-                    authorModyfied=textFieldLibraryGestionListAuthor.getText();
-                    titleModyfied=textFieldLibraryGestionListTitle.getText();
-                    buttonLibraryGestionListModify.setText("Guardar Cambios");
+                        modifyingDocument = true;
+                        authorModyfied = textFieldLibraryGestionListAuthor.getText();
+                        titleModyfied = textFieldLibraryGestionListTitle.getText();
+                        buttonLibraryGestionListModify.setText("Guardar Cambios");
+                    }
                 }
                 else{
                     if (textFieldLibraryGestionListAuthor.getText().length() == 0 || textFieldLibraryGestionListTitle.getText().length() == 0) {

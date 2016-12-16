@@ -76,18 +76,19 @@ public class Documents implements Serializable {
         Hashtable<String, Double> wordFrequency = document.getWordFrequency();
         for (Map.Entry<String, Double> entry : wordFrequency.entrySet()) {
             String word = entry.getKey();
+            // Cuantas veces aparece cada palabra en todos los documentos?
             if (!increase) {
                 if (mDocumentFrequency.get(word) == 1) {
                     mDocumentFrequency.remove(word);
                 } else {
-                    mDocumentFrequency.put(word, mDocumentFrequency.get(word) - entry.getValue());
+                    mDocumentFrequency.put(word, mDocumentFrequency.get(word) - 1);
                 }
             } else if (mDocumentFrequency.containsKey(word)) {
-                mDocumentFrequency.put(word, entry.getValue() + mDocumentFrequency.get(word));
+                mDocumentFrequency.put(word, mDocumentFrequency.get(word) + 1);
             } else {
-                mDocumentFrequency.put(word, entry.getValue());
+                mDocumentFrequency.put(word, (double) 1);
             }
-
+            // En que documentos aparece cada palabra?
             if (!increase) {
                 if (mWordDocuments.get(word).size() == 1) {
                     mWordDocuments.remove(word);
@@ -106,12 +107,15 @@ public class Documents implements Serializable {
                 mWordDocuments.put(word, newVDocuments);
             }
         }
+        // Cual es el peso global de cada palabra?
         calculateInverseDocumentFrequency();
 
         // Actualizar el peso de todas las palabras dentro de cada document
-        for (Map.Entry<String, Hashtable<Author, Document>> titleSet : mDocuments.entrySet()) {
-            for (Map.Entry<Author, Document> authorSet : titleSet.getValue().entrySet()) {
-                authorSet.getValue().calculateWordsWeight(mInverseDocumentFrequency);
+        if (increase) {
+            for (Map.Entry<String, Hashtable<Author, Document>> titleSet : mDocuments.entrySet()) {
+                for (Map.Entry<Author, Document> authorSet : titleSet.getValue().entrySet()) {
+                    authorSet.getValue().calculateWordsWeight(mInverseDocumentFrequency);
+                }
             }
         }
     }

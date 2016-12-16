@@ -66,6 +66,8 @@ public class GraphicMain extends JFrame {
     private JButton showContentButton;
     private JSpinner spinnerbuttonConsultsSeems;
     private JButton buttonLibraryGestionAddAuthor;
+    private JButton buttonListTitleShowDocument;
+    private JButton buttonListSimilarShowDocument;
 
 
     public GraphicMain() {
@@ -216,7 +218,7 @@ public class GraphicMain extends JFrame {
                 int i = 1;
                 String document;
                 for (Pair<String,String> s: similarDocuments){
-                    document=s.getValue() + " - " + s.getKey();
+                    document=s.getValue() + "/" + s.getKey();
                     lista.addElement(document);
                     i++;
                 }
@@ -243,6 +245,49 @@ public class GraphicMain extends JFrame {
                     JOptionPane.showMessageDialog(null, fullcontent);
 
                     //domainControler.addDocument(author, title, content);
+                }
+            }
+        });
+        buttonListTitleShowDocument.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String author=textFieldConsutlsTitleAuthor.getText();
+                String title=listConsutlsTitleAuthor.getSelectedValue().toString();
+                tabbedPane1.setSelectedIndex(2);
+                tabbedPane4.setSelectedIndex(0);
+                textFieldLibraryGestionListAuthor.setText(author);
+                textFieldLibraryGestionListTitle.setText(title);
+                Vector<String> content = domainControler.getDocumentContent(author, title);
+                for(String sentence:content){
+                    try {
+                        textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
+                    }
+                    catch(Exception exc) { System.out.println(e); }
+                }
+            }
+        });
+        buttonListSimilarShowDocument.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String documentIdentifyer=listConsultsSeems.getSelectedValue().toString();
+                String author=null;
+                String title=null;
+                for(int i=0;i<documentIdentifyer.length();++i) {
+                    if(documentIdentifyer.charAt(i)=='/'){
+                        author=documentIdentifyer.substring(0,i);
+                        title=documentIdentifyer.substring(i+1);
+                    }
+                }
+                tabbedPane1.setSelectedIndex(2);
+                tabbedPane4.setSelectedIndex(0);
+                textFieldLibraryGestionListAuthor.setText(author);
+                textFieldLibraryGestionListTitle.setText(title);
+                Vector<String> content = domainControler.getDocumentContent(author, title);
+                for(String sentence:content){
+                    try {
+                        textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
+                    }
+                    catch(Exception exc) { System.out.println(e); }
                 }
             }
         });

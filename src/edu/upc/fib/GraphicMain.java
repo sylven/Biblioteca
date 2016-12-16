@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.*;
 
 import javafx.util.Pair;
@@ -220,6 +221,24 @@ public class GraphicMain extends JFrame {
                     i++;
                 }
                 listConsultsSeems.setModel(lista);
+            }
+        });
+        buttonLibraryGestionAddSingle.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser selectionwindowfile = new JFileChooser();
+                JPanel contentpane = new JPanel();
+                int seleccion=selectionwindowfile.showOpenDialog(contentpane);
+                if(seleccion==JFileChooser.APPROVE_OPTION){
+
+                    //Seleccionamos el fichero
+                    File fichero=selectionwindowfile.getSelectedFile();
+                    String author = new String();
+                    String title = new String();
+                    Vector<String> content = new Vector();
+                    //convertir fichero a elementos-------------------------------------------------------
+
+                domainControler.addDocument(author, title, content);
             }
         });
     }

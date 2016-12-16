@@ -68,6 +68,9 @@ public class GraphicMain extends JFrame {
     private JButton buttonLibraryGestionAddAuthor;
     private JButton buttonListTitleShowDocument;
     private JButton buttonListSimilarShowDocument;
+    private JButton buttonListExpressionShowDocument;
+    private JButton buttonListTitleSimilarDocuments;
+    private JButton buttonListExpressionSimilarDocuments;
 
 
     public GraphicMain() {
@@ -289,6 +292,60 @@ public class GraphicMain extends JFrame {
                     }
                     catch(Exception exc) { System.out.println(e); }
                 }
+            }
+        });
+        buttonListExpressionShowDocument.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String documentIdentifyer=listConsultsExpression.getSelectedValue().toString();
+                String author=null;
+                String title=null;
+                for(int i=0;i<documentIdentifyer.length();++i) {
+                    if(documentIdentifyer.charAt(i)=='/'){
+                        author=documentIdentifyer.substring(0,i);
+                        title=documentIdentifyer.substring(i+1);
+                    }
+                }
+                tabbedPane1.setSelectedIndex(2);
+                tabbedPane4.setSelectedIndex(0);
+                textFieldLibraryGestionListAuthor.setText(author);
+                textFieldLibraryGestionListTitle.setText(title);
+                Vector<String> content = domainControler.getDocumentContent(author, title);
+                for(String sentence:content){
+                    try {
+                        textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
+                    }
+                    catch(Exception exc) { System.out.println(e); }
+                }
+            }
+        });
+        buttonListTitleSimilarDocuments.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String author=textFieldConsutlsTitleAuthor.getText();
+                String title=listConsutlsTitleAuthor.getSelectedValue().toString();
+                tabbedPane2.setSelectedIndex(2);
+                textFieldConsultsSeemsAuthor.setText(author);
+                textFieldConsultsSeemsTitle.setText(title);
+                JOptionPane.showMessageDialog(null, "Seleciona el número de documentos a mostrar y haz clic en el valor de busqueda que desees");
+            }
+        });
+        buttonListExpressionSimilarDocuments.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String documentIdentifyer=listConsultsExpression.getSelectedValue().toString();
+                String author=null;
+                String title=null;
+                for(int i=0;i<documentIdentifyer.length();++i) {
+                    if(documentIdentifyer.charAt(i)=='/'){
+                        author=documentIdentifyer.substring(0,i);
+                        title=documentIdentifyer.substring(i+1);
+                    }
+                }
+                tabbedPane2.setSelectedIndex(2);
+                textFieldConsultsSeemsAuthor.setText(author);
+                textFieldConsultsSeemsTitle.setText(title);
+                JOptionPane.showMessageDialog(null, "Seleciona el número de documentos a mostrar y haz clic en el valor de busqueda que desees");
             }
         });
     }

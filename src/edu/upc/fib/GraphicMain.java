@@ -285,13 +285,19 @@ public class GraphicMain extends JFrame {
                     tabbedPane4.setSelectedIndex(0);
                     textFieldLibraryGestionListAuthor.setText(author);
                     textFieldLibraryGestionListTitle.setText(title);
-                    Vector<String> content = domainControler.getDocumentContent(author, title);
-                    for (String sentence : content) {
-                        try {
-                            textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
-                        } catch (Exception exc) {
-                            System.out.println(e);
-                        }
+                    //Vector<String> content = domainControler.getDocumentContent(author, title);
+                    //for (String sentence : content) {
+                    //    try {
+                    //        textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
+                    //    } catch (Exception exc) {
+                    //        System.out.println(e);
+                    //    }
+                    //}
+                    String content = domainControler.getDocumentContent(author, title);
+                    try {
+                        textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), content, null);
+                    } catch (Exception exc) {
+                        System.out.println(e);
                     }
                 }
             }
@@ -316,13 +322,19 @@ public class GraphicMain extends JFrame {
                     tabbedPane4.setSelectedIndex(0);
                     textFieldLibraryGestionListAuthor.setText(author);
                     textFieldLibraryGestionListTitle.setText(title);
-                    Vector<String> content = domainControler.getDocumentContent(author, title);
-                    for (String sentence : content) {
-                        try {
-                            textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
-                        } catch (Exception exc) {
-                            System.out.println(e);
-                        }
+                    //Vector<String> content = domainControler.getDocumentContent(author, title);
+                    //for (String sentence : content) {
+                    //    try {
+                    //        textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
+                    //    } catch (Exception exc) {
+                    //        System.out.println(e);
+                    //    }
+                    //}
+                    String content = domainControler.getDocumentContent(author, title);
+                    try {
+                        textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), content, null);
+                    } catch (Exception exc) {
+                        System.out.println(e);
                     }
                 }
             }
@@ -346,12 +358,18 @@ public class GraphicMain extends JFrame {
                 tabbedPane4.setSelectedIndex(0);
                 textFieldLibraryGestionListAuthor.setText(author);
                 textFieldLibraryGestionListTitle.setText(title);
-                Vector<String> content = domainControler.getDocumentContent(author, title);
-                for(String sentence:content){
-                    try {
-                        textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
-                    }
-                    catch(Exception exc) { System.out.println(e); }
+                //Vector<String> content = domainControler.getDocumentContent(author, title);
+                //for(String sentence:content){
+                //    try {
+                //        textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
+                //    }
+                //    catch(Exception exc) { System.out.println(e); }
+                //}
+                String content = domainControler.getDocumentContent(author, title);
+                try {
+                    textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), content, null);
+                } catch (Exception exc) {
+                    System.out.println(e);
                 }
             }
         });
@@ -454,7 +472,7 @@ public class GraphicMain extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 {
                     String content;
-                    content = "Donald John Trump (Nueva York, 14 de junio de 1946) es un empresario, político, personalidad televisiva y escritor estadounidense. Siendo el presidente electo de los Estados Unidos de América; se convertirá en el 45° presidente de la Unión tras su toma de posesión, programada para el 20 de enero de 2017. Es presidente de la Trump Organization y fundador de la empresa de hotel y juegos de azar Trump Entertainment Resorts, que es ahora propiedad de Carl Icahn. Trump es una celebridad televisiva, y entre otras cosas fue el presentador del reality show The Apprentice, de la NBC, entre 2004 y 2015. Es hijo de un empresario inmobiliario de Nueva York,4 en cuya compañía, Elizabeth Trump & Son, trabajó mientras estudiaba en la Escuela de Negocios Wharton de la Universidad de Pensilvania. En 1968, se unió oficialmente a esa sociedad,5 que controla desde 1971, cuando la renombró Trump Organization. En los años 1990 la empresa entró en bancarrota comercial, pero en la década siguiente se recuperó, lo que le reportó una fortuna de varios miles de millones de dólares. Su campaña para obtener la candidatura republicana a la Casa Blanca para las elecciones de 2016 se vio caracterizada desde su inicio por una gran atención mediática a nivel nacional e internacional debido a la sucesión de declaraciones polémicas por parte de Trump. Sus propuestas más repetidas consisten en la construcción de un muro a lo largo de la frontera con México y una política dura contra la inmigración ilegal, además de una prohibición temporal de la entrada de musulmanes en los Estados Unidos. En lo económico, aboga por modificar la política comercial del país y fortalecer la producción nacional en detrimento de la deslocalización, en consonancia con posiciones proteccionistas.";
+                    content = "Donald John Trump (Nueva York, 14 de junio de 1946) es un empresario, político, personalidad televisiva y escritor estadounidense.\n\nSiendo el presidente electo de los Estados Unidos de América; se convertirá en el 45° presidente de la Unión tras su toma de posesión, programada para el 20 de enero de 2017. Es presidente de la Trump Organization y fundador de la empresa de hotel y juegos de azar Trump Entertainment Resorts, que es ahora propiedad de Carl Icahn. Trump es una celebridad televisiva, y entre otras cosas fue el presentador del reality show The Apprentice, de la NBC, entre 2004 y 2015. Es hijo de un empresario inmobiliario de Nueva York,4 en cuya compañía, Elizabeth Trump & Son, trabajó mientras estudiaba en la Escuela de Negocios Wharton de la Universidad de Pensilvania. En 1968, se unió oficialmente a esa sociedad,5 que controla desde 1971, cuando la renombró Trump Organization. En los años 1990 la empresa entró en bancarrota comercial, pero en la década siguiente se recuperó, lo que le reportó una fortuna de varios miles de millones de dólares. Su campaña para obtener la candidatura republicana a la Casa Blanca para las elecciones de 2016 se vio caracterizada desde su inicio por una gran atención mediática a nivel nacional e internacional debido a la sucesión de declaraciones polémicas por parte de Trump. Sus propuestas más repetidas consisten en la construcción de un muro a lo largo de la frontera con México y una política dura contra la inmigración ilegal, además de una prohibición temporal de la entrada de musulmanes en los Estados Unidos. En lo económico, aboga por modificar la política comercial del país y fortalecer la producción nacional en detrimento de la deslocalización, en consonancia con posiciones proteccionistas.";
                     domainControler.addDocument("Wikipedia", "Donald Trump", content);
 
                     content = "El presidente de los Estados Unidos (en inglés, President of the United States; acrónimo: POTUS) es el jefe de Estado y de Gobierno de los Estados Unidos. Es el más alto cargo político del país por influencia y reconocimiento. El presidente lidera el poder ejecutivo del Gobierno federal. Entre otros poderes y responsabilidades, el Artículo II de la Constitución de los Estados Unidos encarga al presidente la «fiel ejecución» de la ley federal, hace del presidente el comandante en jefe de las Fuerzas Armadas, lo autoriza a nombrar oficiales ejecutivos y judiciales con el consejo y consentimiento del Senado, lo sitúa al frente de la política exterior de los Estados Unidos, y permite al presidente conceder indultos o moratorias. El presidente es elegido mediante sufragio indirecto por un colegio electoral (o por la Cámara de Representantes si el colegio electoral no concede la mayoría de votos a ningún candidato) para un mandato de cuatro años. Desde la ratificación de la Vigesimosegunda Enmienda en 1951, ninguna persona puede ser elegida para el cargo de presidente más de dos veces. En caso de muerte, destitución, dimisión o renuncia de un presidente, el vicepresidente asume la presidencia. Hubo cuarenta y tres personas que asumieron el cargo y cuarenta y cuatro presidencias. De las personas elegidas para el cargo, cuatro murieron durante su mandato por causas naturales, uno dimitió y cuatro fueron asesinados. El primer presidente fue George Washington, que fue investido en 1789 después de un voto unánime del colegio electoral. William Henry Harrison fue el que menos tiempo permaneció en el cargo, con tan solo 32 días, y Franklin D. Roosevelt, con sus 12 años en el puesto, fue el que permaneció por más tiempo y el único presidente que sirvió por más de dos mandatos (ganó cuatro veces las elecciones presidenciales). El actual presidente es el demócrata Barack Obama, que fue investido para el puesto el 20 de enero de 2009. El 9 de noviembre de 2016, el candidato por el Partido Republicano, Donald Trump, resultó electo en las elecciones presidenciales. Desde principios del siglo XX, el papel hegemónico de los Estados Unidos en el escenario político y económico internacional ha llevado al presidente de este país a ser una figura conocida a nivel global y, debido a la condición del país como única superpotencia, en 2009 la revista Forbes calificaba a su titular como «la persona más poderosa del mundo».";
@@ -509,12 +527,18 @@ public class GraphicMain extends JFrame {
                     JOptionPane.showMessageDialog(null, "Algún campo está vacio, por favor, verifíquelo y pulse \"Cargar Contenido de la obra\" de nuevo");
                 }
                 else{
-                    Vector<String> content = domainControler.getDocumentContent(textFieldLibraryGestionListAuthor.getText(), textFieldLibraryGestionListTitle.getText());
-                    for(String sentence:content){
-                        try {
-                            textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
-                        }
-                        catch(Exception exc) { System.out.println(e); }
+                    //Vector<String> content = domainControler.getDocumentContent(textFieldLibraryGestionListAuthor.getText(), textFieldLibraryGestionListTitle.getText());
+                    //for(String sentence:content){
+                    //    try {
+                    //        textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), sentence, null);
+                    //    }
+                    //    catch(Exception exc) { System.out.println(e); }
+                    //}
+                    String content = domainControler.getDocumentContent(textFieldLibraryGestionListAuthor.getText(), textFieldLibraryGestionListTitle.getText());
+                    try {
+                        textPaneLibraryGestionList.getStyledDocument().insertString(textPaneLibraryGestionList.getStyledDocument().getLength(), content, null);
+                    } catch (Exception exc) {
+                        System.out.println(e);
                     }
                 }
             }
@@ -527,12 +551,18 @@ public class GraphicMain extends JFrame {
                     JOptionPane.showMessageDialog(null, "Algún campo está vacio, por favor, verifíquelo y pulse \"Mostrar Contenido\" de nuevo");
                 }
                 else{
-                    Vector<String> content = domainControler.getDocumentContent(textFieldConsultsContentAuthor.getText(), textFieldConsultsContentTitle.getText());
-                    for(String sentence:content){
-                        try {
-                            textPanelConsultsContent.getStyledDocument().insertString(textPanelConsultsContent.getStyledDocument().getLength(), sentence, null);
-                        }
-                        catch(Exception exc) { System.out.println(e); }
+                    //Vector<String> content = domainControler.getDocumentContent(textFieldConsultsContentAuthor.getText(), textFieldConsultsContentTitle.getText());
+                    //for(String sentence:content){
+                    //    try {
+                    //        textPanelConsultsContent.getStyledDocument().insertString(textPanelConsultsContent.getStyledDocument().getLength(), sentence, null);
+                    //    }
+                    //    catch(Exception exc) { System.out.println(e); }
+                    //}
+                    String content = domainControler.getDocumentContent(textFieldConsultsContentAuthor.getText(), textFieldConsultsContentTitle.getText());
+                    try {
+                        textPanelConsultsContent.getStyledDocument().insertString(textPanelConsultsContent.getStyledDocument().getLength(), content, null);
+                    } catch (Exception exc) {
+                        System.out.println(e);
                     }
                 }
             }

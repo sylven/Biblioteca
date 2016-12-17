@@ -205,8 +205,11 @@ public class Documents implements Serializable {
         return response;
     }
 
-    public Vector<String> getDocumentContent(Author author, String title) {
+    /*public Vector<String> getDocumentContent(Author author, String title) {
         return mDocuments.get(title).get(author).getContent().toStrings();
+    }*/
+    public String getDocumentContent(Author author, String title) {
+        return mDocuments.get(title).get(author).getContent().toString();
     }
 
     public List<Map.Entry<Document, Double>> getSimilarDocuments(Author author, String title) {

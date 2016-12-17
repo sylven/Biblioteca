@@ -237,9 +237,19 @@ public class Documents implements Serializable {
     }
 
     public List<Pair<String,String>> getBoleanDocuments(String expressionToTest) {
-        List<Pair<String,String>> resultset = new ArrayList<Pair<String,String>>();
-        //recorrer docs e ir añadiendo
-        //for doc_0 to doc_N test + add
-        return resultset;
+        List<Pair<String, String>> response = new ArrayList<>();
+        for (Map.Entry<String, Hashtable<Author, Document>> titleSet: mDocuments.entrySet()) {
+            String title = titleSet.getKey();
+            for (Map.Entry<Author, Document> authorSet : titleSet.getValue().entrySet()) {
+                Vector<String> content = getDocumentContent(authorSet.getKey(), title);
+                for(int i = 0; i  < content.size(); i++){
+                    if( VerifyExpression.verifyExpression(expressionToTest, content.elementAt(i).toString())){
+                        response.add(new Pair(title, authorSet.getKey().getName().toString()));
+                        i = content.size();
+                    }
+                }
+            }
+        }
+        return response;
     }
 }

@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.*;
+import java.util.List;
 import java.util.function.BooleanSupplier;
 
 import javafx.util.Pair;
@@ -422,6 +423,25 @@ public class GraphicMain extends JFrame {
                     }
                     JOptionPane.showMessageDialog(null, "Se han añadido " + totaladded + " documentos");
                 }
+            }
+        });
+        buttonConsultsExpression.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(textFieldConsultsExpression.getText().length() == 0 || textFieldConsultsExpression.getText().length() == 0){
+                    JOptionPane.showMessageDialog(null, "No hay nada que buscar, por favor, verifíquelo y pulse \"Buscar en la bilbioteca\" de nuevo");
+                }
+                List<Pair<String, String>> result = domainControler.getBooleanDocuments(textFieldConsultsExpression.getText().toString());
+                DefaultListModel lista = new DefaultListModel();
+                int i = 1;
+                String document;
+                for (Pair<String,String> s: result){
+                    document=s.getValue() + "/" + s.getKey();
+                    lista.addElement(document);
+                    i++;
+                }
+                listConsultsExpression.setModel(lista);
+                if (result.size() == 0){JOptionPane.showMessageDialog(null, "Lamentándolo mucho no hemos podido encontrar nada, por favor, verifique ortografía y sintaxis booleana e inténtelo de nuevo");}
             }
         });
     }

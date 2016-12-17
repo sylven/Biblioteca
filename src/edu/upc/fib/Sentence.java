@@ -16,13 +16,17 @@ public class Sentence implements Serializable {
         Matcher matcher = pattern.matcher(sentence);
         mWords = new Vector<>();
         while (matcher.find()) {
-            if (matcher.group().equals("\\n") || matcher.group().equals("\\r\\n")) {
+            if (matcher.group().equals("\n") || matcher.group().equals("\r\n")) {
                 isLineBreak = true;
                 mWords.add(matcher.group());
             } else if (!matcher.group().equals(" ")) {
                 mWords.add(matcher.group());
             }
         }
+    }
+
+    public boolean isLineBreak() {
+        return isLineBreak;
     }
 
     public int getSize() {

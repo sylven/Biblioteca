@@ -48,8 +48,12 @@ public class Content implements Serializable {
 
     public String toString() {
         String content = "";
+        boolean afterBreak = true;
         for (Sentence sentence : mContent) {
+            if (!afterBreak && !sentence.isLineBreak()) content += " ";
             content += sentence.toString();
+            if (sentence.isLineBreak()) afterBreak = true;
+            else afterBreak = false;
         }
         return content;
     }

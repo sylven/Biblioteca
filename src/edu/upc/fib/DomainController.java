@@ -38,6 +38,11 @@ public class DomainController {
         return library.getAuthorNames();
     }
 
+    public List<Pair<String, String>> getBooleanDocuments(String expressionToTest){
+        return library.getBooleanDocuments(expressionToTest);
+    }
+
+
     public Boolean addAuthor(String authorName){
         return library.addAuthor(authorName);
     }

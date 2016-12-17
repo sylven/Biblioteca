@@ -236,4 +236,10 @@ public class Documents implements Serializable {
         return false;
     }
 
+    public List<Pair<String,String>> getBoleanDocuments(String expressionToTest) {
+        List<Pair<String,String>> resultset = new ArrayList<Pair<String,String>>();
+        //recorrer docs e ir añadiendo
+        //for doc_0 to doc_N test + add
+        return resultset;
+    }
 }

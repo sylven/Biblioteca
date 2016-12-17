@@ -76,11 +76,17 @@ public class Library implements Serializable {
         return mDocuments.getDocumentTitles();
     }
 
-    public Vector<String> getDocumentContent(String authorName, String title) {
+    /*public Vector<String> getDocumentContent(String authorName, String title) {
         if (existsDocument(authorName, title)) {
             return mDocuments.getDocumentContent(mAuthors.getAuthor(authorName), title);
         }
         return new Vector<>();
+    }*/
+    public String getDocumentContent(String authorName, String title) {
+        if (existsDocument(authorName, title)) {
+            return mDocuments.getDocumentContent(mAuthors.getAuthor(authorName), title);
+        }
+        return "";
     }
 
     public List<Pair<String, String>> getSimilarDocuments(String authorName, String title, int nDocuments) {

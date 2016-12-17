@@ -22,7 +22,10 @@ public class DomainController {
         return library.getAuthorsByPrefix(prefix);
     }
 
-    public Vector<String> getDocumentContent(String authorName, String title){
+    /*public Vector<String> getDocumentContent(String authorName, String title){
+        return library.getDocumentContent(authorName, title);
+    }*/
+    public String getDocumentContent(String authorName, String title){
         return library.getDocumentContent(authorName, title);
     }
 

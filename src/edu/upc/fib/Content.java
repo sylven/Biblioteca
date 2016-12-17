@@ -14,7 +14,7 @@ public class Content implements Serializable {
     public Content(String content) {
         mContent = new Vector<>();
 
-        Pattern re = Pattern.compile("[^.!?\\s][^.!?]*(?:[.!?](?!['\"]?\\s|$)[^.!?]*)*[.!?]?['\"]?(?=\\s|$)", Pattern.MULTILINE | Pattern.COMMENTS);
+        Pattern re = Pattern.compile("[^.!?\\s][^.!?]*(?:[.!?](?!['\"]?\\s|$)[^.!?]*)*[.!?]?['\"]?(?=\\s|$)|[\\r?\\n]", Pattern.MULTILINE | Pattern.COMMENTS);
         Matcher reMatcher = re.matcher(content);
         while (reMatcher.find()) {
             mContent.add(new Sentence(reMatcher.group()));
@@ -44,6 +44,14 @@ public class Content implements Serializable {
             wordFrequency.replace(entry.getKey(), entry.getValue()/maxFrequency);
         }
         return wordFrequency;
+    }
+
+    public String toString() {
+        String content = "";
+        for (Sentence sentence : mContent) {
+            content += sentence.toString();
+        }
+        return content;
     }
 
     public Vector<String> toStrings() {

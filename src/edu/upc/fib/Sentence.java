@@ -7,14 +7,19 @@ import java.util.regex.Pattern;
 
 public class Sentence implements Serializable {
     private Vector<String> mWords; // Vector de las palabras de la frase
+    private boolean isLineBreak;
 
     public Sentence(String sentence) {
+        isLineBreak = false;
         // Expresión regular para partir la frase en palabras, signos y espacios.
-        Pattern pattern = Pattern.compile("([A-Za-z'ÁáÄäÀàÉéËëÈèÍíÏïÌìÓóÖöÒòÚúÜüÙùÑñÇç-])+|[0-9]+|[^ ]");
+        Pattern pattern = Pattern.compile("([A-Za-z'ÁáÄäÀàÉéËëÈèÍíÏïÌìÓóÖöÒòÚúÜüÙùÑñÇç-])+|[0-9]+|[^ ]|[\\r?\\n]");
         Matcher matcher = pattern.matcher(sentence);
         mWords = new Vector<>();
         while (matcher.find()) {
-            if (!matcher.group().equals(" ")) {
+            if (matcher.group().equals("\\n") || matcher.group().equals("\\r\\n")) {
+                isLineBreak = true;
+                mWords.add(matcher.group());
+            } else if (!matcher.group().equals(" ")) {
                 mWords.add(matcher.group());
             }
         }

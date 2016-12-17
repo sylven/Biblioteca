@@ -205,9 +205,9 @@ public class Documents implements Serializable {
         return response;
     }
 
-    /*public Vector<String> getDocumentContent(Author author, String title) {
+    public Vector<String> getDocumentContent_vector(Author author, String title) {
         return mDocuments.get(title).get(author).getContent().toStrings();
-    }*/
+    }
     public String getDocumentContent(Author author, String title) {
         return mDocuments.get(title).get(author).getContent().toString();
     }
@@ -244,7 +244,7 @@ public class Documents implements Serializable {
         for (Map.Entry<String, Hashtable<Author, Document>> titleSet: mDocuments.entrySet()) {
             String title = titleSet.getKey();
             for (Map.Entry<Author, Document> authorSet : titleSet.getValue().entrySet()) {
-                Vector<String> content = getDocumentContent(authorSet.getKey(), title);
+                Vector<String> content = getDocumentContent_vector(authorSet.getKey(), title);
                 for(int i = 0; i  < content.size(); i++){
                     if( VerifyExpression.verifyExpression(expressionToTest, content.elementAt(i).toString())){
                         response.add(new Pair(title, authorSet.getKey().getName().toString()));

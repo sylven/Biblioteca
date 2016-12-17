@@ -14,7 +14,7 @@ public class Document implements Comparable<Document>, Serializable {
     private Hashtable<String, Double> mWordsWeight; // Peso de cada palabra en este documento
     //private HashMap<Document, Integer> mSimilarDocuments; // Documentos parecidos a este
 
-    public Document(Author author, String title, Vector<String> content, Vector<String> connectorWords) {
+    public Document(Author author, String title, String content, Vector<String> connectorWords) {
         mAuthor = author;
         mTitle = new Sentence(title);
         mContent = new Content(content);

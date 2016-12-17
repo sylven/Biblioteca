@@ -15,7 +15,7 @@ public class Library implements Serializable {
     public Library() {
         mDocuments = new Documents();
         mAuthors = new Authors();
-        loadStatus();
+        //loadStatus();
     }
 
 
@@ -63,7 +63,7 @@ public class Library implements Serializable {
         return mAuthors.getAuthorNames();
     }
 
-    public boolean addDocument(String authorName, String title, Vector<String> content) {
+    public boolean addDocument(String authorName, String title, String content) {
         addAuthor(authorName);
         return mDocuments.addDocument(mAuthors.getAuthor(authorName), title, content);
     }
@@ -137,7 +137,7 @@ public class Library implements Serializable {
         return false;
     }
 
-    public boolean modifyDocumentContent(String authorName, String title, Vector<String> newContent) {
+    public boolean modifyDocumentContent(String authorName, String title, String newContent) {
         if (existsDocument(authorName, title)) {
             mDocuments.modifyDocumentContent(mAuthors.getAuthor(authorName), title, newContent);
             return true;

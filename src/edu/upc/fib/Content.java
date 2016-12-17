@@ -1,15 +1,23 @@
 package edu.upc.fib;
 
+import java.io.Reader;
 import java.io.Serializable;
+import java.io.StringReader;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Content implements Serializable {
     private Vector<Sentence> mContent;
 
-    public Content(Vector<String> content) {
+    public Content(String content) {
         mContent = new Vector<>();
-        for (String s : content) {
-            mContent.add(new Sentence(s));
+
+        Pattern re = Pattern.compile("[^.!?\\s][^.!?]*(?:[.!?](?!['\"]?\\s|$)[^.!?]*)*[.!?]?['\"]?(?=\\s|$)", Pattern.MULTILINE | Pattern.COMMENTS);
+        Matcher reMatcher = re.matcher(content);
+        while (reMatcher.find()) {
+            mContent.add(new Sentence(reMatcher.group()));
         }
     }
 

@@ -54,23 +54,23 @@ public class DomainController {
         return getDocumentTitles();
     }
 
-    public Boolean addDocument(String AuthorName, String title, Vector<String> content){
+    public Boolean addDocument(String AuthorName, String title, String content){
         return library.addDocument(AuthorName, title, content);
     }
 
-    public Boolean modifyDocumentAuthor(String authorName,String title,String newAuthorName){
+    public Boolean modifyDocumentAuthor(String authorName, String title, String newAuthorName){
         return library.modifyDocumentAuthor(authorName, title, newAuthorName);
     }
 
-    public Boolean modifyDocumentTitle(String authorName,String title,String newTitle){
+    public Boolean modifyDocumentTitle(String authorName, String title, String newTitle){
         return library.modifyDocumentTitle(authorName, title, newTitle);
     }
 
-    public Boolean modifyDocumentContent(String authorName,String title,String newContent){
-        Vector<String> vnewContent=new Vector<>();
-        vnewContent.add(newContent);
+    public Boolean modifyDocumentContent(String authorName, String title, String newContent){
+        //Vector<String> vnewContent=new Vector<>();
+        //vnewContent.add(newContent);
         //Cuando el contenido se separe bien por frase se podrà pasar un String directamente
-        return library.modifyDocumentContent(authorName, title, vnewContent);
+        return library.modifyDocumentContent(authorName, title, newContent);
     }
 
     public Boolean removeDocument(String AuthorName, String title){

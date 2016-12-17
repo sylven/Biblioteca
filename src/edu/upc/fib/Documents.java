@@ -1,5 +1,6 @@
 package edu.upc.fib;
 
+import javafx.util.Pair;
 import sun.reflect.generics.tree.Tree;
 
 import javax.print.Doc;
@@ -44,7 +45,7 @@ public class Documents implements Serializable {
 
     // Gestión de documentos
 
-    public boolean addDocument(Author author, String title, Vector<String> content) {
+    public boolean addDocument(Author author, String title, String content) {
         Document newDocument = new Document(author, title, content, connectorWords);
         if (author.addDocument(newDocument)) {
             //Vector<Document> vDocuments;
@@ -165,7 +166,7 @@ public class Documents implements Serializable {
         author.addDocument(document);
     }
 
-    public void modifyDocumentContent(Author author, String title, Vector<String> newContent) {
+    public void modifyDocumentContent(Author author, String title, String newContent) {
         updateWordFrequency(mDocuments.get(title).get(author), false);
         mDocuments.get(title).get(author).setContent(new Content(newContent));
         updateWordFrequency(mDocuments.get(title).get(author), true);
@@ -191,6 +192,17 @@ public class Documents implements Serializable {
 
     public Set<String> getDocumentTitles() {
         return mDocuments.keySet();
+    }
+
+    public List<Pair<String, String>> getDocumentInfos() {
+        List<Pair<String, String>> response = new ArrayList<>();
+        for (Map.Entry<String, Hashtable<Author, Document>> titleSet: mDocuments.entrySet()) {
+            String title = titleSet.getKey();
+            for (Map.Entry<Author, Document> authorSet : titleSet.getValue().entrySet()) {
+                response.add(new Pair(title, authorSet.getKey().getName().toString()));
+            }
+        }
+        return response;
     }
 
     public Vector<String> getDocumentContent(Author author, String title) {

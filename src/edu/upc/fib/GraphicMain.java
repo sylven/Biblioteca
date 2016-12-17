@@ -254,8 +254,8 @@ public class GraphicMain extends JFrame {
                     String author = new String();
                     String title = new String();
                     String frase = new String();
-                    //Vector<String> content = new Vector();
-                    String content = "";
+                    Vector<String> content = new Vector();
+                    //String content = "";
                     try {
                         convertTodocument(fichero.toString(), content);
                     } catch (IOException e1) {
@@ -265,7 +265,7 @@ public class GraphicMain extends JFrame {
                     content.remove(0);
                     title = content.firstElement();
                     content.remove(0);
-                    Boolean resutlt = domainControler.addDocument(author, title, content);
+                    Boolean resutlt = domainControler.addDocument(author, title, content.firstElement());
                     if(resutlt){JOptionPane.showMessageDialog(null, "El documento de \"" + author +"\" con título \"" + title + "\" ha sido añadido satisfactoriamente");}
                     else {JOptionPane.showMessageDialog(null, "Error, el documento ya está importado?");}
                 }
@@ -414,7 +414,7 @@ public class GraphicMain extends JFrame {
                                 content.remove(0);
                                 title = content.firstElement();
                                 content.remove(0);
-                                if(domainControler.addDocument(author, title, content)){totaladded++;}
+                                if(domainControler.addDocument(author, title, content.firstElement())){totaladded++;}
                             }
                         } catch (IOException e1) {
                             e1.printStackTrace();
@@ -653,11 +653,17 @@ public class GraphicMain extends JFrame {
         String cadena;
         FileReader f = new FileReader(route);
         BufferedReader b = new BufferedReader(f);
-        while((cadena = b.readLine())!=null) {
-            content.add(cadena);
-        }
-        b.close();
 
+        content.add(b.readLine());
+        content.add(b.readLine());
+        //content.add("");
+        cadena = "";
+        String s;
+        while((s = b.readLine())!=null) {
+            cadena += s;
+        }
+        content.add(cadena);
+        b.close();
     }
 
 

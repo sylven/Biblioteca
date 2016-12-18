@@ -65,6 +65,7 @@ public class Authors implements Serializable {
     }
 
     public SortedMap<String, Author> getAuthorsByPrefix(String prefix){
+        if (prefix == null) return mAuthors;
         return mAuthors.subMap(prefix, prefix + Character.MAX_VALUE);
     }
 

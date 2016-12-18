@@ -55,6 +55,7 @@ public class Author implements Comparable<Author>, Serializable {
     }
 
     public SortedMap<String, Document> getAuthorDocumentsByPrefix(String titlePrefix){
+        if (titlePrefix == null) return mDocuments;
         return mDocuments.subMap(titlePrefix, titlePrefix + Character.MAX_VALUE);
     }
 

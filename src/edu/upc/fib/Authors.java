@@ -34,7 +34,8 @@ public class Authors implements Serializable {
     public boolean removeAuthor(String authorName, Documents documents) {
         if (existsAuthor(authorName)) {
             // Delete all his documents
-            for (String title : getAuthor(authorName).getDocumentTitles()) {
+            List<String> titles = new ArrayList<>(getAuthor(authorName).getDocumentTitles());
+            for (String title : titles) {
                 documents.removeDocument(getAuthor(authorName), title);
             }
             mAuthors.remove(authorName);

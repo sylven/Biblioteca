@@ -240,6 +240,16 @@ public class Library implements Serializable {
     public List<Pair<String,String>> getBooleanDocuments(String expressionToTest) {
             return mDocuments.getBoleanDocuments(expressionToTest);
     }
+
+    public List<Pair<String,String>> getDocumentsByPrefix(String titlePrefix){
+        SortedMap<String, Hashtable<Author, Document>> documentList = mDocuments.getDocumentsByPrefix(titlePrefix);
+        List<Pair<String, String>> resultsList = new ArrayList<>();
+        for (Map.Entry<String, Hashtable<Author, Document>> docEntry : documentList.entrySet()) {
+            for (Author author : docEntry.getValue().keySet())
+            resultsList.add(new Pair<>(docEntry.getKey(), author.getName().toString()));
+        }
+        return resultsList;
+    }
 }
 
 

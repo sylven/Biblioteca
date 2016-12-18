@@ -255,4 +255,9 @@ public class Documents implements Serializable {
         }
         return response;
     }
+
+    public SortedMap<String, Hashtable<Author, Document>> getDocumentsByPrefix(String titlePrefix){
+        return mDocuments.subMap(titlePrefix, titlePrefix + Character.MAX_VALUE);
+    }
+
 }

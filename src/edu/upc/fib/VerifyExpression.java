@@ -4,9 +4,6 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by Javier on 17/12/2016.
- */
 public class VerifyExpression {
     public static boolean verifyExpression(String sentenceToTest, String expressionToTest){
         Vector<String> expression_cut = new Sentence(expressionToTest).getVector();

@@ -116,7 +116,7 @@ public class Library implements Serializable {
     }
 
     public Set<String> getAuthorsByPrefix(String prefix) {
-        return mAuthors.getAutorsByPrefix(prefix).keySet();
+        return mAuthors.getAuthorsByPrefix(prefix).keySet();
     }
 
     public boolean existsDocument(String authorName, String title) {
@@ -242,13 +242,30 @@ public class Library implements Serializable {
     }
 
     public List<Pair<String,String>> getDocumentsByPrefix(String titlePrefix){
+        List<Pair<String, String>> response = new ArrayList<>();
         SortedMap<String, Hashtable<Author, Document>> documentList = mDocuments.getDocumentsByPrefix(titlePrefix);
-        List<Pair<String, String>> resultsList = new ArrayList<>();
         for (Map.Entry<String, Hashtable<Author, Document>> docEntry : documentList.entrySet()) {
             for (Author author : docEntry.getValue().keySet())
-            resultsList.add(new Pair<>(docEntry.getKey(), author.getName().toString()));
+                response.add(new Pair<>(docEntry.getKey(), author.getName().toString()));
         }
-        return resultsList;
+        return response;
+    }
+
+    public List<Pair<String,String>> getDocumentsByPrefixes(String authorPrefix, String titlePrefix){
+        List<Pair<String, String>> response = new ArrayList<>();
+        SortedMap<String, Author> authors = mAuthors.getAuthorsByPrefix(authorPrefix);
+        for (Map.Entry<String, Author> author : authors.entrySet()) {
+            for (String docTitle : author.getValue().getAuthorDocumentsByPrefix(titlePrefix).keySet()) {
+                response.add(new Pair<>(docTitle, author.getKey()));
+            }
+
+            /*Set<String> authorDocs = getAuthorDocumentTitles(author);
+            authorDocs.subMap(prefix, prefix + Character.MAX_VALUE);
+            for (String docTitle : authorDocs) {
+                response.add(new Pair<>(docTitle, author));
+            }*/
+        }
+        return response;
     }
 }
 

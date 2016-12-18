@@ -42,6 +42,7 @@ public class Main {
                     System.out.println("| 4- Número de documentos más parecidos a un documento |");
                     System.out.println("| 5- Busqueda por expresión                            |");
                     System.out.println("| 6- Lista de títulos que empiecen con un prefijo      |");
+                    System.out.println("| 7- Lista de de autores y títulos con prefijos        |");
                     System.out.println("| 0- Volver atrás                                      |");
                     System.out.println("|------------------------------------------------------|");
                     System.out.print("  >> Escoge una opción: ");
@@ -134,6 +135,22 @@ public class Main {
 
                         List<Pair<String, String>> documents = library.getDocumentsByPrefix(titlePrefix);
                         if (documents.size() == 0) System.out.println("(i) No hay documentos con el prefijo " + titlePrefix + ".");
+                        else {
+                            int i = 1;
+                            for (Pair<String, String> p: documents){
+                                System.out.println(i + ". " + p.getKey() + " de " + p.getValue());
+                                i++;
+                            }
+                        }
+                    } else if (choice == 7) {
+                        System.out.println("\n[Library > Consulta > Lista de de autores y títulos con prefijos]");
+                        System.out.print("  >> Introduce un prefijo de autor: ");
+                        String authorPrefix = scanner.nextLine();
+                        System.out.print("  >> Introduce un prefijo de título: ");
+                        String titlePrefix = scanner.nextLine();
+
+                        List<Pair<String, String>> documents = library.getDocumentsByPrefixes(authorPrefix, titlePrefix);
+                        if (documents.size() == 0) System.out.println("(i) No hay documentos con esos prefijos.");
                         else {
                             int i = 1;
                             for (Pair<String, String> p: documents){

@@ -2,20 +2,19 @@ package edu.upc.fib;
 
 import javax.print.Doc;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 
 public class Author implements Comparable<Author>, Serializable {
     private Sentence mName; // Nombre del autor
     //private Vector<Document> mDocuments; // Lista de documentos de los que es autor
-    private Hashtable<String, Document> mDocuments; // Lista de documentos de los que es autor <titulo, Document>
+    //private Hashtable<String, Document> mDocuments; // Lista de documentos de los que es autor <titulo, Document>
+    private TreeMap<String, Document> mDocuments; // Lista de documentos de los que es autor <titulo, Document>
 
     public Author(String name) {
         mName = new Sentence(name);
         //mDocuments = new Vector<>();
-        mDocuments = new Hashtable<>();
+        //mDocuments = new Hashtable<>();
+        mDocuments = new TreeMap<>();
     }
 
     // Gestión del autor
@@ -53,6 +52,10 @@ public class Author implements Comparable<Author>, Serializable {
     @Override
     public int compareTo(Author o) {
         return mName.toString().compareTo(o.getName().toString());
+    }
+
+    public SortedMap<String, Document> getAuthorDocumentsByPrefix(String titlePrefix){
+        return mDocuments.subMap(titlePrefix, titlePrefix + Character.MAX_VALUE);
     }
 
 }

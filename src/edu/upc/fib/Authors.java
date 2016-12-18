@@ -64,7 +64,7 @@ public class Authors implements Serializable {
         return getAuthor(author).getDocumentTitles();
     }
 
-    public SortedMap<String, Author> getAutorsByPrefix(String prefix){
+    public SortedMap<String, Author> getAuthorsByPrefix(String prefix){
         return mAuthors.subMap(prefix, prefix + Character.MAX_VALUE);
     }
 
